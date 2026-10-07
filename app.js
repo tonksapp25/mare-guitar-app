@@ -121,11 +121,11 @@
     '1-2':['Četiri koraka!','Pljesni 1-2-3-4, pa isto na žici. Kao hodanje!'],
     '1-3':['Zvuk… tišina!','Kao semafor: zvuk = zeleno, tišina = crveno.'],
     '1-4':['Lov na žice!','Najtanja je prva. Susjedna je druga. Pronađi ih kao detektiv!'],
-    '1-5':['Tvoj nastup!','Danas sviraš sama. Mama i tata samo slušaju, pa plješću na kraju.'],
-    '1-6':['Pjevaj Brateca!','Najprije usta, pa prsti. Pjesma živi u tebi.'],
+    '1-5':['Pjevaj Brateca!','Najprije usta i pljesak. Gitara može pričekati.'],
+    '1-6':['Tvoj nastup!','Danas sviraš sama. Mama i tata samo slušaju, pa plješću na kraju.'],
     '1-7':['Još jednom!','Izaberi omiljenu igru i ponovi je. To je tvoja pobjeda.'],
     '2-1':['Kućica prsta!','Kažiprst blizu metalne prečke. Ne stišći prejako.'],
-    '2-2':['Prazno pa prst!','Najprije 0 bez prsta, pa 1 uz prečku. Polako ponovi par.'],
+    '2-2':['Korak pa žica!','Pljesni ravno — na svaki korak jedan zvuk na praznoj prvoj žici.'],
     '2-3':['Tri kućice!','0, 1, 3, 1 — polako. Zvuk ne smije zujati.'],
     '2-4':['Karta za prste!','Krugovi pokazuju red: 0, pa 1, pa 3. Prvo uši, pa prsti.'],
     '2-5':['Nova staza!','Ista igra na drugoj žici. Prsti već znaju put.'],
@@ -169,7 +169,7 @@
   const weekStarMax=week=>starCards(week).length*3;
   const totalStars=()=>[1,2,3,4].reduce((a,w)=>a+weekStarTotal(w),0);
   const badges=[
-    {id:'zice',title:'Lovac na žice',icon:'string',week:1,need:['1-4','1-5']},
+    {id:'zice',title:'Lovac na žice',icon:'string',week:1,need:['1-4','1-6']},
     {id:'prsti',title:'Čarobni prsti',icon:'hand',week:2,need:['2-3','2-6']},
     {id:'pjesmica',title:'Pjevačica',icon:'note',week:3,need:['3-5','3-6']},
     {id:'koncert',title:'Mali koncert',icon:'spark',week:4,needAny:['4-3','4-6']}
@@ -206,7 +206,7 @@
   const cardAudioIndex=c=>{
     if(c.kind==='rhythm'){
       if(c.week===1&&c.num===3)return 5; /* zvuk–tišina */
-      if(c.week===1&&c.num===6)return 2; /* Bratec A */
+      if(c.week===1&&c.num===5)return 2; /* Bratec A */
       if(c.week===2&&c.num===2)return 8; /* prva žica 0-1-0-1 */
       if(c.week===4&&c.num===4)return null; /* 4.4: dva playera u cardMedia */
       return 0; /* puls */
@@ -351,7 +351,7 @@
     /* Sjedenje: originalni crtež s legendom (bez AI slike). */
     if(k==='1-1'||k==='4-1')return '';
     if(k==='1-2')return teachFig(figRhythm,'');
-    if(k==='1-5')return teachFig(figShow,'<span class="c-s1">1</span> = najtanja, najbliža podu');
+    if(k==='1-6')return teachFig(figShow,'<span class="c-s1">1</span> = najtanja, najbliža podu');
     if(k==='1-3')return teachFig(figSilence,'');
     if(k==='1-4')return teachFig(figStrings,'<span class="c-s1">1</span> = najtanja, najbliža podu · <span class="c-s2">2</span> = odmah iznad');
     if(k==='2-1')return teachFig(figNeck({aria:'Kažiprst na prvoj žici, tik uz prvu prečku',string:1,spots:[{fret:1,text:'prst',mark:'prečka'}]}),'<span class="c-s1">1</span> = najtanja, najbliža podu. Prst tik uz prvu prečku.');
@@ -393,9 +393,9 @@
     const fig=c.kind==='neck'?'':diagram(c.kind,c.data);
     const hideFig=hideCardFig(c,hero);
     if(c.kind==='rhythm'&&ai!==null){
-      /* 1.6 je pjevanje i pljesak — bez četiri kruga. */
-      if(c.week===1&&c.num===6)return cardAudioBlock(ai,'Poslušaj, zapjevaj i plješći uz pjesmu.');
-      const note=c.week===1&&c.num===5?'Četiri zvuka na prvoj žici.':c.week===2&&c.num===2?'Uz otkucaje sviraj 0, 1, 0, 1.':'';
+      /* 1.5 je pjevanje i pljesak — bez četiri kruga. */
+      if(c.week===1&&c.num===5)return cardAudioBlock(ai,'Poslušaj, zapjevaj i plješći uz pjesmu.');
+      const note=c.week===1&&c.num===6?'Četiri zvuka na prvoj žici.':c.week===2&&c.num===2?'Na svaki otkucaj odsviraj praznu prvu žicu.':'';
       /* Hero (npr. 1.2) zamjenjuje stari teal ritam-crtež. */
       return hero?`${hero}${cardAudioBlock(ai,note)}`:`${cardAudioBlock(ai,note)}${fig}`;
     }
@@ -533,12 +533,12 @@
     {text:'Pljesni četiri puta ravno, pa isto odsviraj na prvoj žici.',missions:[2],parent:'Tiho tapkaj uz nju. Ako žuri, usporite oboje — sporije je bolje.',game:'Igra: pljesak pa žica.'},
     {text:'Odsviraj zvuk, pa tišinu. Kao igra stani–kreni.',missions:[3],parent:'Slušajte zajedno. Na riječ „tišina” ona lagano dodirne žicu da prestane zvoniti.',game:'Igra: semafor zvuka (zeleno = sviraj, crveno = stani).'},
     {text:'Pronađi prvu i drugu žicu i odsviraj svaku zasebno.',missions:[4],parent:'Pitaj: „Koja je najtanja?” Ne pokazuj odmah — neka ona potraži.',game:'Igra: lov na dvije žice.'},
-    {text:'Pokaži četiri zvuka na prvoj žici — sama, pa se nakloni.',missions:[5],parent:'Dok svira, samo slušaj. Plješći nakon naklona. Ne ispravljaj usred nastupa.',game:'Igra: mini nastup (četiri zvuka na prvoj žici).'},
-    {text:'Pjevuši „Bratec Martin” i plješći u ritmu.',missions:[6],parent:'Najprije samo pjevanje i pljesak. Gitara danas može pričekati.',game:'Igra: pjevaj pa plješći.'},
+    {text:'Pjevuši „Bratec Martin” i plješći u ritmu.',missions:[5],parent:'Najprije samo pjevanje i pljesak. Gitara danas može pričekati.',game:'Igra: pjevaj pa plješći.'},
+    {text:'Pokaži četiri zvuka na prvoj žici — sama, pa se nakloni.',missions:[6],parent:'Dok svira, samo slušaj. Plješći nakon naklona. Ne ispravljaj usred nastupa.',game:'Igra: mini nastup (četiri zvuka na prvoj žici).'},
     {text:'Ponovi omiljenu misiju ili igru iz ovog tjedna.',missions:[7],parent:'Neka Marija izabere što voli ponoviti. To jača samopouzdanje.',game:'Igra: njezin izbor!'}
   ],[
     {text:'Kažiprst blizu metalne prečke — jedan čist zvuk.',missions:[1],parent:'Ako žica zuji: prst malo bliže prečci i blaži stisak. Neka odmara šaku između pokušaja.',game:'Igra: prst traži kućicu.'},
-    {text:'Na prvoj žici: najprije 0 (prazno), pa 1 (prvi prag).',missions:[2],parent:'Danas je samo 0 i 1, polako i čisto. Cijeli niz 0-1-3-1 čeka sutra.',game:'Igra: 0 pa 1.'},
+    {text:'Pljesni četiri puta ravno — na svaki korak odsviraj praznu prvu žicu.',missions:[2],parent:'Tiho tapkaj uz nju. Jedan zvuk po koraku, bez žurbe.',game:'Igra: korak pa žica.'},
     {text:'Spoji cijeli niz: 0, 1, 3, 1 — bez žurbe.',missions:[3],parent:'Bolje jedan sporiji prolaz nego tri brza i mutna. Opusti šaku između.',game:'Igra: četiri kućice u nizu.'},
     {text:'Objasni što znače 0, 1 i 3, pa ih odsviraj redom.',missions:[4],parent:'Neka ona tebi objasni brojeve. To je učenje, ne ispit.',game:'Igra: detektiv brojeva.'},
     {text:'Ista igra na drugoj žici: 1, pa 3, pa opet 1.',missions:[5],parent:'Ako zapne, vratite se na prvu žicu pola minute, pa opet na drugu.',game:'Igra: nova staza (druga žica).'},

@@ -127,8 +127,8 @@ page('Susret 4: moj mali koncert','TJEDAN 4 • POVEZIVANJE I PROVJERA',[
     note('Uspjeh: samostalan početni motiv, prepoznatljiv redoslijed A-A-B-B, održan puls i duži G u dijelu B. Ponovno samostalno izvođenje drugi dan potvrđuje naučeno.')])
 
 daily=[
- [('Upoznaj','1.1 i 1.3; pronađi prvu žicu.'),('Zaustavi','1.3: zvuk pa tišina.'),('Pronađi','1.4: prva i druga žica.'),('Odgovori','1.2: ponovi dva pa četiri zvuka.'),('Zapjevaj','1.5: pjevaj i plješći.'),('Pokaži','1.6: izvedi bez pomaganja.'),('Ponovi','1.7: ponovi omiljenu misiju.')],
- [('Prvi prag','2.3: prva žica 0 pa 1.'),('Treći prag','2.1 i 2.3: zaseban zvuk na 3.'),('Poveži','2.3: 0-1-3-1 polako.'),('Druga žica','2.5: 1-3-1, bez žurbe.'),('Pročitaj','2.4: pokaži što znači 0, 1 i 3.'),('Pokaži','2.6: pročitaj i odsviraj niz.'),('Ponovi','2.7: ponovi omiljenu misiju.')],
+ [('Udobno','1.1: sjedi udobno i dotakni prvu žicu.'),('Koraci','1.2: pljesak pa četiri zvuka na prvoj žici.'),('Tišina','1.3: zvuk pa tišina.'),('Žice','1.4: prva i druga žica.'),('Zapjevaj','1.5: pjevaj i plješći.'),('Pokaži','1.6: četiri zvuka — sama, pa naklon.'),('Ponovi','1.7: ponovi omiljenu misiju.')],
+ [('Prst','2.1: kažiprst blizu prve prečke.'),('Korak','2.2: na svaki pljesak — prazna prva žica.'),('Niz','2.3: 0-1-3-1 polako.'),('Karta','2.4: značenje 0, 1 i 3.'),('Druga','2.5: druga žica 1-3-1.'),('Pokaži','2.6: pročitaj i odsviraj niz.'),('Ponovi','2.7: ponovi omiljenu misiju.')],
  [('Pripremi','3.1: ramena miruju, prvi prag druge žice.'),('Mali most','3.3: druga žica 3, pa prva prazna.'),('Pjevaj','3.4: echo A i B; Pjesmice ili list.'),('Dio B','3.2: B na gitari — 0-1-3; zadnji ton traje.'),('Dio A','3.5: pjevaj Bratec Martin — dio A.'),('Pokaži','3.6: mali koncert — sama A, zatim sama B.'),('Ponovi','3.7: ponovi omiljenu misiju.')],
  [('Pripremi','4.1: ugodi gitaru i list pjesmice.'),('Spoji','4.2: poveži A pa A.'),('Most','4.3: vježbaj spoj A pa B.'),('Motiv','4.3: sviraj A-A-B-B.'),('Zajedno','4.4: mama/tata tapka, Marija A-A-B-B.'),('Koncert','4.6: mali koncert bez ekrana.'),('Ponovi','4.7: ponovi omiljenu misiju.')]
 ]

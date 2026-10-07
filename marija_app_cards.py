@@ -181,6 +181,27 @@ REVIEW_CARDS = [
     },
 ]
 
+# Dnevni hookovi u skladu s dailyKid u app.js (dan N → misija N.N).
+DAILY_WEEK1 = [
+    ["Udobno", "1.1: sjedi udobno i dotakni prvu žicu."],
+    ["Koraci", "1.2: pljesak pa četiri zvuka na prvoj žici."],
+    ["Tišina", "1.3: zvuk pa tišina — kao semafor."],
+    ["Žice", "1.4: prva i druga žica, zasebno."],
+    ["Zapjevaj", "1.5: pjevaj i plješći uz Bratec Martin."],
+    ["Pokaži", "1.6: četiri zvuka na prvoj žici — sama, pa naklon."],
+    ["Ponovi", "1.7: ponovi omiljenu misiju."],
+]
+
+DAILY_WEEK2 = [
+    ["Prst", "2.1: kažiprst blizu prve prečke na prvoj žici."],
+    ["Korak", "2.2: na svaki pljesak — prazna prva žica."],
+    ["Niz", "2.3: 0-1-3-1 polako na prvoj žici."],
+    ["Karta", "2.4: objasni značenje 0, 1 i 3."],
+    ["Druga", "2.5: na drugoj žici — 1, 3, 1."],
+    ["Pokaži", "2.6: sama pročitaj i odsviraj niz."],
+    ["Ponovi", "2.7: ponovi omiljenu misiju."],
+]
+
 # Dnevni hookovi u skladu s dailyKid[2] u app.js (jedna misija po danu).
 DAILY_WEEK3 = [
     ["Pripremi", "3.1: ramena miruju, prvi prag druge žice."],
@@ -226,6 +247,10 @@ def apply_marija_app_data(data):
             cards.append(deepcopy(rc))
     cards.sort(key=lambda c: (c["week"], c["num"]))
     out["cards"] = cards
+    if len(out.get("daily", [])) >= 1:
+        out["daily"][0] = deepcopy(DAILY_WEEK1)
+    if len(out.get("daily", [])) >= 2:
+        out["daily"][1] = deepcopy(DAILY_WEEK2)
     if len(out.get("daily", [])) >= 3:
         out["daily"][2] = deepcopy(DAILY_WEEK3)
     if len(out.get("daily", [])) >= 4:
