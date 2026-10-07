@@ -1,0 +1,30 @@
+MOJA PRVA GITARSKA PUSTOLOVINA - PRVI MJESEC
+
+1. Za citanje i slusanje otvori gitarska_pustolovina.html u pregledniku.
+   Hrvatske kartice, vodic i pet zvucnih primjera nalaze se na jednom mjestu.
+   Zvucni primjeri su sintetizirani tonovi, nisu snimka gitare.
+
+2. Za ispis otvori pdf/gitarska_pustolovina_prvi_mjesec.pdf.
+   Stranice 1-11: vodic za odraslu osobu.
+   Stranice 12-23: 24 djecje kartice, dvije po stranici.
+   Stranice 24-25: tabulatura pocetnog motiva Bratec Martin.
+   Stranice 26-27: list napretka i zavrsna provjera.
+   Ispis na A4, jednostrano, 100% ili prilagodba stranici.
+
+3. Pocni susretom 1 i karticama 1.1-1.6.
+   Odrasla osoba ugadja gitaru i kratko provjerava polozaj svaki dan.
+   Vjezbe su na hrvatskom; vanjske aplikacije sluze kao dodatak.
+
+4. Za prijenos na drugi uredjaj prenesi cijeli ovaj direktorij,
+   ukljucujuci poddirektorije audio i pdf. Sve osim vanjskih
+   poveznica moze se koristiti bez interneta.
+
+5. Aplikacije nisu isprobane na vasem Android uredjaju.
+   Vodic ukljucuje provjeru mikrofona i zamjenske igre bez aplikacije.
+   Nema obvezne pretplate ni obveznog dugog videa.
+
+6. sadrzaj.json sadrzi tekstove, kartice i redoslijed zadataka
+   za kasniju nadogradnju. build_package.py u radnoj mapi generira
+   HTML, PDF i zvucne primjere iz istog izvora.
+
+Izdanje 1.0 - 7. listopada 2026.

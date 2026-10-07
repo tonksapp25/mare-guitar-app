@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 580" role="img" aria-labelledby="title desc">
+<title id="title">Klasična gitara i njezini dijelovi</title><desc id="desc">Gitara sa šest žica, glavom za ugađanje, vratom i pragovima, zvučnim otvorom i drvenim tijelom. Brojevi odgovaraju legendi uz sliku.</desc>
+<defs><linearGradient id="wood" x2="1" y2="0"><stop stop-color="#dcab67"/><stop offset=".5" stop-color="#f4d39b"/><stop offset="1" stop-color="#d6a467"/></linearGradient></defs>
+<path d="M176 280 C152 265 114 277 106 303 C98 324 107 345 123 361 C138 378 135 392 116 413 C85 453 88 498 113 523 C140 551 260 551 287 523 C312 498 315 453 284 413 C265 392 262 378 277 361 C293 345 302 324 294 303 C286 277 248 265 224 280 Z" fill="url(#wood)" stroke="#80562f" stroke-width="4"/>
+<path d="M177 286 C149 272 121 284 113 306 C106 326 116 346 130 361 C147 382 143 395 123 418 C94 455 97 495 120 518 C145 543 255 543 280 518 C303 495 306 455 277 418 C257 395 253 382 270 361 C284 346 294 326 287 306 C279 284 251 272 223 286" fill="none" stroke="#b0844e" stroke-width="1.5"/>
+<rect x="178" y="99" width="44" height="219" rx="2" fill="#654839" stroke="#4a362b" stroke-width="2"/>
+<g stroke="#bca995" stroke-width="2"><path d="M178 133H222 M178 153H222 M178 172H222 M178 190H222 M178 207H222 M178 223H222 M178 238H222 M178 252H222 M178 265H222 M178 277H222 M178 288H222 M178 299H222 M178 309H222"/></g>
+<path d="M178 107 L173 35 Q173 22 183 20 H217 Q227 22 227 35 L222 107 Z" fill="#a57545" stroke="#68492f" stroke-width="3"/>
+<rect x="181" y="35" width="9" height="55" rx="4" fill="#342a23"/><rect x="210" y="35" width="9" height="55" rx="4" fill="#342a23"/>
+<g stroke="#848681" stroke-width="4"><path d="M169 42H184 M169 63H184 M169 84H184 M216 42H231 M216 63H231 M216 84H231"/></g>
+<g fill="#e3e3dc" stroke="#727a75"><ellipse cx="165" cy="42" rx="7" ry="4"/><ellipse cx="165" cy="63" rx="7" ry="4"/><ellipse cx="165" cy="84" rx="7" ry="4"/><ellipse cx="235" cy="42" rx="7" ry="4"/><ellipse cx="235" cy="63" rx="7" ry="4"/><ellipse cx="235" cy="84" rx="7" ry="4"/></g>
+<rect x="177" y="106" width="46" height="5" fill="#f8efe1"/>
+<circle cx="200" cy="370" r="38" fill="none" stroke="#956a3f" stroke-width="7"/><circle cx="200" cy="370" r="30" fill="#342b23"/>
+<rect x="158" y="465" width="84" height="18" rx="4" fill="#63452e"/><rect x="176" y="470" width="48" height="4" rx="1" fill="#f9f1e2"/>
+<g stroke="#eee6d1" stroke-width="1"><path d="M190 54V476 M194 54V476 M198 54V476 M202 54V476 M206 54V476 M210 54V476"/></g>
+<g stroke="#39796c" stroke-width="2" fill="none"><path d="M252 61H235 M278 200H223 M270 337L211 346 M116 370H163 M308 485L275 468"/></g>
+<g fill="#214d49" stroke="#fffefa" stroke-width="3"><circle cx="269" cy="61" r="18"/><circle cx="295" cy="200" r="18"/><circle cx="287" cy="337" r="18"/><circle cx="99" cy="370" r="18"/><circle cx="321" cy="495" r="18"/></g>
+<g fill="white" text-anchor="middle" font-family="Arial,sans-serif" font-size="19" font-weight="bold"><text x="269" y="68">1</text><text x="295" y="207">2</text><text x="287" y="344">3</text><text x="99" y="377">4</text><text x="321" y="502">5</text></g>
+</svg>

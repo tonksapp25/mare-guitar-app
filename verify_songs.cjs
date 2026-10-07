@@ -1,0 +1,61 @@
+const {chromium}=require('C:/Users/kresi/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+const fs=require('fs'),path=require('path'),{pathToFileURL}=require('url'),vm=require('vm');
+const box={window:{}};vm.runInNewContext(fs.readFileSync('songs.js','utf8'),box);
+const song=box.window.GUITAR_SONGS[0];
+const notes=song.rows.flat();
+const pitches=notes.map(n=>(n[0]===1?64:59)+n[1]);
+const expected=[64,66,68,64,64,66,68,64,68,69,71,68,69,71,71,73,71,69,68,64,71,73,71,69,68,64,64,59,64,64,59,64];
+if(JSON.stringify(pitches)!==JSON.stringify(expected))throw Error('Bratec melody mismatch');
+if(song.rows.length!==2||notes.length!==32||notes.reduce((s,n)=>s+n[2],0)!==32)throw Error('Full song shape');
+if(notes.some(n=>!n[3]))throw Error('Missing aligned lyrics');
+if(box.window.GUITAR_SONGS.some(s=>['peciva','janje'].includes(s.id)))throw Error('Removed songs still present');
+if(box.window.GUITAR_SONGS.find(s=>s.id==='radost').rows.flat().length!==30)throw Error('Ode must contain the expanded theme');
+if(box.window.GUITAR_SONGS.filter(s=>s.category==='bozic').length!==3)throw Error('Missing Christmas songs');
+(async()=>{
+ const browser=await chromium.launch({headless:true});const page=await browser.newPage({viewport:{width:1440,height:1200}});
+ const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.goto(pathToFileURL(path.resolve('index.html')).href+'#pjesmica');
+ if(await page.locator('.song').count()!==0)throw Error('Library must not show tablatures');
+ await page.getByRole('link',{name:'Bratec Martin →',exact:true}).click();
+ await page.locator('#bratec').waitFor();
+ if(await page.locator('#bratec .compact-tab').count()!==2)throw Error('Must show two rows');
+ if(await page.locator('.song').count()!==1)throw Error('Must show one song only');
+ await page.screenshot({path:'tmp/webapp/songs.png',fullPage:true});
+ const before=await page.locator('#bratec .tab-fret').allTextContents();
+ await page.locator('#song-position').selectOption('2');
+ const after=await page.locator('#bratec .tab-fret').allTextContents();
+ if(after.some((n,i)=>Number(n)!==Number(before[i])+2))throw Error('Transposition mismatch');
+ await page.locator('[data-play-song="bratec"]').click();
+ await page.waitForFunction(()=>document.querySelector('[data-play-song="bratec"]').textContent==='■ Zaustavi');
+ await page.waitForFunction(()=>document.querySelector('.tab-note.active'),{},{timeout:10000});
+ await page.locator('#stop-song').click();
+ if(await page.locator('.tab-note.active').count())throw Error('Playback did not stop');
+ await page.locator('#song-position').selectOption('0');
+ for(const kind of ['fret','string','duration','bar','lyric','position','tempo','scope','song','count','listen']){
+  await page.locator(`[data-explain="${kind}"]`).first().click();
+  if(!await page.locator('#explain-dialog').isVisible())throw Error('Missing modal: '+kind);
+  if(!await page.locator('.modal-picture,.syllable-picture,.position-picture').count())throw Error('Missing picture: '+kind);
+  if(kind==='fret')await page.screenshot({path:'tmp/webapp/explanation.png',fullPage:false});
+  await page.getByRole('button',{name:'Razumijem',exact:true}).click();
+ }
+ await page.locator('.svg-help[data-explain="fret"]').first().focus();
+ await page.keyboard.press('Enter');
+ if(!await page.locator('#explain-dialog').isVisible())throw Error('Keyboard modal failed');
+ await page.keyboard.press('Escape');
+ if(await page.locator('#explain-dialog').isVisible())throw Error('Escape failed');
+ await page.pdf({path:'tmp/webapp/song-sheet-print.pdf',format:'A4',printBackground:true});
+ for(const id of ['radost','zvjezdica','radujte','tiha-noc','zvoncici']){
+  await page.goto(pathToFileURL(path.resolve('index.html')).href+'#pjesmica/'+id);
+  await page.locator('#'+id).waitFor();
+  if(await page.locator('.song').count()!==1||!await page.locator('#'+id).count())throw Error('Single song route failed: '+id);
+ }
+ await page.goto(pathToFileURL(path.resolve('index.html')).href+'#pjesmica/radost');
+ await page.locator('#radost').waitFor();
+ await page.screenshot({path:'tmp/webapp/ode-expanded.png',fullPage:true});
+ await page.setViewportSize({width:390,height:844});
+ await page.screenshot({path:'tmp/webapp/songs-mobile.png',fullPage:true});
+ if(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1))throw Error('Mobile body overflow');
+ if(errors.length)throw Error(errors.join('\n'));
+ console.log('PASS: full Bratec, expanded Ode, 3 Christmas songs, one-song routes, 11 modal types, keyboard/Escape, transposition, playback, mobile.');
+ await browser.close();
+})().catch(e=>{console.error(e);process.exit(1)});

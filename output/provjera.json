@@ -1,0 +1,29 @@
+{
+  "pages": 29,
+  "cards": 28,
+  "overflow": [],
+  "melody_frequencies_hz": [
+    261.6,
+    293.7,
+    329.6,
+    261.6,
+    261.6,
+    293.7,
+    329.6,
+    261.6,
+    329.6,
+    349.2,
+    392.0,
+    329.6,
+    349.2,
+    392.0
+  ],
+  "audio_durations_seconds": {
+    "01_cetiri_otkucaja.wav": 8.3,
+    "02_prva_zica_0_1_3_1.wav": 8.3,
+    "03_bratec_martin_dio_A.wav": 8.3,
+    "04_bratec_martin_dio_B.wav": 8.3,
+    "05_bratec_martin_motiv.wav": 20.3
+  },
+  "pdf_links": 6
+}

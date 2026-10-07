@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="hr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f48fb1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="mobile-web-app-capable" content="yes">
+  <title>Gitarska pustolovina · Marija</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="data.js" defer></script>
+  <script src="songs.js" defer></script>
+  <script src="song-ui.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body class="theme-marija">
+  <a class="skip" href="#content">Preskoči na sadržaj</a>
+  <div class="nav-backdrop" id="nav-backdrop" hidden></div>
+  <aside class="sidebar" id="app-sidebar" aria-label="Navigacija">
+    <div class="sidebar-top">
+      <a class="brand" href="#pocetak"><span class="brand-icon" aria-hidden="true">♪</span><span>Gitarska<br>pustolovina</span></a>
+      <button type="button" class="nav-close" id="nav-close" aria-label="Zatvori izbornik">✕</button>
+    </div>
+    <p class="eyebrow">MARIJIN PRVI MJESEC</p>
+    <nav id="navigation"></nav>
+    <div class="sidebar-note"><strong>Ti to možeš!</strong><br>Prvo lijep zvuk,<br>pa malo igre.</div>
+    <button class="print secondary" type="button">Ispiši listić</button>
+  </aside>
+  <div class="workspace">
+    <header class="topbar">
+      <button type="button" class="nav-toggle" id="nav-toggle" aria-label="Otvori izbornik" aria-expanded="false" aria-controls="app-sidebar">
+        <span class="nav-toggle-bars" aria-hidden="true"></span>
+        <span class="nav-toggle-text">Izbornik</span>
+      </button>
+      <span class="topbar-greeting" id="topbar-greeting">Marijina gitara</span>
+      <span class="local-badge">Tvoja bilježnica</span>
+    </header>
+    <main id="content" tabindex="-1"></main>
+    <footer>Gitara 3/4 · Sviramo polako i veselo · Prvi mjesec</footer>
+  </div>
+  <a class="danas-chip" id="danas-chip" href="#tjedan-1/danas">Danas →</a>
+  <nav class="mobile-dock" id="mobile-dock" aria-label="Brza navigacija"></nav>
+  <noscript>Za listanje materijala uključi JavaScript. Za statično izdanje otvori <a href="output/gitarska_pustolovina.html">postojeći HTML</a>.</noscript>
+  <dialog id="explain-dialog" aria-labelledby="explain-title"><button class="modal-close secondary" type="button" aria-label="Zatvori objašnjenje">✕</button><div id="explain-body"></div><button type="button" class="modal-done">Super, krenimo!</button></dialog>
+  <div id="zvonko-toast" class="zvonko-toast" hidden role="status" aria-live="polite"></div>
+  <div id="zvonko-badge" class="zvonko-welcome" hidden role="dialog" aria-modal="true" aria-labelledby="zvonko-badge-title">
+    <div class="zvonko-welcome-card">
+      <div class="zvonko-welcome-pic">
+        <img class="zvonko-welcome-img" src="assets/dragon-guitar-pixar.jpg" alt="Zvonko, slatki zmaj s malom gitarom" width="200" height="200">
+        <span class="zvonko-hi-five" aria-hidden="true"><span class="hi-five-paw">★</span></span>
+      </div>
+      <p class="zvonko-welcome-eyebrow">NOVI BEDŽ</p>
+      <h2 id="zvonko-badge-title"></h2>
+      <p class="zvonko-welcome-text" id="zvonko-badge-text"></p>
+      <button type="button" class="button zvonko-welcome-go" id="zvonko-badge-go">Daj pet!</button>
+    </div>
+  </div>
+  <div id="zvonko-welcome" class="zvonko-welcome" hidden role="dialog" aria-modal="true" aria-labelledby="zvonko-welcome-title">
+    <div class="zvonko-welcome-card">
+      <div class="zvonko-welcome-pic">
+        <img class="zvonko-welcome-img" src="assets/dragon-guitar-pixar.jpg" alt="" width="200" height="200">
+        <span class="zvonko-hi-five" aria-hidden="true"><span class="hi-five-paw">★</span></span>
+      </div>
+      <p class="zvonko-welcome-eyebrow" id="zvonko-welcome-eye"></p>
+      <h2 id="zvonko-welcome-title"></h2>
+      <p class="zvonko-welcome-text" id="zvonko-welcome-text"></p>
+      <button type="button" class="button zvonko-welcome-go" id="zvonko-welcome-go">Daj pet!</button>
+    </div>
+  </div>
+</body>
+</html>

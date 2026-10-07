@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 550" role="img" aria-labelledby="title desc">
+<title id="title">Dijete udobno sjedi i drži klasičnu gitaru</title><desc id="desc">Desnoruki položaj: leđa uspravna, ramena opuštena. Desna ruka svira iznad zvučnog otvora, lijeva ruka doseže vrat. Gitara je oslonjena na lijevu nogu, a lijevo stopalo na podnožak. Drugo stopalo je na podu.</desc>
+<defs><linearGradient id="gwood" x2="1" y2="0"><stop stop-color="#dfb275"/><stop offset="1" stop-color="#f6d59e"/></linearGradient></defs>
+<rect x="24" y="22" width="552" height="510" rx="26" fill="#f0f5ef"/>
+<path d="M77 506H530" stroke="#b1c5b7" stroke-width="3"/>
+<!-- Stable chair and the child's two supported legs. -->
+<path d="M205 169V338H350 M219 338V504 M336 338V504" fill="none" stroke="#778e81" stroke-width="10" stroke-linejoin="round"/>
+<path d="M247 293 Q250 319 228 352 L213 451 L243 463 L272 364 L288 336 Q330 330 371 321 L415 417 L439 397 L410 309 Q383 287 327 292 Z" fill="#618793" stroke="#315565" stroke-width="3"/>
+<path d="M213 447 L239 457 L233 480 L209 478 Z M414 411 L438 392 L451 410 L430 429 Z" fill="#efc8a5" stroke="#a17659" stroke-width="2"/>
+<path d="M207 474 Q219 480 235 475 L247 492 Q250 502 237 505 H183 Q174 502 185 490 Z M428 423 Q438 415 449 408 L473 421 Q485 428 479 436 H432 Q421 435 428 423 Z" fill="#f5efe6" stroke="#526a60" stroke-width="3"/>
+<path d="M407 439H485 M416 439L408 506 M477 439L486 506" fill="none" stroke="#93724f" stroke-width="8" stroke-linecap="round"/>
+<!-- Torso, neck and a recognisable face. -->
+<path d="M235 164 Q270 145 307 160 L334 179 L337 301 Q296 319 241 299 L231 190 Z" fill="#e7b85e" stroke="#947136" stroke-width="3"/>
+<path d="M262 136V159 Q278 174 293 157V134" fill="#efc8a5" stroke="#a17659" stroke-width="2"/>
+<ellipse cx="278" cy="100" rx="37" ry="45" fill="#efc8a5" stroke="#a17659" stroke-width="2"/>
+<path d="M241 102 Q229 55 267 46 Q309 35 322 78 L312 104 L304 73 Q272 87 249 79 L249 106 Z" fill="#655043"/>
+<path d="M261 100H267 M289 100H295" stroke="#4d3b32" stroke-width="4" stroke-linecap="round"/><path d="M273 111L269 120H278 M266 130 Q278 137 289 130" stroke="#9c6952" stroke-width="2" fill="none" stroke-linecap="round"/>
+<!-- Left arm reaches toward the neck without a raised shoulder. -->
+<path d="M320 176 Q353 198 354 235 L356 200" fill="none" stroke="#a17659" stroke-width="25" stroke-linecap="round"/>
+<path d="M320 176 Q353 198 354 235 L356 200" fill="none" stroke="#efc8a5" stroke-width="21" stroke-linecap="round"/>
+<path d="M313 163 Q333 168 346 187 L328 204 L308 187" fill="#e7b85e" stroke="#947136" stroke-width="2"/>
+<!-- Classical guitar: neck rises toward the child's left (viewer's right). -->
+<g transform="translate(282 288) rotate(38)">
+<path d="M-20 -52 C-39 -61 -64 -49 -67 -30 C-70 -12 -54 -2 -50 11 C-48 25 -65 39 -73 58 C-86 98 -66 127 0 129 C66 127 86 98 73 58 C65 39 48 25 50 11 C54 -2 70 -12 67 -30 C64 -49 39 -61 20 -52 Z" fill="url(#gwood)" stroke="#80562f" stroke-width="3"/>
+<rect x="-14" y="-201" width="28" height="162" fill="#654839" stroke="#4a362b" stroke-width="2"/>
+<path d="M-14 -201L-19 -244Q0 -252 19 -244L14 -201Z" fill="#ad7d49" stroke="#68492f" stroke-width="2"/>
+<g stroke="#848681" stroke-width="3"><path d="M-25 -236H-13 M-25 -224H-13 M-25 -212H-13 M13 -236H25 M13 -224H25 M13 -212H25"/></g>
+<g stroke="#ad9780"><path d="M-14 -188H14 M-14 -170H14 M-14 -153H14 M-14 -137H14 M-14 -122H14 M-14 -108H14 M-14 -95H14 M-14 -83H14 M-14 -72H14 M-14 -61H14 M-14 -51H14"/></g>
+<circle cy="12" r="23" fill="none" stroke="#9d7445" stroke-width="4"/><circle cy="12" r="18" fill="#342b23"/><rect x="-31" y="82" width="62" height="12" rx="3" fill="#63452e"/>
+<g stroke="#efe7d7" stroke-width=".8"><path d="M-9 -237V87 M-5.4 -237V87 M-1.8 -237V87 M1.8 -237V87 M5.4 -237V87 M9 -237V87"/></g>
+</g>
+<!-- Left fingertips on the fretboard and thumb behind it. -->
+<g transform="translate(-44 0)"><path d="M395 201 Q388 190 394 182 Q399 178 403 185 L408 193 L417 177 Q422 173 425 178 L415 200 Q410 210 399 207 Z" fill="#efc8a5" stroke="#a17659" stroke-width="2"/>
+<path d="M404 186L414 194 M400 190L410 198" stroke="#a17659" stroke-width="1.5"/></g>
+<!-- Right arm rests over the upper bout, hand beside the sound hole. -->
+<path d="M241 180 Q213 200 213 226 Q225 254 270 283" fill="none" stroke="#a17659" stroke-width="26" stroke-linecap="round"/>
+<path d="M241 180 Q213 200 213 226 Q225 254 270 283" fill="none" stroke="#efc8a5" stroke-width="22" stroke-linecap="round"/>
+<path d="M237 164Q222 170 213 188L231 205L248 188" fill="#e7b85e" stroke="#947136" stroke-width="2"/>
+<path d="M265 276 Q277 275 288 286 L295 298 Q294 304 288 298 L280 289 L288 304 Q286 309 281 303 L273 292 L276 303 Q271 308 268 301 L260 287 Z" fill="#efc8a5" stroke="#a17659" stroke-width="2"/>
+<!-- Numbered pointers, explained in readable HTML beside the picture. -->
+<g stroke="#39796c" stroke-width="2" fill="none"><path d="M145 142L236 164 M148 269L242 266 M487 184L376 193 M516 461L476 441"/></g>
+<g fill="#214d49" stroke="#fffefa" stroke-width="3"><circle cx="127" cy="137" r="20"/><circle cx="131" cy="269" r="20"/><circle cx="505" cy="181" r="20"/><circle cx="529" cy="472" r="20"/></g>
+<g fill="white" font-family="Arial,sans-serif" font-size="21" font-weight="bold" text-anchor="middle"><text x="127" y="145">1</text><text x="131" y="277">2</text><text x="505" y="189">3</text><text x="529" y="480">4</text></g>
+</svg>

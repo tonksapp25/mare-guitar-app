@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 240" role="img" aria-label="Most izmedu zica">
+  <rect width="560" height="240" rx="20" fill="#fff5fb"/>
+  <!-- lijevo: 2. zica prag 3 -->
+  <rect x="40" y="50" width="180" height="120" rx="12" fill="#fff3e0" stroke="#ff9800" stroke-width="3"/>
+  <line x1="60" y1="90" x2="200" y2="90" stroke="#ff9800" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="130" cy="90" r="22" fill="#ff9800"/>
+  <text x="130" y="98" text-anchor="middle" fill="#fff" font-size="22" font-family="Arial,sans-serif" font-weight="bold">3</text>
+  <text x="130" y="145" text-anchor="middle" fill="#e65100" font-size="15" font-family="Arial,sans-serif" font-weight="bold">2. ~ica</text>
+  <!-- strelica -->
+  <path d="M240 110 H300" stroke="#ec407a" stroke-width="5" stroke-linecap="round"/>
+  <polygon points="310,110 292,100 292,120" fill="#ec407a"/>
+  <!-- desno: 1. zica prazna 0 -->
+  <rect x="340" y="50" width="180" height="120" rx="12" fill="#ffe4f0" stroke="#ec407a" stroke-width="3"/>
+  <line x1="360" y1="90" x2="500" y2="90" stroke="#ec407a" stroke-width="3.5" stroke-linecap="round"/>
+  <circle cx="430" cy="90" r="22" fill="#ec407a"/>
+  <text x="430" y="98" text-anchor="middle" fill="#fff" font-size="22" font-family="Arial,sans-serif" font-weight="bold">0</text>
+  <text x="430" y="145" text-anchor="middle" fill="#c2185b" font-size="15" font-family="Arial,sans-serif" font-weight="bold">1. ~ica</text>
+  <text x="280" y="210" text-anchor="middle" fill="#880e4f" font-size="16" font-family="Arial,sans-serif" font-weight="bold">skok!</text>
+</svg>

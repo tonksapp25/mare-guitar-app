@@ -1,0 +1,48 @@
+---
+description: Dizajn, jezik i pedagogija za Gitarsku pustolovinu (Marija, 8)
+alwaysApply: true
+---
+
+# Gitarska pustolovina — pravila projekta
+
+Aplikacija za djevojčicu Mariju (8 godina): klasična gitara, 4 tjedna, dnevne misije. Mascot: **Zvonko**. Tema: `theme-marija`.
+
+## Jezik
+
+- Sav tekst za dijete i roditelja: **hrvatski** (nikad engleski u UI, slikama, alt tekstu, captionima).
+- Ton: topao, jasan, kratke rečenice; za dijete „ti“, za roditelja „Za mama/tata“.
+- Bez meta-teksta o pregledniku, HTML-u, PDF-u ili „aplikaciji“ u dječjem UI-u.
+
+## Dizajn (prati postojeće)
+
+- Paleta: ružičasta (`#ec407a`, `#c2185b`, `#fff5fb`, `#ffe4f0`), drvo `#f0c878`, accent žuta za ciljeve — **ne** teal/zelena iz stare generacije, **ne** ljubičasti AI gradijenti.
+- Font: Fredoka / Nunito (`--font-main`).
+- Ikonice: pink CSS / SVG (`.app-ico`), ne ChatGPT emoji nakupine.
+- Kartice misija, Danas, Zvonko toast/welcome — zadrži postojeće obrasce u `styles.css` / `app.js`.
+- Mobilni: čitljivo, veliki tap targeti; ne lomi drawer / Danas chip / dock.
+
+## Slike i crteži
+
+- **Jednostavno** kao misija 1.3: mali teach SVG, ružičasta pozadina, malo elemenata, jasan jedan koncept.
+- Preferiraj ugrađeni SVG u `missionHero` / `teachFig` (radi offline, isti stil).
+- Ne pretrpavati: bez stopala, badgeova, engleskih naslova, srca i dekoracije ako ne uče.
+- Primjer ritma: puni krugovi + ♪ + „zvuk“; tišina: iscrtani krug + × + „tišina“.
+
+## Pedagogija i sadržaj
+
+- **Dan = ista misija** u tom tjednu (1. dan → 1.1, 2. dan → 1.2, …). Naslov Dana, `dailyKid` misije/igre i kartica moraju se poklapati.
+- Upute djetetu: jedan cilj, 2–4 kratka koraka, jasna igra.
+- Roditeljski tipovi: konkretno što raditi / što ne ispravljati; odvojeni od dječjeg teksta.
+- „Ako zapne“: kratko, umirujuće, bez kritike.
+- Zvonko: ženski oblik za Mariju, kratko ohrabrenje; welcome „Daj pet!“ gdje već postoji.
+
+## Kod
+
+- Statički HTML/JS/CSS (`index.html`, `app.js`, `data.js`, `styles.css`); localStorage `gitarska-pustolovina-v1`.
+- Ne mijenjaj široko dizajn sustav osim ako djetetu/UX to treba; uskladi s postojećim teach figurama i karticama.
+- Pri novom sadržaju: provjeri usklađenost Danas ↔ kartica ↔ audio ↔ slika.
+
+## Kontekst razgovora
+
+- Kad procijeniš da je kontekst razgovora **prešao ~60 %** (duga povijest, compaction/sažimanje, rizik gubitka detalja), **odmah javi korisniku** kratkom porukom da otvori **novi chat** i nastavi tamo.
+- Ne čekaj da kontekst bude potpuno pun; bolje ranije nego kasnije.
