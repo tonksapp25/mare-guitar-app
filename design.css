@@ -393,5 +393,5 @@
   body.theme-marija:not(.sidebar-hidden) .nav-toggle { display: none !important; }
   body.theme-marija .nav-close { display: inline-flex !important; flex-shrink: 0; }
   body.theme-marija .nav-close-mobile { display: none; }
-  body.theme-marija .nav-collapse-arrow { display: inline; font-size: 24px; line-height: 1; }
+  body.theme-marija .nav-collapse-arrow { display: inline; font-family: Arial, sans-serif; font-size: 28px; font-weight: 400; line-height: 1; }
 }
