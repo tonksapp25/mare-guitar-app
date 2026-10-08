@@ -1,0 +1,191 @@
+/* Shared visual finish. Screen-only so printed lesson sheets keep their layout. */
+@media screen {
+  body.theme-marija {
+    --ink:#392d46;--muted:#76677e;--paper:#fff;--line:#e9e2ee;
+    --accent:#c43b76;--accent-hover:#aa2b61;--teal:#a13265;
+    --shadow-soft:0 4px 18px rgba(63,35,73,.045);
+    --shadow-lift:0 8px 24px rgba(63,35,73,.09);
+    background:radial-gradient(ellipse at 95% 0,#f4eaff,transparent 45%),#faf7fb;
+    color:var(--ink);font-family:"Nunito",system-ui,sans-serif;
+    font-weight:700;line-height:1.55;
+  }
+  body.theme-marija :is(h1,h2,h3,.brand,.course-week-number,.star-hero-num) {
+    font-family:"Fredoka","Nunito",sans-serif;font-weight:500;color:var(--ink);
+  }
+  body.theme-marija h1 {background:none;-webkit-text-fill-color:var(--ink);letter-spacing:-.6px;line-height:1.15}
+  body.theme-marija h2 {line-height:1.25}
+  body.theme-marija :is(button,input,select,textarea,.button){font-family:inherit}
+  body.theme-marija :is(button,.button){font-weight:800}
+  body.theme-marija :is(.sheet,.exercise-card,.song-choice,.day,.week-tile):nth-child(n) {
+    background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow-soft);
+  }
+  body.theme-marija .exercise-card{padding:24px}
+  body.theme-marija .page-heading{margin-bottom:24px}
+  body.theme-marija .page-heading .lede{color:var(--muted);font-size:16px;line-height:1.6;margin-top:10px}
+  body.theme-marija :is(.eyebrow,.sheet-label){color:#a13265;font-size:11px;font-weight:900;letter-spacing:1.5px}
+  body.theme-marija .topbar{background:#fff;border-bottom:1px solid var(--line);backdrop-filter:none;box-shadow:none}
+  body.theme-marija .topbar-greeting{font-size:14px;color:var(--ink);font-weight:800}
+  body.theme-marija .local-badge{background:#f4eff8;border:0;color:var(--muted);font-size:11px}
+  body.theme-marija .nav-toggle{background:#f7f1f7;color:#9d3061;border:1px solid #eadee9;box-shadow:none;border-radius:12px}
+  body.theme-marija .utility-bar{background:#fff;border-bottom:1px solid var(--line)}
+  body.theme-marija :is(.home-shortcut,.round-shortcut){color:var(--muted)}
+  body.theme-marija :is(.home-shortcut>span[aria-hidden],.round-shortcut>svg,.round-shortcut>span[aria-hidden]) {
+    border:1px solid #e8dce7;background:#fff;color:#a13265;box-shadow:0 2px 6px #392d4605;
+  }
+  body.theme-marija .round-shortcut.is-current>svg{background:#f9e9f0;border-color:#cb7b9d}
+  body.theme-marija .shortcut-label{font-weight:800;font-size:11px}
+  body.theme-marija .sidebar{background:#40304d;box-shadow:none;border-right:0}
+  body.theme-marija .sidebar .brand{color:#fff}
+  body.theme-marija #topbar-greeting{font-size:13px;color:#785a7b}
+  body.theme-marija .brand-icon{animation:none;background:#f5ccdc;color:#742949;border:0;border-radius:16px}
+  body.theme-marija .sidebar nav a{border-radius:12px;color:#f0e8f4;font-size:14px;font-weight:800}
+  body.theme-marija .sidebar nav a[aria-current=page]{background:#f8e5ee;color:#842851;box-shadow:none}
+  body.theme-marija .sidebar-note{color:#d9ccdf;border-color:#ffffff24;font-size:13px}
+  body.theme-marija .sidebar-note strong{color:#f2c8d9}
+  body.theme-marija .nav-close{box-shadow:none;background:#ffffff0c;border:1px solid #ffffff50}
+  body.theme-marija .nav-backdrop{background:#30243f66;backdrop-filter:blur(3px)}
+  body.theme-marija .app-ico{background:#c45a88;box-shadow:none}
+  body.theme-marija :is(.button,button.modal-done,a.button:not(.secondary)) {
+    border:1px solid transparent;background:#c43b76;color:#fff;border-radius:14px;
+    box-shadow:0 3px 0 #9e2e5e;min-height:48px;transition:background .15s,box-shadow .15s;
+  }
+  body.theme-marija :is(.secondary,.button.secondary,a.button.secondary) {
+    background:#fff;color:#96335e;border:1px solid #dfcddc;box-shadow:none;border-radius:14px;
+  }
+  body.theme-marija :is(button,a.button):disabled{box-shadow:none;opacity:.4}
+  body.theme-marija :is(button,a,.button):hover{transform:none}
+  body.theme-marija button:not(:disabled):not(.skip):not(.modal-close):hover{transform:none;box-shadow:none}
+  body.theme-marija :is(.button:not(.secondary),button.modal-done):hover{background:#ac2f65}
+  body.theme-marija :is(.course-week,.day-tile,.song-choice):hover{border-color:#c792b2;box-shadow:var(--shadow-lift)}
+  body.theme-marija :is(.card-tag,.day-tile-num){background:#f6ebf3;color:#91315d;border:0;box-shadow:none;font-weight:900}
+  body.theme-marija .card-tag{border-radius:8px;font-size:10px;letter-spacing:.8px;padding:6px 10px}
+  body.theme-marija .course-weeks{gap:16px}
+  body.theme-marija .course-week{min-height:140px;padding:22px;gap:18px;background:#fff;border:1px solid var(--line);border-radius:22px;color:var(--ink);box-shadow:var(--shadow-soft)}
+  body.theme-marija .course-week-number{width:56px;flex-basis:56px;height:64px;border-radius:18px;background:#fbe2eb;color:#9b315f;font-size:32px}
+  body.theme-marija .course-week:nth-child(2) .course-week-number{background:#eae5fc;color:#6c50a2}
+  body.theme-marija .course-week:nth-child(3) .course-week-number{background:#dbf0e9;color:#367365}
+  body.theme-marija .course-week:nth-child(4) .course-week-number{background:#fff0ce;color:#936522}
+  body.theme-marija .course-week strong{font-size:18px;font-weight:900}
+  body.theme-marija .course-week small{color:var(--muted);font-size:11px;line-height:1.5;margin-top:6px}
+  body.theme-marija .course-week>span:last-child{color:#b9a6bd}
+  body.theme-marija .resume-summary{border:1px solid var(--line);background:#f0eaf7;border-radius:18px;padding:18px}
+  body.theme-marija .resume-summary p{margin-top:0;color:#665371}
+  body.theme-marija .location-path{background:#faf7fb;border:0;border-bottom:1px solid #e8dfeb;border-radius:0;padding:2px 4px;color:var(--muted)}
+  body.theme-marija .location-path a{color:#76617e;text-decoration:none}
+  body.theme-marija .location-path strong{color:#84335b}
+  body.theme-marija .week-picker{padding:5px;background:#eee8f1;border-radius:15px;gap:5px!important}
+  body.theme-marija #content .week-pick{background:transparent;border:0;border-radius:11px;color:#77617f;box-shadow:none;font-weight:900;font-size:12px}
+  body.theme-marija #content .week-pick.is-active{background:#fff;color:#95345f;box-shadow:0 2px 6px #392d460d}
+  body.theme-marija #content .week-pick:hover{background:#fff}
+  body.theme-marija .review-card{background:#fff!important;border-color:var(--line)!important}
+  body.theme-marija .lesson-map{background:#fff;border:1px solid var(--line);border-radius:14px}
+  body.theme-marija .lesson-map summary{color:#68536f;font-weight:800;font-size:13px}
+  body.theme-marija .week-timeline a{border:1px solid #e9dfec;color:#75627c;border-radius:12px;background:#fff}
+  body.theme-marija .week-timeline a[aria-current=step]{background:#fbe6ef;border:2px solid #bd4a7b;color:#862c54}
+  body.theme-marija .timeline-status{font-size:10px}
+  body.theme-marija .timeline-legend{color:var(--muted);font-size:11px}
+  body.theme-marija .day-path{display:grid;gap:10px}
+  body.theme-marija .day-tile{border:1px solid var(--line);background:#fff;border-radius:16px;box-shadow:0 2px 8px #392d4604;padding:15px 18px;gap:16px;min-height:80px;color:var(--ink)}
+  body.theme-marija .day-tile.is-today{background:#fff;border-color:#bd6e96;box-shadow:inset 4px 0 #bd4a7b}
+  body.theme-marija .day-tile::after{content:'›';font-size:24px;color:#b19bb7;font-weight:500}
+  body.theme-marija .day-tile-num{border-radius:12px;min-height:44px;min-width:56px;display:grid;place-items:center;font-size:12px}
+  body.theme-marija .day-tile-title{font-size:15px;font-weight:900;flex:1}
+  body.theme-marija .day-tile-practice{font-size:11px;color:#83718a}
+  body.theme-marija .last-day-label{font-size:10px;font-weight:700;color:#a45a7c;margin-top:3px}
+  body.theme-marija :is(.mascot-panel,.card-zvonko){background:#f3eef9;border:0;border-radius:16px;box-shadow:none}
+  body.theme-marija .mascot-panel{margin-bottom:22px}
+  body.theme-marija .mascot-frame{background:transparent;border:0}
+  body.theme-marija .mascot-frame img{border-radius:14px}
+  body.theme-marija .speech-bubble{background:transparent;border:0;box-shadow:none;padding:0!important;font-size:14px}
+  body.theme-marija .speech-bubble strong{color:#77518b;font-family:"Fredoka",sans-serif;font-weight:500;font-size:18px}
+  body.theme-marija .card-zvonko p{font-weight:700;color:#766482}
+  body.theme-marija .card-zvonko strong{color:#795189}
+  body.theme-marija .exercise-card h3{color:var(--ink);font-size:26px;margin:14px 0}
+  body.theme-marija .step-one{background:#fff5d9;border:1px solid #ecdcb4;border-radius:16px;color:#554428;padding:17px 18px;font-weight:900;box-shadow:none;font-size:19px;line-height:1.5}
+  body.theme-marija .step-kicker{color:#a03a65;font-size:11px;letter-spacing:1px;font-weight:900;text-transform:uppercase}
+  body.theme-marija :is(.step-guidance,.tune-check){color:#8a778d;font-weight:700;font-size:12px}
+  body.theme-marija .step-actions .step-prev{background:#faf7fb;border-color:#e4d8e7;color:#84658c;box-shadow:none}
+  body.theme-marija .step-actions .step-next{border-radius:14px}
+  body.theme-marija :is(.card-audio,.card-figure,.read-map-card){border:1px solid var(--line);border-radius:16px;background:#fcfafc;box-shadow:none}
+  body.theme-marija .card-audio-label{font-size:12px;color:#78586f}
+  body.theme-marija audio{display:block;width:100%;max-width:100%;height:44px;border-radius:12px}
+  body.theme-marija .card-figure-caption{background:transparent;border:0;color:var(--muted);font-size:13px;padding:8px 0 0}
+  body.theme-marija .posture-girl{border:1px solid #e6d8e8;border-radius:16px}
+  body.theme-marija .mission-game{background:#edf5f0;color:#4b7360;border:0;border-radius:12px;font-size:13px}
+  body.theme-marija :is(.parent-fold,.part-reminder,.song-options,.song-sources){border:0;border-top:1px solid var(--line);background:transparent;border-radius:0;box-shadow:none;padding:8px 0;margin-top:14px}
+  body.theme-marija :is(.parent-fold,.part-reminder,.song-options,.song-sources) summary{color:#705a79;font-size:13px;font-weight:800;gap:10px;cursor:pointer;list-style:none}
+  body.theme-marija :is(.parent-fold,.part-reminder,.song-options,.song-sources) summary::after{content:'＋';font-size:18px;margin-left:auto}
+  body.theme-marija :is(.parent-fold,.part-reminder,.song-options,.song-sources)[open]>summary::after{content:'−'}
+  body.theme-marija summary::-webkit-details-marker{display:none}
+  body.theme-marija .print-quiet{background:transparent!important;border:0!important;box-shadow:none!important;color:#8b778f!important;font-size:12px!important}
+  body.theme-marija .mission-back{gap:10px;flex-wrap:wrap}
+  body.theme-marija .mission-back a{font-size:13px}
+  body.theme-marija .finish-hint{background:#fff6df;color:#7e693c;font-size:13px}
+  body.theme-marija .review-pick{background:#fff;border:1px solid #e8dbe9;border-radius:12px;box-shadow:none;color:#725075;padding:14px}
+  body.theme-marija .review-picks{border-top:1px solid var(--line)}
+  body.theme-marija .review-picks-lede{color:#77617f;font-size:13px}
+  body.theme-marija .song-choice{padding:22px;border-radius:20px}
+  body.theme-marija .song-choice h2{font-size:22px;margin:14px 0 8px}
+  body.theme-marija .song-choice p{font-size:13px;color:var(--muted);margin:0}
+  body.theme-marija .song-choices{gap:14px}
+  body.theme-marija .song-sheet{padding:24px!important}
+  body.theme-marija .song-back{color:#98627e;text-decoration:none;font-weight:800;font-size:13px}
+  body.theme-marija .tap-hint{background:#f5f0f8;border:0;border-radius:12px;padding:12px;font-size:13px;color:#7c6685}
+  body.theme-marija .data-help{background:#faf7fc;border:1px solid #e9dfed;box-shadow:none;color:#76607e;border-radius:10px;font-size:12px}
+  body.theme-marija .song-row-label{font-family:"Fredoka",sans-serif;color:#85558e;font-weight:500;font-size:18px;padding-top:12px}
+  body.theme-marija .tab-row{background:#fff;border-bottom:1px solid #eee7f0;padding-bottom:8px}
+  body.theme-marija .tab-string-labels{background:#fff;bottom:16px}
+  body.theme-marija .tab-string-fixed{box-shadow:none}
+  body.theme-marija .tab-note rect{fill:#fff}
+  body.theme-marija .tab-note.active rect{fill:#ffe2a5}
+  body.theme-marija .song-sheet .svg-help:hover rect{fill:#fff0c9}
+  body.theme-marija .song-controls select{background:#fff;border:1px solid #d8cadf;border-radius:10px}
+  body.theme-marija .star-hero{background:#f0e8f8;border:1px solid #e1d4ec;border-radius:22px;box-shadow:none}
+  body.theme-marija .star-hero-num{color:#986096}
+  body.theme-marija :is(.star-hero-bar,.week-meter-track){background:#eee6f1;border:0}
+  body.theme-marija :is(.star-hero-bar .week-meter-fill,.week-meter-fill){background:#b96596}
+  body.theme-marija .badge-tile{background:#f8f5fa;border:1px solid #e6dfea;border-radius:16px;opacity:1;box-shadow:none}
+  body.theme-marija .badge-tile:not(.is-unlocked) .app-ico{background:#e6dce9;color:#9b88a2;box-shadow:none}
+  body.theme-marija .badge-tile.is-unlocked{background:#fff4d6;border-color:#e2c578;box-shadow:none}
+  body.theme-marija .badge-state{color:#81718a;font-size:12px}
+  body.theme-marija .gallery-mission{background:#fff;border:1px solid #e7deec;border-radius:13px;box-shadow:none}
+  body.theme-marija .gallery-mission.has-stars{background:#fff6dc;border-color:#e8d28d}
+  body.theme-marija .star-choice{background:#fff;border:1px solid #e5d9e7;border-radius:14px;box-shadow:none}
+  body.theme-marija .star-choice.is-selected,body.theme-marija .star-choice[aria-pressed=true]{background:#fff4d5;border-color:#d9b65c;box-shadow:none}
+  body.theme-marija .concert-invite{background:#fff8e7;border:1px solid #ead8a9;border-radius:22px}
+  body.theme-marija :is(#explain-dialog,#hand-dialog,#guitar-name-dialog){border:1px solid #e5d6e8;border-radius:24px;background:#fff;box-shadow:0 24px 80px #30203840}
+  body.theme-marija dialog::backdrop{background:#30243f70;backdrop-filter:blur(4px)}
+  body.theme-marija #explain-dialog::backdrop{background:#30243f70;backdrop-filter:blur(4px)}
+  body.theme-marija #explain-dialog .how-to-read{padding:0!important;border:0;background:transparent;box-shadow:none;margin:0}
+  body.theme-marija :is(input,textarea){background:#fff;border:1px solid #dbccdf;border-radius:12px;color:var(--ink);box-shadow:none}
+  body.theme-marija .gate{background:#f5edf7}
+  body.theme-marija .gate-card{background:#fff;border:1px solid #e6d8eb;box-shadow:0 20px 70px #51365b12;border-radius:26px}
+  body.theme-marija .mobile-dock{background:#fff;border-top:1px solid #e9dfed;box-shadow:0 -4px 18px #392d4605;backdrop-filter:none;padding-top:7px;padding-bottom:calc(7px + env(safe-area-inset-bottom,0px))}
+  body.theme-marija .mobile-dock .dock-item{background:transparent;border-radius:14px;box-shadow:none;color:#927a96;min-height:56px;font-size:10px;gap:4px}
+  body.theme-marija .mobile-dock .dock-item[aria-current=page]{background:#f8eaf1;color:#9d3061;box-shadow:none}
+  body.theme-marija .mobile-dock .app-ico{width:26px;height:26px;background:transparent;color:inherit;box-shadow:none;font-size:20px;margin:0}
+  body.theme-marija footer{color:#aa97af;font-size:11px}
+  body.theme-marija :is(.goal,.note,blockquote){background:#f7f1f8;border-color:#d8b3d3;color:#725a7a;box-shadow:none}
+  @media(min-width:1000px){
+    body.theme-marija .utility-bar{background:transparent;border:0}
+    body.theme-marija main{padding-top:24px!important}
+    body.theme-marija .page-shortcuts{gap:20px}
+  }
+  @media(max-width:700px){
+    body.theme-marija .course-week{min-height:118px;padding:18px;gap:14px}
+    body.theme-marija .course-week-number{flex-basis:48px;height:58px;font-size:28px}
+    body.theme-marija .course-week strong{font-size:16px}
+    body.theme-marija .day-tile{padding:12px;gap:10px;min-height:76px}
+    body.theme-marija .day-tile-title{font-size:14px}
+    body.theme-marija .day-tile-practice{font-size:10px}
+    body.theme-marija .day-tile::after{display:none}
+    body.theme-marija .exercise-card{padding:16px!important;border-radius:20px}
+    body.theme-marija .exercise-card .step-one{padding:14px;font-size:18px}
+    body.theme-marija .song-sheet{padding:16px!important}
+    body.theme-marija .song-sheet .data-help{padding:7px 8px;font-size:12px}
+    body.theme-marija .song-title .song-play{min-width:140px}
+    body.theme-marija .card-zvonko{border-radius:12px}
+    body.theme-marija .page-heading{margin-bottom:20px}
+    body.theme-marija .location-path{font-size:12px}
+  }
+}

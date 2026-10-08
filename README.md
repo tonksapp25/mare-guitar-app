@@ -86,3 +86,10 @@ Pjesmica `bratec-vjezba` prikazuje isti A i B kao lekcije, u četiri kratka reda
 Izvorni puni zapis `bratec` ostaje dostupan kao druga verzija za kasnije.
 `bratec-prijelaz` je skriven iz kataloga i služi zvučnom primjeru prijelaza.
 Oznake žica ostaju vidljive uz pomicanje dugog zapisa; osnovna legenda je otvorena.
+
+## Vizualni stil
+
+`design.css` je završni sloj izgleda za ekran, nakon `styles.css` i `ux.css`.
+Ujednačava tipografiju, kartice, gumbe, navigaciju i dijaloge. Tjedni imaju
+četiri blage boje, glavna radnja je ružičasta, a uputa za vježbu svijetložuta.
+Pravila su ograničena na `@media screen` kako bi ispis zadržao postojeći raspored.
