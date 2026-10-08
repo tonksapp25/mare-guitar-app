@@ -358,10 +358,12 @@
 @media print { #parent-info-dialog { display: none !important; } }
 
 @media screen {
+  body.theme-marija .sidebar { display: flex !important; flex-direction: column; }
+  body.theme-marija .sidebar > * { flex-shrink: 0; }
   body.theme-marija .sidebar-dedication {
-    display: flex; align-items: center; gap: 10px;
-    margin: 8px 12px 0; padding-top: 18px; border-top: 1px solid #ffffff24;
-    color: #f2c8d9; font-size: 13px; line-height: 1.6;
+    display: flex; align-items: center; gap: 7px;
+    margin: auto 12px 0; padding-top: 18px; border-top: 1px solid #ffffff24;
+    color: #f2c8d9; font-size: 12px; line-height: 1.6; font-weight: 400; font-style: italic; white-space: nowrap;
   }
-  body.theme-marija .sidebar-dedication > [aria-hidden] { font-size: 22px; color: #f3a5c3; }
+  body.theme-marija .sidebar-dedication > [aria-hidden] { font-size: 15px; font-style: normal; color: #f3a5c3; }
 }
