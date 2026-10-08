@@ -59,3 +59,7 @@ i vraćaju položaj skrolanja. Povijest ekrana čuva se u sessionStorage,
 a koraci vježbi i posljednja otvorena misija u postojećem localStorage zapisu.
 Kružni prečaci stoje uz sadržaj na širokom ekranu i iznad njega na mobitelu;
 gitara uvijek otvara štimanje. Promjena koraka čuva postojeći audio player.
+
+Donja navigacija na mobitelu i tabletu: Danas, Pjesmice i Zvjezdice.
+Na ekranu širem od 1280 px zamjenjuje je postojeći lijevi izbornik.
+Štimanje je uvijek u kružnim prečacima; ostali krugovi prate trenutačnu vježbu.

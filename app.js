@@ -560,7 +560,8 @@
           const box=note.getBoundingClientRect(),frame=scroller.getBoundingClientRect();
           if(box.left<frame.left+36||box.right>frame.right-36)scroller.scrollTo({left:scroller.scrollLeft+box.left-frame.left-scroller.clientWidth/2+box.width/2,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});
           const topbar=document.querySelector('.topbar').getBoundingClientRect().bottom;
-          const dock=document.getElementById('mobile-dock').getBoundingClientRect().top;
+          const dockBox=document.getElementById('mobile-dock').getBoundingClientRect();
+          const dock=dockBox.height?dockBox.top:window.innerHeight;
           if(frame.top<topbar||frame.bottom>dock)scroller.scrollIntoView({block:'center',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});
         }
       }
@@ -737,7 +738,7 @@
     if(dock){
       const dockNav=[
         ['#pocetak','spark','Danas',(route==='pocetak'&&anchor!=='stimanje')||anchor==='danas'],
-        ['#pocetak/stimanje','tune','Štimaj',route==='pocetak'&&anchor==='stimanje'],
+        ['#pjesmica','note','Pjesmice',route==='pjesmica'],
         ['#napredak','star','Zvjezdice',route==='napredak']
       ];
       dock.innerHTML=dockNav.map(([href,icon,label,on])=>`<a href="${href}" class="dock-item${on?' is-on':''}"${on?' aria-current="page"':''}><span class="dock-icon app-ico app-ico-${icon}" aria-hidden="true"></span><span class="dock-label">${label}</span></a>`).join('');
@@ -1054,7 +1055,6 @@
       const cardKey=anchor.replace('kartica-','');
       if(stuckTips[cardKey])links.push(['','help','Ako zapne',cardKey]);
     }
-    links.push(['#pjesmica','song','Pjesmice']);
     document.getElementById('page-shortcuts').innerHTML=links.map(([href,icon,label,key])=>key?`<button type="button" class="round-shortcut" data-shortcut-help="${key}" aria-label="${label}">${shortcutIcon(icon)}<span class="shortcut-label">${label}</span></button>`:`<a class="round-shortcut${location.hash===href?' is-current':''}" href="${href}" aria-label="${label}"${location.hash===href?' aria-current="page"':''}>${shortcutIcon(icon)}<span class="shortcut-label">${label}</span></a>`).join('');
   };
   document.addEventListener('click',e=>{

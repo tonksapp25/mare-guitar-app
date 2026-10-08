@@ -145,3 +145,10 @@ body.theme-marija .data-help{min-width:44px;min-height:44px;padding:8px 10px;bor
   .song-options,.song-sources,.song-title,.tap-hint{display:none!important}
   .song-sheet .tab-fret{font-size:24px!important}
 }
+
+/* Desktop already has the main navigation in its sidebar. */
+@media(min-width:1281px){
+  .mobile-dock{display:none!important}
+  .workspace{padding-bottom:0}
+  body.theme-marija .zvonko-toast{bottom:24px!important}
+}
