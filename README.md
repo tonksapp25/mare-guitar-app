@@ -113,3 +113,11 @@ Izbori za ponavljanje i kontrole melodije zadržavaju svoje mjesto kroz korake.
 Prva vježba mijenja
 prikaz sjedenja u prikaz žica kada zadatak traži dodir najtanje žice, a cijela
 legenda položaja dostupna je pod „Pogledaj cijeli položaj”.
+
+## Praćenje ritma uz zvuk
+
+U vježbama s četiri zvuka i sa zvukom/tišinom strelica iznad kruga i obrub
+pokazuju trenutačni korak. Prate vrijeme WAV snimke, uključujući dva uvodna
+otkucaja i pauze između tri ponavljanja. Pauziranje zadržava oznaku, premotavanje
+je odmah usklađuje, a kraj snimke je uklanja. Oznake su unutar crteža i ne mijenjaju
+visinu ekrana. Završavanje vježbe zaustavlja zvuk kao i prije.

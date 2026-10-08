@@ -327,3 +327,11 @@
   body.theme-marija .completion-next-hint{margin:8px 0 0;min-height:2.8em;font-size:12px;line-height:1.4;color:var(--muted)}
 }
 @media print{.mission-controls,#completion-dialog{display:none!important}}
+
+@media screen {
+  .rhythm-marker { opacity: 0; pointer-events: none; }
+  .rhythm-marker.is-current { opacity: 1; }
+  .rhythm-halo { fill: none; stroke: #9d285f; stroke-width: 4; }
+  .rhythm-pointer { fill: #9d285f; }
+}
+@media print { .rhythm-marker { display: none; } }
