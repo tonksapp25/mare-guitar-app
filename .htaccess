@@ -1,0 +1,5 @@
+# Canonical public URL. Requires HTTPS certificate and mod_rewrite on the host.
+RewriteEngine On
+RewriteCond %{HTTPS} !=on [OR]
+RewriteCond %{HTTP_HOST} !^mare\.aplikacija\.com\.hr$ [NC]
+RewriteRule ^ https://mare.aplikacija.com.hr%{REQUEST_URI} [R=301,L,NE]

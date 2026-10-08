@@ -26,7 +26,7 @@ class Dependencies(HTMLParser):
 def build():
     deps = Dependencies()
     deps.feed((ROOT / 'index.html').read_text(encoding='utf-8'))
-    paths = set(deps.paths)
+    paths = set(deps.paths) | {Path('.htaccess')}
     for folder in ['assets', 'output/audio', 'output/pdf']:
         paths.update(p.relative_to(ROOT) for p in (ROOT / folder).rglob('*') if p.is_file())
     paths.add(Path('output/gitarska_pustolovina.html'))

@@ -143,3 +143,11 @@ Raspakiraj sadržaj izravno u javnu mapu hostinga (`public_html`, `public` ili
 odabranu podmapu): `index.html` treba biti na toj razini, uz `assets` i `output`.
 Nije potreban build na serveru, Node, PHP ni pravilo za preusmjeravanje ruta.
 Skripta provjerava integritet arhive i jednakost svih datoteka s izvornicima.
+
+Javna domena: https://mare.aplikacija.com.hr/
+ZIP uključuje `.htaccess` za Apache/LiteSpeed: HTTP i drugi nazivi domene
+preusmjeravaju se statusom 301 na ovu HTTPS domenu, uz očuvanje putanje i upita.
+Na hostingu najprije aktiviraj valjani SSL certifikat za `mare.aplikacija.com.hr`.
+Pravilo ne izdaje certifikat; hosting mora podržavati `.htaccess` i `mod_rewrite`.
+Ako se HTTPS završava na zasebnom proxyju, provjeri hostingovu konfiguraciju
+HTTPS-a prije primjene pravila kako bi se izbjeglo ponavljano preusmjeravanje.
