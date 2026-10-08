@@ -395,3 +395,10 @@
   body.theme-marija .nav-close-mobile { display: none; }
   body.theme-marija .nav-collapse-arrow { display: inline; font-family: Arial, sans-serif; font-size: 28px; font-weight: 400; line-height: 1; }
 }
+
+@media screen and (min-width:1000px) {
+  body.theme-marija .sidebar .nav-close,
+  body.theme-marija .sidebar .nav-close:hover {
+    border: 0; background: transparent; box-shadow: none;
+  }
+}
