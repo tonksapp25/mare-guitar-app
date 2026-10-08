@@ -231,12 +231,11 @@
   body.theme-marija .workspace #content{max-width:1100px;padding:20px 24px 28px!important}
   body.theme-marija .topbar{
     position:sticky!important;top:0;z-index:30;display:grid;
-    grid-template-columns:minmax(96px,1fr) minmax(0,2fr) minmax(96px,1fr);
+    grid-template-columns:minmax(44px,1fr) minmax(0,2fr) minmax(44px,1fr);
     gap:8px;padding:8px 14px;padding-top:calc(8px + env(safe-area-inset-top,0px));
     min-height:60px!important;
   }
-  body.theme-marija .nav-toggle{display:inline-flex;justify-self:start;min-height:44px;padding:8px 10px;font-size:13px;gap:7px}
-  body.theme-marija .nav-toggle-text{display:inline}
+  body.theme-marija .nav-toggle{display:inline-flex;align-items:center;justify-content:center;justify-self:start;width:44px;height:44px;min-height:44px;padding:10px}
   body.theme-marija #topbar-greeting{
     justify-self:center;max-width:100%;min-width:44px;min-height:44px;padding:7px 12px;
     border:1px solid #e8dce7;border-radius:12px;background:#fff;box-shadow:none;
