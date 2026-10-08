@@ -193,3 +193,58 @@ body.theme-marija .week-timeline a[aria-current=step]{background:#fff3c4;border:
 @media(min-width:1000px){.location-path{top:var(--app-topbar-height,60px)}}
 @media(max-height:600px) and (orientation:landscape){.location-path{top:0}}
 @media print{.location-path{display:none!important}}
+
+/* Put the child's task first; navigation is available without occupying the lesson. */
+.week-orientation:has(.lesson-map){margin-bottom:12px}
+.lesson-map{border:1px solid #f5b8d4;border-radius:14px;background:#fff8fc;padding:0 12px}
+.lesson-map summary{min-height:48px;display:flex;align-items:center;color:#880e4f;font-size:14px}
+.lesson-map summary::after{content:'＋';margin-left:auto;font-size:20px}
+.lesson-map[open] summary::after{content:'−'}
+.lesson-map .week-picker{margin-top:8px}
+.timeline-legend{font-size:12px;line-height:1.4;margin:12px 0;color:#8a496b}
+.exercise-card .step-one{margin:8px 0 12px;font-size:18px;line-height:1.45}
+.exercise-card .step-actions{display:flex;justify-content:flex-end;gap:8px;margin:8px 0 0}
+.step-guidance{font-size:13px;line-height:1.4;color:#8a496b;margin:8px 0}
+.step-next:disabled{opacity:.45;cursor:default;transform:none!important}
+.part-reminder{padding:0;margin:8px 0 12px;border-color:#f5b8d4}
+.part-reminder summary{min-height:44px;display:flex;align-items:center;color:#880e4f;font-size:14px}
+.part-reminder p{font-size:14px;margin:10px 0}
+.part-reminder .button{min-height:48px}
+.mission-game{margin:16px 0;font-size:14px;padding:12px;border-radius:12px;background:#fff3c4;color:#880e4f}
+.mission-parent summary{min-height:48px;display:flex;align-items:center}
+.mission-parent p{font-size:14px;line-height:1.5;margin-top:12px}
+.day-practice{min-height:48px;width:100%;margin:12px 0}
+.day-practice[aria-pressed=true]{background:#fff3c4!important;color:#880e4f!important;border-color:#c2185b!important}
+.day-tile-practice{font-size:12px;font-weight:700;color:#8a496b;white-space:nowrap}
+.context-return{margin:0 0 12px}
+.context-return .button{display:flex;align-items:center;justify-content:center;width:100%;min-height:48px;font-size:14px}
+.invite-instruction{font-size:14px;color:#8a496b}
+.basic-legend{margin:12px 0 16px}
+.song-row-label{font-size:18px;color:#880e4f;margin:16px 0 4px}
+.tab-row{position:relative;margin:12px 0}
+.song-sheet .tab-row .compact-tab-scroll{margin:0;padding-bottom:8px}
+.song-sheet .compact-tab{width:1030px;max-width:none}
+.song-sheet .compact-tab.short-tab{width:268px;min-width:268px;max-width:none}
+.tab-string-labels{position:absolute;left:0;top:0;bottom:8px;width:54px;z-index:2;pointer-events:none;background:#fff8fc}
+body.theme-marija .tab-string-fixed{position:absolute;left:0;transform:translateY(-50%);display:grid;place-items:center;pointer-events:auto;width:52px;min-width:44px;height:44px;padding:0;border:1px solid #f5b8d4;border-radius:10px;background:#fff8fc;color:#c2185b;font-size:12px;box-shadow:none}
+.song-level{font-size:14px;line-height:1.5;margin:10px 0}
+body.theme-marija .tab-string-fixed[data-string="2"]{color:#a14b00;background:#fff3c4}
+.print-string{display:none}
+@media(max-width:700px){
+  .card-zvonko{padding:8px 10px!important;margin:10px 0!important}
+  .card-zvonko img{width:34px;height:34px}
+  .card-zvonko p{font-size:13px}
+  .card-zvonko strong{font-size:14px}
+  .exercise-card h3{font-size:20px!important;line-height:1.3;margin:12px 0!important}
+  .exercise-card .card-tag{font-size:11px!important;padding:5px 10px!important}
+  .tune-check{font-size:13px;margin-bottom:10px}
+  .location-path{margin-bottom:10px}
+  .review-picks-grid{grid-template-columns:1fr}
+  .review-pick{min-height:48px}
+}
+@media print{
+  .context-return,.lesson-map,.day-practice,.step-guidance,.mission-parent,.part-reminder{display:none!important}
+  .tab-string-labels{display:none!important}
+  .print-string{display:block;font-size:18px}
+  .song-sheet .compact-tab,.song-sheet .compact-tab.short-tab{width:100%;min-width:0;max-width:100%}
+}

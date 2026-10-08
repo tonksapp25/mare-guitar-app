@@ -68,3 +68,21 @@ gitara uvijek otvara štimanje. Promjena koraka čuva postojeći audio player.
 Donja navigacija na mobitelu i tabletu: Početak, Pjesmice i Zvjezdice.
 Na ekranu širem od 1280 px zamjenjuje je postojeći lijevi izbornik.
 Štimanje je uvijek u kružnim prečacima; ostali krugovi prate trenutačnu vježbu.
+
+## Jasniji dječji prikaz
+
+Na mobitelu je karta dana zatvorena u „Dani i tjedni”, a putanja ostaje vidljiva.
+Uputa dolazi prije gumba Dalje. Ponavljanje nudi izbor odmah, a slaganje melodije
+traži četiri zvuka prije nastavka. `kid-copy.js` sadrži kratke prikazne korake;
+izvorne generirane kartice ostaju u `data.js`. Treći dan četvrtog tjedna ima
+zasebne korake, sliku i zvuk prijelaza kraj A → početak B.
+
+`dayPractice` bilježi pokušaj po danu odvojeno od zvjezdica za karticu. Dva dana
+koja koriste istu karticu zato ne preuzimaju oznaku pokušaja jedan od drugoga.
+Pomoć za čitanje otvara se u dijalogu. Povratak iz pjesmice/zvukova pamti rutu,
+korak i skrolanje izvorne vježbe u sessionStorage (`mare-support-return`).
+
+Pjesmica `bratec-vjezba` prikazuje isti A i B kao lekcije, u četiri kratka reda.
+Izvorni puni zapis `bratec` ostaje dostupan kao druga verzija za kasnije.
+`bratec-prijelaz` je skriven iz kataloga i služi zvučnom primjeru prijelaza.
+Oznake žica ostaju vidljive uz pomicanje dugog zapisa; osnovna legenda je otvorena.

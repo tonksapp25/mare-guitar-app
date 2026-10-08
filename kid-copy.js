@@ -23,12 +23,12 @@ window.KID_COPY=(()=>{
     '3-6':['Koncert!','Mama i tata samo slušaju, pa plješću na kraju.'],
     '3-7':['Još jednom!','Izaberi omiljenu misiju i ponovi je. To je tvoja pobjeda.'],
     '4-7':['Još jednom!','Izaberi omiljenu misiju i ponovi je. To je tvoja pobjeda.'],
-    '4-1':['Priprema!','Mama/tata ugodi gitaru. Ti sjedni udobno i pripremi list.'],
+    '4-1':['Priprema!','Mama ili tata naštimaju gitaru. Ti sjedni udobno.'],
     '4-2':['Dva puta A!','Sviraj A, pa odmah opet A — bez stajanja.'],
-    '4-3':['A-A-B-B!','Polako i ponosno — cijela pjesmica.'],
+    '4-3':['Dva mala dijela!','A i B su dijelovi koje već poznaješ.'],
     '4-4':['Zajedno!','Slušaj njihovo tapkanje i sviraj uz njega.'],
     '4-5':['Tvoja melodija!','Četiri zvuka koje TI biraš. Ti si skladateljica!'],
-    '4-6':['Koncert!','Odloži telefon. Samo ti, gitara i pljesak na kraju.']
+    '4-6':['Koncert!','Možeš gledati brojeve dok sviraš. Na kraju te čeka pljesak!']
   };
   /* Kratki savjeti na težim misijama — ako zapne / zuji / boli. */
   const stuckTips={
@@ -81,5 +81,18 @@ window.KID_COPY=(()=>{
     {text:'Moj mali koncert — odloži ekran, sviraj A-A-B-B s lista i nakloni se!',missions:[6],parent:'Samo slušaj i plješći na kraju. Bez ispravaka usred nastupa. Zvjezdice ★ birate zajedno na kartici.',game:'Igra: koncert!'},
     {text:'Ponovi omiljenu misiju ili igru iz ovog tjedna.',missions:[7],parent:'Može ponoviti koncert (4.6) ili bilo koju drugu misiju. Ako je koncert uspio i drugi dan, ★★★ na 4.6.',game:'Igra: njezin izbor!'}
   ]];
-  return {dailyKid,missionTips,stuckTips};
+  const missionSteps={
+    '2-1':['Stavi kažiprst na prvi prag, blizu metalne prečke.','Pritisni žicu lagano i odsviraj jedan čist zvuk.','Pusti žicu i odmori šaku.'],
+    '2-4':['Pogledaj crtu prve žice.','Broj kaže koji prag sviraš: 0 bez pritiskanja, 1 kažiprst na prvi prag, 3 prstenjak na treći.','Izaberi jedan broj i odsviraj taj zvuk na gitari.'],
+    '3-1':['Sjedni udobno i namjesti gitaru.','Pronađi prvi prag na drugoj žici.','Opusti ramena, pa odsviraj jedan zvuk.'],
+    '3-4':['Otpjevaj dio A, pa ga otpjevaj još jednom.','Otpjevaj dio B, pa ga otpjevaj još jednom.','Otvori vježbu Bratec Martin ispod. Pronađi dva ista dijela A i dva ista dijela B.'],
+    '3-6':['Odsviraj dio A. Podsjetnik je ispod upute.','Odsviraj dio B. Ako još zapinje, danas možeš ponoviti samo A.','Nakloni se! Mama ili tata neka ti zaplješću.'],
+    '4-1':['Pozovi mamu ili tatu da naštimaju gitaru.','Sjedni udobno i opusti ramena.','Otvori vježbu Bratec Martin ili pripremi njen ispis.'],
+    '4-2':['Odsviraj dio A.','Odsviraj isti dio A još jednom, bez stajanja.','Sviraj jednako ravnomjerno, bez ubrzavanja.'],
+    '4-3':['Pogledaj podsjetnik za dijelove A i B.','Odsviraj dio A dvaput, pa dio B dvaput.','U svakom dijelu B zadnji zvuk drži dva koraka.'],
+    '4-4':['Mama ili tata tiho tapkaju četiri jednaka koraka.','Sviraj A, A, B, B uz njihovo tapkanje.','Ako zapne, usporite. Ne mora biti savršeno.'],
+    '4-6':['Sviraj A, A, B, B. Možeš gledati vježbu ili njen ispis.','Pokaži mami ili tati što znači jedan broj na crti.','Nakloni se! Zajedno odaberite zvjezdice.']
+  };
+  const bridgeSteps=['Odsviraj samo zadnji zvuk dijela A: druga žica, prvi prag.','Zatim odsviraj prvi zvuk dijela B: prazna prva žica.','Spoji ta dva zvuka polako. Danas vježbamo samo taj prijelaz.'];
+  return {dailyKid,missionTips,stuckTips,missionSteps,bridgeSteps};
 })();

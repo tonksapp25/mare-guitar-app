@@ -7,7 +7,11 @@ window.GUITAR_SONGS = (() => {
   const b=[n(1,4,1,'kaj'),n(1,5,1,'još'),n(1,7,2,'spiš?')];
   const c=[n(1,7,.5,'Već'),n(1,9,.5,'ti'),n(1,7,.5,'vu-'),n(1,5,.5,'ra'),n(1,4,1,'tu-'),n(1,0,1,'če,')];
   const d=[n(1,0,1,'bim,'),n(2,0,1,'bam,'),n(1,0,2,'bom.')];
+  const lessonA=[n(2,1,1,'Bra-'),n(2,3,1,'tec'),n(1,0,1,'Mar-'),n(2,1,1,'tin,')];
+  const lessonB=[n(1,0,1,'kaj'),n(1,1,1,'još'),n(1,3,2,'spiš?')];
   return [
+    {id:'bratec-prijelaz',title:'Kraj A i početak B',tag:'DVA ZVUKA IZ LEKCIJA',hidden:true,rows:[[lessonA[3],lessonB[0]]],description:'Samo prijelaz koji vježbamo treći dan četvrtog tjedna.'},
+    {id:'bratec-vjezba',title:'Bratec Martin · vježba iz lekcija',lesson:true,tag:'IZ LEKCIJA · PRAGOVI 0, 1 I 3',rowLabels:['Dio A','Ponovi dio A','Dio B','Ponovi dio B'],rows:[lessonA,lessonA,lessonB,lessonB],description:'To su isti dijelovi A i B koje učimo u trećem i četvrtom tjednu. Svaki dio sviramo dvaput. Ovo je početak pjesmice.'},
     {id:'bratec',title:'Bratec Martin',tag:'CIJELA PJESMICA · 2 ŽICE',rows:[[...a,...a,...b,...b],[...c,...c,...d,...d]],description:'Počinje praznom prvom žicom. Za „bam” prijeđi na praznu drugu. Više pragove pronalazi pomicanjem cijele ruke, bez rastezanja prstiju.'},
     {id:'radost',title:'Oda radosti',tag:'2 ŽICE · GLAVNA TEMA, 8 TAKTOVA',rows:[
       [n(1,0),n(1,0),n(1,1),n(1,3),n(1,3),n(1,1),n(1,0),n(2,3),n(2,1),n(2,1),n(2,3),n(1,0),n(1,0,1.5),n(2,3,.5),n(2,3,2)],
