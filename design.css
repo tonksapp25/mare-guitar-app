@@ -356,3 +356,12 @@
   body.theme-marija #parent-info-dialog .completion-heading h2 { font-size: 20px; }
 }
 @media print { #parent-info-dialog { display: none !important; } }
+
+@media screen {
+  body.theme-marija .sidebar-dedication {
+    display: flex; align-items: center; gap: 10px;
+    margin: 8px 12px 0; padding-top: 18px; border-top: 1px solid #ffffff24;
+    color: #f2c8d9; font-size: 13px; line-height: 1.6;
+  }
+  body.theme-marija .sidebar-dedication > [aria-hidden] { font-size: 22px; color: #f3a5c3; }
+}
