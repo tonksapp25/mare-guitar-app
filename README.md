@@ -97,8 +97,12 @@ Pravila su ograničena na `@media screen` kako bi ispis zadržao postojeći rasp
 ## Prijelazi između koraka
 
 Uputa i prikaz čine jednu cjelinu: od 700 px su u dva stupca, na užem ekranu
-slijede jedan ispod drugoga. Kontrole ostaju iznad donje navigacije. Klik na
-Natrag ili Dalje vraća novu uputu ispod stalne putanje; Završi vodi na oznaku
-pokušaja i zvjezdice. Zvuk se pritom ne učitava ponovno. Prva vježba mijenja
+slijede jedan ispod drugoga. Kontrole ostaju iznad donje navigacije. Prostor za
+uputu i sliku rezerviran je prema najdužem koraku pri trenutačnoj širini ekrana.
+Natrag i Dalje mijenjaju sadržaj bez pomicanja stranice dok je uputa vidljiva.
+Ako je izvan vidnog polja, vraća se blagim pomicanjem ispod stalne putanje;
+Završi vodi na oznaku pokušaja i zvjezdice. Zvuk se pritom ne učitava ponovno.
+Izbori za ponavljanje i kontrole melodije zadržavaju svoje mjesto kroz korake.
+Prva vježba mijenja
 prikaz sjedenja u prikaz žica kada zadatak traži dodir najtanje žice, a cijela
 legenda položaja dostupna je pod „Pogledaj cijeli položaj”.

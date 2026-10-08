@@ -113,8 +113,8 @@
     }).join('');
     const picks=MELODY_CHOICES.map(ch=>`<button type="button" class="melody-choice" data-melody-pick="${escape(ch.id)}" data-melody-mission="${escape(missionKey)}"${slots.length===4?' disabled':''}>${escape(ch.label)}</button>`).join('');
     const spots=slots.map(id=>{const ch=melodyChoice(id);return ch?{string:ch.s,fret:ch.f,text:ch.f===0?'0':String(ch.f)}:null;}).filter(Boolean);
-    const preview=spots.length?teachFig(figNeck({aria:'Tvoja četiri zvuka na vratu',strings:[1,2],spots}),spots.length===4?'Sviraj redom s lijeva nadesno.':''):'';
-    const reset=slots.length?`<button type="button" class="melody-reset secondary" data-melody-undo="${escape(missionKey)}">Makni zadnji zvuk</button> <button type="button" class="melody-reset secondary" data-melody-reset="${escape(missionKey)}">Počni ispočetka</button>`:'';
+    const preview=teachFig(figNeck({aria:'Tvoja četiri zvuka na vratu',strings:[1,2],spots}),spots.length===4?'Sviraj redom s lijeva nadesno.':'Ovdje vidiš zvukove koje biraš.');
+    const reset=`<div class="melody-actions"><button type="button" class="melody-reset secondary" data-melody-undo="${escape(missionKey)}"${slots.length?'':' disabled'}>Makni zadnji zvuk</button> <button type="button" class="melody-reset secondary" data-melody-reset="${escape(missionKey)}"${slots.length?'':' disabled'}>Počni ispočetka</button></div>`;
     return `<div class="melody-builder"><p class="melody-builder-lede">Izaberi četiri zvuka za svoju melodiju. Isti zvuk možeš izabrati više puta.</p><div class="melody-slots" role="list">${slotHtml}</div><div class="melody-choices" role="group" aria-label="Poznata mjesta">${picks}</div>${reset}${preview}</div>`;
   };
   const hideCardFig=(c,hero)=>{
@@ -325,11 +325,11 @@
 
   const figSit=`<svg class="teach-svg teach-svg-tall" viewBox="0 0 360 380" role="img" aria-label="Udobno sjedim"><rect width="360" height="380" rx="20" fill="#fff5fb"/><rect x="95" y="250" width="160" height="16" rx="4" fill="#ce93d8"/><rect x="110" y="266" width="14" height="55" fill="#ab47bc"/><rect x="226" y="266" width="14" height="55" fill="#ab47bc"/><ellipse cx="180" cy="190" rx="48" ry="60" fill="#f8bbd0"/><circle cx="180" cy="100" r="32" fill="#ffccbc"/><ellipse cx="170" cy="96" rx="2.5" ry="3.5" fill="#5d4037"/><ellipse cx="190" cy="96" rx="2.5" ry="3.5" fill="#5d4037"/><path d="M168 112 Q180 120 192 112" fill="none" stroke="#e57373" stroke-width="2"/><path d="M150 92 Q155 64 180 62 Q205 64 210 92" fill="#8d6e63"/><ellipse cx="230" cy="210" rx="58" ry="48" fill="#f0c878" stroke="#8d6e4a" stroke-width="2" transform="rotate(-12 230 210)"/><circle cx="235" cy="205" r="14" fill="#3e2723"/><rect x="185" y="125" width="18" height="75" rx="2" fill="#a1887f" transform="rotate(-12 194 162)"/><path d="M145 165 Q110 200 130 230" fill="none" stroke="#ffccbc" stroke-width="12" stroke-linecap="round"/><path d="M205 170 Q250 180 245 220" fill="none" stroke="#ffccbc" stroke-width="12" stroke-linecap="round"/><path d="M158 248 Q145 290 135 335" fill="none" stroke="#f48fb1" stroke-width="14" stroke-linecap="round"/><path d="M200 248 Q220 290 240 335" fill="none" stroke="#f48fb1" stroke-width="14" stroke-linecap="round"/><ellipse cx="130" cy="345" rx="18" ry="8" fill="#ec407a"/><ellipse cx="245" cy="345" rx="18" ry="8" fill="#ec407a"/></svg>`;
   const teachFig=(svg,caption)=>`<div class="teach-hero">${svg}${caption?`<p class="card-figure-caption">${withFingers(caption)}</p>`:''}</div>`;
-  const missionHero=c=>{
+  const missionHero=(c,shownStep)=>{
     const k=`${c.week}-${c.num}`;
     /* Sjedenje: originalni crtež s legendom (bez AI slike). */
     if(k==='1-1'){
-      const step=missionStep[missionStepKey(k)]||0;
+      const step=shownStep??(missionStep[missionStepKey(k)]||0);
       if(step===2)return teachFig(figStrings,'Prva žica je najtanja i najbliža podu. Nježno je dotakni.');
       return `<figure class="step-posture"><img class="posture-girl" src="assets/illustrations/udobno-sjedenje-curica.jpg" alt="Udoban položaj s gitarom: opuštena ramena i oslonjena stopala" width="600" height="800"><figcaption>${step===0?'Oba stopala imaju oslonac. Gitara miruje na nozi.':'Spusti ramena. Šake neka budu mekane i opuštene.'}</figcaption></figure>`;
     }
@@ -364,8 +364,8 @@
     return `<div class="review-picks"><p class="review-picks-lede">Dodirni vježbu koju želiš ponoviti:</p><div class="review-picks-grid">${picks.map(c=>`<a class="review-pick" href="${missionRoute(week,c.num)}"><span class="review-pick-title">${escape(cardTitle(week,c.num))}</span></a>`).join('')}</div></div>`;
   };
   const partReminder=()=>`<details class="part-reminder"><summary>Podsjeti me: dio A i dio B</summary><p><strong>Dio A:</strong> druga žica 1 → druga žica 3 → prva žica 0 → druga žica 1.</p><p><strong>Dio B:</strong> prva žica 0 → 1 → 3. Zadnji zvuk drži dva koraka.</p><a class="button secondary" href="#pjesmica/bratec-vjezba">Otvori vježbu s dijelovima A i B</a></details>`;
-  const cardParts=c=>{
-    const hero=()=>missionHero(c);
+  const cardParts=(c,shownStep)=>{
+    const hero=()=>missionHero(c,shownStep);
     const fig=c.kind==='neck'?'':diagram(c.kind,c.data);
     const drawn=hero();
     const hideFig=hideCardFig(c,drawn);
@@ -467,7 +467,7 @@
     <text x="228" y="162" text-anchor="middle" font-family="Fredoka, Nunito, sans-serif" font-size="14" font-weight="700" fill="#c2185b">sredina</text>
   </svg>`;
   const tuneSection=()=>`<section class="sheet tune-home" id="stimanje"><div class="sheet-label">PRIJE SVIRANJA</div><h2>Štimamo uz odraslu osobu</h2><p class="lede">Na glavi gitare su mehanike — kotačići koji se okreću. Svaka žica ide do svoje. Mama ili tata ih polako okreću. Ti pomažeš jednim nježnim zvukom.</p><div class="tune-layout"><figure class="tune-figure">${tuneFigure()}<figcaption>Ružičaste mehanike se okreću. Crtica na sredini = žica je naštimana.</figcaption></figure><ol class="tune-steps"><li><strong>Pozovi mamu ili tatu.</strong> Oni okreću kotačiće na glavi gitare.</li><li><strong>Ti odsviraj jednu žicu.</strong> Nježno odsviraj žicu koju ti pokažu, pa slušaj.</li><li><strong>Kad je gitara spremna, vrati se na vježbu.</strong> Gumb za povratak je ispod.</li></ol></div>${printQuiet()}<details class="parent-fold"><summary>Za mamu ili tatu · štimer i upute</summary><p class="tune-app"><a class="button" href="https://play.google.com/store/apps/details?id=com.ovelin.guitartuna" target="_blank" rel="noopener noreferrer">Guitar Tuna · Android</a><a class="button secondary" href="https://apps.apple.com/us/app/guitartuna-tune-play-guitar/id527588389" target="_blank" rel="noopener noreferrer">Guitar Tuna · iPhone / iPad</a><a class="button secondary" href="https://www.youtube.com/watch?v=RA3l0QOo4aw" target="_blank" rel="noopener noreferrer">Pogledaj kako se okreću mehanike</a></p><p class="day-parent" role="note">Video je na hrvatskom, prva lekcija škole za početnike. Gledajte dio sa štimerom; štimanje po sluhu preskočite. Smjer okretanja ovisi o gitari — okrenite malo i gledajte ide li crtica prema sredini. Ne okrećite naglo, da žica ne pukne. U Guitar Tuni odaberite gitaru i standardno štimanje. Prva prazna žica: E, druga: B (često H). Mehanike okreće odrasla osoba.</p></details></section>`;
-  const card=c=>{
+  const card=(c,shownStep)=>{
     const key=`${c.week}-${c.num}`;const n=getStars(key);const stuck=key==='4-3'&&missionDay(4,3)===3?'probaj svaki zvuk zasebno. Onda ih spoji polako: druga žica na 1, pa prazna prva žica.':stuckTips[key];
     const withStars=c.kind!=='review';
     const day=missionDay(c.week,c.num);
@@ -475,14 +475,14 @@
     const steps=key==='4-3'&&day===3?bridgeSteps:childSteps[key]||(Array.isArray(c.steps)?c.steps:[]);
     const needsMelody=key==='4-5'&&melodySlots(key).length<4;
     const lastIndex=Math.max(0,steps.length-1);
-    const i=Math.min(missionStep[missionStepKey(key)]||0,lastIndex);
+    const i=Math.min(shownStep??(missionStep[missionStepKey(key)]||0),lastIndex);
     const last=steps.length===0||i>=lastIndex;
-    const {picture,sound}=cardParts(c);
+    const {picture,sound}=cardParts(c,i);
     const showNav=steps.length>1;
     const prevHtml=showNav?`<button type="button" class="secondary step-prev" data-step-prev="${key}"${i===0?' disabled':''} aria-label="Prethodni korak">Natrag</button>`:'';
     const nextHtml=showNav&&!last?`<button type="button" class="button step-next" data-step-next="${key}" data-step-max="${lastIndex}"${needsMelody?' disabled':''} aria-label="Sljedeći korak">Dalje</button>`:'';
     const reminder=(c.week===3&&[4,6].includes(c.num))||(c.week===4&&c.num!==5&&c.kind!=='review');
-    const stepHtml=steps.length?`<p class="step-kicker">Korak ${i+1} od ${steps.length}</p><p class="step-one" tabindex="-1">${fingerPlain(steps[i].replace('misiju','vježbu'))}</p>${c.kind==='review'&&i===0?reviewPickList(c.week):''}${reminder?partReminder():''}${needsMelody?`<p class="step-guidance" role="status">Izaberi još ${4-melodySlots(key).length} ${4-melodySlots(key).length===1?'zvuk':'zvuka'} ispod upute.</p>`:''}${showNav?`<p class="step-guidance">${last?'Probaj zadatak, pa dodirni Završi.':c.kind==='review'&&i===0?'Izaberi vježbu iznad. Kad je ponoviš, vrati se ovamo.':'Probaj ovaj zadatak, pa nastavi.'}</p>`:''}`:'';
+    const stepHtml=steps.length?`<p class="step-kicker">Korak ${i+1} od ${steps.length}</p><p class="step-one" tabindex="-1">${fingerPlain(steps[i].replace('misiju','vježbu'))}</p>${c.kind==='review'?reviewPickList(c.week):''}${reminder?partReminder():''}${needsMelody?`<p class="step-guidance" role="status">Izaberi još ${4-melodySlots(key).length} ${4-melodySlots(key).length===1?'zvuk':'zvuka'} ispod upute.</p>`:''}${showNav?`<p class="step-guidance">${last?'Probaj zadatak, pa dodirni Završi.':c.kind==='review'&&i===0?'Izaberi vježbu iznad. Kad je ponoviš, vrati se ovamo.':'Probaj ovaj zadatak, pa nastavi.'}</p>`:''}`:'';
     const controlsHtml=showNav?`<div class="step-actions">${prevHtml}<span class="step-position" aria-hidden="true">${i+1} / ${steps.length}</span>${nextHtml||'<button type="button" class="button step-next" data-step-finish aria-label="Završi vježbu">Završi</button>'}</div>`:'';
     const starsHtml=last&&withStars?`<div class="mission-footer">${starButtons(key,n)}${n?`<p class="mission-cheer">${escape(mascotName)}: ${n===3?'Tri zvjezdice! Ti si sjajna!':n===2?'Sama — super! Sutra možeš treću.':'Bravo! Probala si. Još ★★ kad budeš sama!'}</p>`:''}</div>`:'';
     const reviewHtml='';
@@ -505,6 +505,34 @@
       ${printQuiet()}
     </article>`;
   };
+  const stabiliseLesson=()=>{
+    const current=document.querySelector('.exercise-card');if(!current)return;
+    const match=/kartica-(\d)-(\d)/.exec(current.id);
+    const c=match&&data.cards.find(c=>c.week===Number(match[1])&&c.num===Number(match[2]));if(!c)return;
+    const host=document.createElement('div');host.className='lesson-measure';
+    host.style.cssText=`position:absolute;left:-10000px;top:0;visibility:hidden;pointer-events:none;width:${current.getBoundingClientRect().width}px;`;
+    host.setAttribute('aria-hidden','true');
+    // Measure every step at the card's actual width without changing saved progress.
+    let extraHeight=0,pictureHeight=0,textHeight=0;
+    const count=(childSteps[`${c.week}-${c.num}`]||c.steps||[]).length;
+    for(let i=0;i<count;i++){
+      const template=document.createElement('template');template.innerHTML=card(c,i);
+      const sample=template.content.firstElementChild;
+      sample.removeAttribute('id');sample.querySelectorAll('[id]').forEach(el=>el.removeAttribute('id'));
+      Array.from(sample.children).forEach(el=>{if(!el.classList.contains('mission-work'))el.remove();});
+      sample.querySelector('.mission-sound')?.remove();
+      sample.querySelectorAll('details').forEach(el=>{el.open=!!current.querySelector('.'+el.classList[0])?.open;});
+      host.replaceChildren(sample);content.appendChild(host);
+      const text=sample.querySelector('.step-one').getBoundingClientRect().height;
+      textHeight=Math.max(textHeight,text);
+      extraHeight=Math.max(extraHeight,sample.querySelector('.mission-step').getBoundingClientRect().height-text);
+      pictureHeight=Math.max(pictureHeight,sample.querySelector('.mission-picture').getBoundingClientRect().height);
+    }
+    host.remove();
+    current.style.setProperty('--lesson-text-height',Math.ceil(textHeight)+'px');
+    current.style.setProperty('--lesson-step-height',Math.ceil(textHeight+extraHeight)+'px');
+    current.style.setProperty('--lesson-picture-height',Math.ceil(pictureHeight)+'px');
+  };
   // Keep playing audio mounted; the first lesson also changes its illustration by step.
   const refreshMission=key=>{
     const [w,n]=key.split('-').map(Number);
@@ -513,6 +541,9 @@
     if(!c||!current)return;
     const template=document.createElement('template');template.innerHTML=card(c);
     const next=template.content.firstElementChild;
+    const focus=current.contains(document.activeElement)?document.activeElement:null;
+    const focusSelector=focus?.matches('.step-next')?'.step-next':focus?.matches('.step-prev')?'.step-prev':null;
+    current.querySelectorAll('details[open]').forEach(el=>{const counterpart=next.querySelector('.'+el.classList[0]);if(counterpart)counterpart.open=true;});
     for(const selector of ['.mission-step','.mission-controls','.mission-completion','.mission-help']){
       current.querySelector(selector)?.replaceWith(next.querySelector(selector));
     }
@@ -529,14 +560,24 @@
       orientation.replaceWith(replacement);
     }
     updateShortcuts();
+    if(focusSelector){const control=current.querySelector(focusSelector);if(control&&!control.disabled)control.focus({preventScroll:true});}
   };
   const revealMissionStep=(selector='.mission-work')=>{
     const work=document.querySelector(selector);if(!work)return;
     const bottom=selector=>{const el=document.querySelector(selector);return el&&getComputedStyle(el).position==='sticky'?el.getBoundingClientRect().bottom:0;};
     const top=Math.max(bottom('.topbar'),bottom('.utility-bar'),bottom('.location-path'))+12;
-    window.scrollTo({top:Math.max(0,window.scrollY+work.getBoundingClientRect().top-top),behavior:'instant'});
+    window.scrollTo({top:Math.max(0,window.scrollY+work.getBoundingClientRect().top-top),behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'instant':'smooth'});
     const focus=selector==='.mission-work'?document.querySelector('.step-one'):work.querySelector('button');
     focus?.focus({preventScroll:true});
+  };
+  const keepMissionStepVisible=()=>{
+    const instruction=document.querySelector('.step-one');if(!instruction)return;
+    const path=document.querySelector('.location-path');
+    const top=path?Math.max(0,path.getBoundingClientRect().bottom)+8:12;
+    const controls=document.querySelector('.mission-controls');
+    const bottom=controls?.getBoundingClientRect().top||window.innerHeight;
+    const rect=instruction.getBoundingClientRect();
+    if(rect.top<top||rect.bottom>bottom)revealMissionStep();
   };
   const weekMeter=week=>{
     const got=weekStarTotal(week);const max=weekStarMax(week);const pct=Math.round(got/max*100);
@@ -801,6 +842,7 @@
     document.querySelectorAll('audio').forEach(a=>a.addEventListener('play',()=>document.querySelectorAll('audio').forEach(other=>{if(other!==a)other.pause()})));
     updateShortcuts();
     updateHomeNavigation();
+    stabiliseLesson();
     updateChrome();
   }
   const setNavOpen=open=>{
@@ -948,7 +990,7 @@
       const key=stepPrev.dataset.stepPrev;
       missionStep[missionStepKey(key)]=Math.max(0,(missionStep[missionStepKey(key)]||0)-1);
       save();refreshMission(key);
-      revealMissionStep();
+      keepMissionStepVisible();
       return;
     }
     const stepNext=e.target.closest('[data-step-next]');
@@ -958,7 +1000,7 @@
       const next=Math.min(max,(missionStep[missionStepKey(key)]||0)+1);
       missionStep[missionStepKey(key)]=next;
       save();refreshMission(key);
-      revealMissionStep();
+      keepMissionStepVisible();
 
       return;
     }
@@ -1158,7 +1200,7 @@
     });
   });
   window.addEventListener('orientationchange',()=>setNavOpen(false),{passive:true});
-  window.addEventListener('resize',updateChrome,{passive:true});
+  window.addEventListener('resize',()=>{updateChrome();stabiliseLesson();},{passive:true});
   window.visualViewport?.addEventListener('resize',()=>{
     if(document.body.classList.contains('nav-open')&&window.visualViewport&&window.visualViewport.width>1280)setNavOpen(false);
   });
