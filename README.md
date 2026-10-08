@@ -121,3 +121,8 @@ pokazuju trenutačni korak. Prate vrijeme WAV snimke, uključujući dva uvodna
 otkucaja i pauze između tri ponavljanja. Pauziranje zadržava oznaku, premotavanje
 je odmah usklađuje, a kraj snimke je uklanja. Oznake su unutar crteža i ne mijenjaju
 visinu ekrana. Završavanje vježbe zaustavlja zvuk kao i prije.
+
+Savjeti za roditelje na karticama vježbi otvaraju se u modalu s nazivom vježbe.
+Gumbi „Za mamu ili tatu” i „Ako zapne” dijele jedan red, uključujući ekran od
+320 px. Zatvaranje modala vraća fokus na izvorni gumb bez pomicanja stranice;
+pomoć „Ako zapne” ostaje kratki savjet ispod tog reda.

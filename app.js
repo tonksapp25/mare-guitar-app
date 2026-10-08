@@ -488,7 +488,9 @@
     const open=!!stuckOpen[key];
     const tip=key==='4-3'&&day===3?['Mali prijelaz!','Sviramo samo dva zvuka: kraj A i početak B.']:cardTip(key);
     const zvonkoHtml=`<aside class="card-zvonko" aria-label="${escape(mascotName)}"><img src="assets/dragon-guitar-pixar.jpg" alt="" width="56" height="56"><p><strong>${escape(tip[0])}</strong>${fingerPlain(tip[1])}</p></aside>`;
-    const stuckHtml=stuck?`<button type="button" class="stuck-toggle secondary" data-stuck-toggle="${key}" aria-expanded="${open?'true':'false'}">Ako zapne</button>${open?`<div class="stuck-tip" id="stuck-${key}" role="note"><img src="assets/dragon-guitar-pixar.jpg" alt="" width="48" height="48"><p><strong>${escape(mascotName)}:</strong> ${fingerPlain(stuck)}</p></div>`:''}`:'';
+    const parentHtml=kid?.parent?`<button type="button" class="secondary parent-info-toggle" data-parent-info="${key}" aria-haspopup="dialog" aria-controls="parent-info-dialog">Za mamu ili tatu</button>`:'';
+    const stuckHtml=stuck?`<button type="button" class="stuck-toggle secondary" data-stuck-toggle="${key}" aria-expanded="${open?'true':'false'}">Ako zapne</button>`:'';
+    const stuckTipHtml=stuck&&open?`<div class="stuck-tip" id="stuck-${key}" role="note"><img src="assets/dragon-guitar-pixar.jpg" alt="" width="48" height="48"><p><strong>${escape(mascotName)}:</strong> ${fingerPlain(stuck)}</p></div>`:'';
     return `<article class="exercise-card${c.kind==='review'?' review-card':''}${c.kind==='posture'?' instruction-card':''}${withStars&&n?' has-stars':''}" id="kartica-${c.week}-${c.num}">
       <div class="card-tag">${c.week}. TJEDAN · ${missionDay(c.week,c.num)?`DAN ${missionDay(c.week,c.num)}`:'DODATNA VJEŽBA'}</div>
       <h3>${escape(key==='4-3'?(day===3?'Mali most: kraj A i početak B':'Sviram A, A, B, B'):cardTitle(c.week,c.num))}</h3>
@@ -498,8 +500,7 @@
       ${zvonkoHtml}
       ${kid?.game?`<p class="mission-game">${fingerPlain(kid.game)}</p>`:''}
       ${listenLinks(videosForMission(c.week,c.num))}
-      ${kid?.parent?`<details class="parent-fold mission-parent"><summary>Za mamu ili tatu</summary><p>${fingerPlain(kid.parent)}</p></details>`:''}
-      <div class="mission-help">${stuckHtml}</div>
+      ${parentHtml||stuck?`<div class="mission-help"><div class="mission-help-actions">${parentHtml}${stuckHtml}</div>${stuckTipHtml}</div>`:''}
       ${printQuiet()}
     </article>`;
   };
@@ -817,6 +818,7 @@
     section('Pouzdani izvori',pageBody(11))+
     section('Ispis','<p><a href="output/pdf/gitarska_pustolovina_prvi_mjesec.pdf">PDF cijelog mjeseca</a> · <a href="output/gitarska_pustolovina.html">Dugi HTML list svih materijala</a></p>');}
   function render(keepPosition=false){
+    if(document.getElementById('parent-info-dialog').open)document.getElementById('parent-info-dialog').close();
     if(document.getElementById('completion-dialog').open)document.getElementById('completion-dialog').close();
     stopSong();
     const openDialog=document.getElementById('explain-dialog');if(openDialog.open)openDialog.close();
@@ -1010,6 +1012,18 @@
       }
     }
     if(e.target.closest('.print'))window.print();
+    const parentInfo=e.target.closest('[data-parent-info]');
+    if(parentInfo){
+      const [w,n]=parentInfo.dataset.parentInfo.split('-').map(Number);
+      const day=missionDay(w,n),kid=day?dailyKid[w-1][day-1]:null;
+      if(!kid?.parent)return;
+      document.getElementById('parent-info-lesson').textContent=parentInfo.closest('.exercise-card').querySelector('h3').textContent;
+      document.getElementById('parent-info-body').innerHTML=`<p>${fingerPlain(kid.parent)}</p>`;
+      parentInfoOrigin={hash:location.hash,key:parentInfo.dataset.parentInfo};
+      document.getElementById('parent-info-dialog').showModal();
+      return;
+    }
+    if(e.target.closest('#parent-info-close,#parent-info-done')){document.getElementById('parent-info-dialog').close();return;}
     if(e.target.closest('[data-step-finish]')){openCompletion();return;}
     if(e.target.closest('#completion-close,#completion-stay,#completion-next')){
       if(completionContext?.review&&e.target.closest('#completion-stay,#completion-next')){
@@ -1167,6 +1181,17 @@
   },{passive:true});
   document.addEventListener('focusin',e=>{
     if(!e.target.closest('.header-tools'))setShortcutsOpen(false);
+  });
+  let parentInfoOrigin=null;
+  const parentInfoDialog=document.getElementById('parent-info-dialog');
+  parentInfoDialog.addEventListener('close',()=>{
+    if(parentInfoOrigin?.hash===location.hash)document.querySelector(`[data-parent-info="${parentInfoOrigin.key}"]`)?.focus({preventScroll:true});
+    parentInfoOrigin=null;
+  });
+  parentInfoDialog.addEventListener('click',e=>{
+    if(e.target!==e.currentTarget)return;
+    const r=e.currentTarget.getBoundingClientRect();
+    if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)e.currentTarget.close();
   });
   document.getElementById('completion-dialog').addEventListener('close',()=>{
     if(completionContext?.hash===location.hash)document.querySelector('[data-step-finish]')?.focus({preventScroll:true});

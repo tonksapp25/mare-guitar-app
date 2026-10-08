@@ -17,14 +17,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css?ux=1">
   <link rel="stylesheet" href="ux.css">
-  <link rel="stylesheet" href="design.css?v=16">
+  <link rel="stylesheet" href="design.css?v=17">
   <script src="data.js" defer></script>
   <script src="figures.js" defer></script>
   <script src="kid-copy.js?v=2" defer></script>
   <script src="songs.js" defer></script>
   <script src="song-ui.js" defer></script>
   <script src="rhythm-follow.js?v=1" defer></script>
-  <script src="app.js?v=14" defer></script>
+  <script src="app.js?v=15" defer></script>
 </head>
 <body class="theme-marija">
   <div id="gate" class="gate">
@@ -80,6 +80,12 @@
       <div class="completion-action-space"><div id="completion-actions" class="completion-actions" hidden><button type="button" class="secondary" id="completion-stay">Ostani ovdje</button><a class="button" id="completion-next" href="#pocetak">Sljedeća vježba →</a></div></div>
       <p id="completion-next-hint" class="completion-next-hint"></p>
     </div>
+  </dialog>
+  <dialog id="parent-info-dialog" aria-labelledby="parent-info-title" aria-describedby="parent-info-lesson">
+    <div class="completion-heading"><h2 id="parent-info-title">Za mamu ili tatu</h2><button type="button" class="secondary" id="parent-info-close" aria-label="Zatvori informacije za roditelje">✕</button></div>
+    <p id="parent-info-lesson" class="completion-lesson"></p>
+    <div id="parent-info-body"></div>
+    <button type="button" class="button" id="parent-info-done">Natrag na vježbu</button>
   </dialog>
   <dialog id="explain-dialog" aria-labelledby="explain-title"><button class="modal-close secondary" type="button" aria-label="Zatvori objašnjenje">✕</button><div id="explain-body"></div><button type="button" class="modal-done">Natrag na vježbu</button></dialog>
   <dialog id="hand-dialog" aria-labelledby="hand-title">
