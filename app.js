@@ -872,6 +872,9 @@
     const toggle=document.getElementById('nav-toggle');
     const backdrop=document.getElementById('nav-backdrop');
     if(toggle){const expanded=desktop?!sidebarHidden:open;const label=desktop?(sidebarHidden?'Prikaži izbornik':'Sakrij izbornik'):(open?'Zatvori izbornik':'Otvori izbornik');toggle.setAttribute('aria-expanded',expanded?'true':'false');toggle.setAttribute('aria-label',label);toggle.title=label;}
+    const close=document.getElementById('nav-close');
+    close.setAttribute('aria-label',desktop?'Sakrij izbornik':'Zatvori izbornik');
+    close.title=desktop?'Sakrij izbornik':'Zatvori izbornik';
     if(backdrop)backdrop.hidden=!open;
     document.getElementById('app-sidebar').inert=!(desktop&&!sidebarHidden||open);
     if(open)document.getElementById('nav-close').focus({preventScroll:true});
@@ -1013,7 +1016,14 @@
       }else setNavOpen(!document.body.classList.contains('nav-open'));
       return;
     }
-    if(e.target.closest('#nav-close')||e.target.closest('#nav-backdrop')){setNavOpen(false);document.getElementById('nav-toggle').focus({preventScroll:true});return;}
+    if(e.target.closest('#nav-close')||e.target.closest('#nav-backdrop')){
+      if(desktopNav.matches){
+        sidebarHidden=true;document.body.classList.add('sidebar-hidden');
+        try{localStorage.setItem('mare-sidebar-hidden','true');}catch{}
+        updateChrome();stabiliseLesson();
+      }
+      setNavOpen(false);document.getElementById('nav-toggle').focus({preventScroll:true});return;
+    }
     if(e.target.closest('#navigation a')||e.target.closest('.brand'))setNavOpen(false);
     const invitePrint=e.target.closest('.print-invite');
     if(invitePrint){
