@@ -1,6 +1,8 @@
 (() => {
   'use strict';
   const data=window.GUITAR_DATA;
+  const figures=window.GUITAR_FIGURES||{};
+  const {dailyKid,missionTips,stuckTips}=window.KID_COPY;
   const content=document.getElementById('content');
   const titles=['Upoznajem gitaru','Prsti stvaraju zvukove','Moja prva pjesmica','Moj mali koncert'];
   const goals=['Pronađi dvije žice, odsviraj četiri ravnomjerna zvuka i zaustavi ih.','Pročitaj 0, 1 i 3 te odsviraj kratak niz po poljima.','Odsviraj dio A i dio B pjesmice, svaki zasebno.','Poveži A-A-B-B i ponovi samostalno drugi dan.'];
@@ -11,7 +13,7 @@
   const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const key=(kind,values)=>kind+'|'+JSON.stringify(values);
   const diagram=(kind,values)=>{
-    const drawing=data.figures[key(kind,values)]||'';
+    const drawing=figures[key(kind,values)]||'';
     const labels=kind==='guitar'?[
       ['Glava','Tu nam odrasla osoba pomaže ugađati žice.'],['Vrat i pragovi','Ovdje stavljamo prste — svako mjesto ima svoj zvuk.'],['Šest žica','Dotakni žicu, pusti i slušaj — to je tvoj ton!'],['Zvučni otvor','Desna ruka svira žice iznad ovog velikog kruga.'],['Tijelo gitare','Ovdje zvuk postaje glasniji i lijepši.']
     ]:kind==='posture'?[
@@ -116,51 +118,6 @@
     return '';
   };
   const pageBody=n=>data.pages[n-1].blocks.map(block).join('');
-  const missionTips={
-    '1-1':['Sjedi udobno!','Ramena dolje, stopala na podu — onda gitara zvuči sretno.'],
-    '1-2':['Četiri koraka!','Pljesni 1-2-3-4, pa isto na žici. Kao hodanje!'],
-    '1-3':['Zvuk… tišina!','Kao semafor: zvuk = zeleno, tišina = crveno.'],
-    '1-4':['Lov na žice!','Najtanja je prva. Susjedna je druga. Pronađi ih kao detektiv!'],
-    '1-5':['Pjevaj Brateca!','Najprije usta i pljesak. Gitara može pričekati.'],
-    '1-6':['Tvoj nastup!','Danas sviraš sama. Mama i tata samo slušaju, pa plješću na kraju.'],
-    '1-7':['Još jednom!','Izaberi omiljenu igru i ponovi je. To je tvoja pobjeda.'],
-    '2-1':['Kućica prsta!','Kažiprst blizu metalne prečke. Ne stišći prejako.'],
-    '2-2':['Korak pa žica!','Pljesni ravno — na svaki korak jedan zvuk na praznoj prvoj žici.'],
-    '2-3':['Tri kućice!','0, 1, 3, 1 — polako. Zvuk ne smije zujati.'],
-    '2-4':['Karta za prste!','Krugovi pokazuju red: 0, pa 1, pa 3. Prvo uši, pa prsti.'],
-    '2-5':['Nova staza!','Ista igra na drugoj žici. Prsti već znaju put.'],
-    '2-6':['Tvoj nastup!','Danas sviraš sama. Mama i tata samo slušaju, pa plješću na kraju.'],
-    '2-7':['Još jednom!','Izaberi omiljenu igru i ponovi je. To je tvoja pobjeda.'],
-    '3-1':['Ramena miruju!','Prije zvuka: opusti se. Lijepo sjedenje = lijep zvuk.'],
-    '3-2':['Dio B!','Na prvoj žici: 0, 1, 3. Zadnji ton drži — to je dio B pjesmice.'],
-    '3-3':['Mali most!','S jedne žice na drugu — kao skok preko potoka.'],
-    '3-4':['Tražim A i B!','Otvori Pjesmice (♪) ili list s papira — tamo vidiš crte za A i B.'],
-    '3-5':['Dio A!','Pjevuši, pa sviraj. Bratec Martin počinje ovdje.'],
-    '3-6':['Koncert!','Prvo A, pa B — sama. Mama i tata slušaju i plješću na kraju.'],
-    '3-7':['Još jednom!','Izaberi omiljenu misiju i ponovi je. To je tvoja pobjeda.'],
-    '4-7':['Još jednom!','Izaberi omiljenu misiju i ponovi je. To je tvoja pobjeda.'],
-    '4-1':['Priprema!','Mama/tata ugodi gitaru. Ti sjedni udobno i pripremi list.'],
-    '4-2':['Dva puta A!','Sviraj A, pa odmah opet A — bez stajanja.'],
-    '4-3':['A-A-B-B!','Cijeli motiv: A, A, B, B. Polako i ponosno.'],
-    '4-4':['Zajedno!','Mama ili tata tapka. Ti sviraš A-A-B-B uz taj puls.'],
-    '4-5':['Tvoja melodija!','Četiri zvuka koje TI biraš. Ti si skladateljica!'],
-    '4-6':['Koncert!','Odloži telefon. Samo ti, gitara i pljesak na kraju.']
-  };
-  /* Kratki savjeti na težim misijama — ako zapne / zuji / boli. */
-  const stuckTips={
-    '1-3':'lagano položi prst na žicu da prestane zvoniti. Ako i dalje zvoni, pričekaj.',
-    '1-4':'najtanja je bliže podu. Dodirni samo jednu i slušaj koja je viša.',
-    '2-1':'prst malo bliže metalnoj prečci, stisni blaže, odmori šaku.',
-    '2-3':'opusti šaku i sviraj samo 0 pa 1. Treći prag dodaj kad bude čisto.',
-    '2-5':'vrati se na prvu žicu (0-1-3-1), pa opet na drugu.',
-    '3-2':'broji naglas 1-2-3-4 i na 4. samo drži — ne trzaj.',
-    '3-3':'sviraj svaku žicu zasebno, pa spoji most.',
-    '3-4':'otvori Pjesmice (♪) ili tiskani list. Prstom povuci isti red — A dva puta, B dva puta.',
-    '3-5':'najprije samo pjevaj dio A, pa jedan ton odjednom.',
-    '4-2':'sviraj jedan A, predahni, pa drugi — kasnije spoji.',
-    '4-3':'samo A-A, pa samo B-B. Cijeli motiv kad bude lagano.',
-    '4-6':'jedan dio, stani, onda drugi — to je OK!'
-  };
   const starLabels=['','Probala sam','Sama!','Sutra opet!'];
   const getStars=key=>Math.min(3,Math.max(0,Number(state.missionStars[key])||0));
   const weekMissionCount=week=>data.cards.filter(c=>c.week===week).length;
@@ -437,12 +394,18 @@
     if(hero)return `${hero}${hideFig?'':fig}`;
     return fig;
   };
+  /* 1.5 je pjevanje i pljesak, 3.4 je list i glas — gitara čeka. */
+  const lessonUsesGuitar=c=>!(c.week===1&&c.num===5)&&!(c.week===3&&c.num===4);
+  const tuneReminder=()=>`<aside class="tune-reminder" role="note"><p><strong>Prvo naštimaj gitaru.</strong> Mama ili tata polako okreću mehanike na glavi. Ti nježno odsviraš jednu praznu žicu.</p><a href="#pocetak/stimanje">Kako se štima →</a></aside>`;
+  const tuneFigure=()=>`<svg class="teach-svg tune-svg" viewBox="0 0 320 200" role="img" aria-label="Mehanike na glavi gitare se okreću. Na telefonu crtica na sredini znači da je žica naštimana"><rect width="320" height="200" rx="20" fill="#fff5fb"/><text x="72" y="22" text-anchor="middle" font-family="Fredoka, Nunito, sans-serif" font-size="14" font-weight="700" fill="#c2185b">mehanike</text><rect x="36" y="36" width="72" height="112" rx="18" fill="#f0c878" stroke="#8d6e4a" stroke-width="2"/><circle cx="28" cy="60" r="8" fill="#ec407a"/><circle cx="28" cy="92" r="8" fill="#ec407a"/><circle cx="28" cy="124" r="8" fill="#ec407a"/><path d="M10 108 A 12 12 0 0 0 10 140" fill="none" stroke="#c2185b" stroke-width="2.5" stroke-linecap="round"/><path d="M10 140 l6 -2 l-1 -6" fill="#c2185b"/><circle cx="116" cy="60" r="8" fill="#f48fb1"/><circle cx="116" cy="92" r="8" fill="#f48fb1"/><circle cx="116" cy="124" r="8" fill="#f48fb1"/><text x="72" y="168" text-anchor="middle" font-family="Fredoka, Nunito, sans-serif" font-size="13" font-weight="700" fill="#8d6e4a">okreći polako</text><rect x="168" y="28" width="120" height="140" rx="16" fill="#fff" stroke="#ec407a" stroke-width="3"/><rect x="186" y="46" width="84" height="90" rx="10" fill="#ffe4f0"/><path d="M204 116 A 24 24 0 0 1 252 116" fill="none" stroke="#f8bbd0" stroke-width="8" stroke-linecap="round"/><line x1="228" y1="116" x2="228" y2="84" stroke="#c2185b" stroke-width="4" stroke-linecap="round"/><circle cx="228" cy="116" r="5" fill="#c2185b"/><text x="228" y="154" text-anchor="middle" font-family="Fredoka, Nunito, sans-serif" font-size="14" font-weight="700" fill="#c2185b">sredina</text></svg>`;
+  const tuneSection=()=>`<section class="sheet tune-home" id="stimanje"><div class="sheet-label">PRIJE SVIRANJA</div><h2>Kako se štima gitara</h2><p class="lede">Na glavi gitare su mehanike — kotačići koji se okreću. Svaka žica ide do svoje. Mama ili tata ih polako okreću. Ti pomažeš jednim nježnim zvukom.</p><div class="tune-layout"><figure class="tune-figure">${tuneFigure()}<figcaption>Ružičaste mehanike se okreću. Crtica na sredini = žica je naštimana.</figcaption></figure><ol class="tune-steps"><li><strong>Pronađi mehaniku.</strong> Pogledaj kuda ide žica koju želiš naštimati. Na kraju je njezin kotačić.</li><li><strong>Otvori Guitar Tuna i odsviraj.</strong> Mama ili tata otvore <em>Guitar Tuna</em> Ti nježno odsviraš samo tu praznu žicu.</li><li><strong>Okreni polako.</strong> Ako je crtica lijevo, žica je preniska — zategni mehaniku. Ako je desno, previsoka — popusti. Kad je na sredini, gotovo. Onda sljedeća žica.</li></ol></div><p class="tune-app"><a class="button" href="https://play.google.com/store/apps/details?id=com.ovelin.guitartuna" target="_blank" rel="noopener noreferrer">Otvori Guitar Tuna</a><a class="button secondary" href="https://www.youtube.com/watch?v=RA3l0QOo4aw" target="_blank" rel="noopener noreferrer">Pogledaj kako se okreću mehanike</a></p><p class="day-parent" role="note"><strong>Za mamu ili tatu:</strong> Video je na hrvatskom, prva lekcija škole za početnike. Gledajte dio sa štimerom; štimanje po sluhu preskočite. Smjer okretanja ovisi o gitari — okrenite malo i gledajte ide li crtica prema sredini. Ne okrećite naglo, da žica ne pukne. U Guitar Tuni odaberite gitaru i standardno štimanje. Prva prazna žica: E, druga: B (često H). Mehanike okreće odrasla osoba.</p></section>`;
   const card=c=>{
     const key=`${c.week}-${c.num}`;const n=getStars(key);const tip=cardTip(key);const stuck=stuckTips[key];
     const withStars=c.kind!=='review';
     return `<article class="exercise-card${c.kind==='review'?' review-card':''}${c.kind==='posture'?' instruction-card':''}${withStars&&n?' has-stars':''}" id="kartica-${c.week}-${c.num}">
       <div class="card-tag">MISIJA ${c.week}.${c.num}</div>
       <h3>${escape(c.title)}</h3>
+      ${lessonUsesGuitar(c)?tuneReminder():''}
       <div class="card-zvonko"><img src="assets/dragon-guitar-pixar.jpg" alt="" width="64" height="64"><p><strong>${escape(tip[0])}</strong> ${escape(tip[1])}</p></div>
       ${cardMedia(c)}
       <ol>${c.steps.map(s=>`<li>${escape(s)}</li>`).join('')}</ol>
@@ -527,42 +490,6 @@
   };
   const missionLink=(week,num)=>`<a class="mission-link" href="#tjedan-${week}/kartica-${week}-${num}">${escape(cardTitle(week,num))}</a>`;
   const missionLinks=(week,nums)=>nums.map(num=>missionLink(week,num)).join(' · ');
-  const dailyKid=[[
-    /* Dan = ista misija: 1.1 → 1.2 → 1.3 → 1.4 → 1.5 → 1.6 → 1.7 */
-    {text:'Udobno sjedni s gitarom i dotakni prvu (najtanju) žicu.',missions:[1],parent:'Prvo joj pomozi namjestiti stolac i gitaru. Kad sjedi udobno, pusti ju da sama potraži najtanju žicu.',game:'Igra: detektiv žice (gdje je najtanja?).'},
-    {text:'Pljesni četiri puta ravno, pa isto odsviraj na prvoj žici.',missions:[2],parent:'Tiho tapkaj uz nju. Ako žuri, usporite oboje — sporije je bolje.',game:'Igra: pljesak pa žica.'},
-    {text:'Odsviraj zvuk, pa tišinu. Kao igra stani–kreni.',missions:[3],parent:'Slušajte zajedno. Na riječ „tišina” ona lagano dodirne žicu da prestane zvoniti.',game:'Igra: semafor zvuka (zeleno = sviraj, crveno = stani).'},
-    {text:'Pronađi prvu i drugu žicu i odsviraj svaku zasebno.',missions:[4],parent:'Pitaj: „Koja je najtanja?” Ne pokazuj odmah — neka ona potraži.',game:'Igra: lov na dvije žice.'},
-    {text:'Pjevuši „Bratec Martin” i plješći u ritmu.',missions:[5],parent:'Najprije samo pjevanje i pljesak. Gitara danas može pričekati.',game:'Igra: pjevaj pa plješći.'},
-    {text:'Pokaži četiri zvuka na prvoj žici — sama, pa se nakloni.',missions:[6],parent:'Dok svira, samo slušaj. Plješći nakon naklona. Ne ispravljaj usred nastupa.',game:'Igra: mini nastup (četiri zvuka na prvoj žici).'},
-    {text:'Ponovi omiljenu misiju ili igru iz ovog tjedna.',missions:[7],parent:'Neka Marija izabere što voli ponoviti. To jača samopouzdanje.',game:'Igra: njezin izbor!'}
-  ],[
-    {text:'Kažiprst blizu metalne prečke — jedan čist zvuk.',missions:[1],parent:'Ako žica zuji: prst malo bliže prečci i blaži stisak. Neka odmara šaku između pokušaja.',game:'Igra: prst traži kućicu.'},
-    {text:'Pljesni četiri puta ravno — na svaki korak odsviraj praznu prvu žicu.',missions:[2],parent:'Tiho tapkaj uz nju. Jedan zvuk po koraku, bez žurbe.',game:'Igra: korak pa žica.'},
-    {text:'Spoji cijeli niz: 0, 1, 3, 1 — bez žurbe.',missions:[3],parent:'Bolje jedan sporiji prolaz nego tri brza i mutna. Opusti šaku između.',game:'Igra: četiri kućice u nizu.'},
-    {text:'Objasni što znače 0, 1 i 3, pa ih odsviraj redom.',missions:[4],parent:'Neka ona tebi objasni brojeve. To je učenje, ne ispit.',game:'Igra: detektiv brojeva.'},
-    {text:'Ista igra na drugoj žici: 1, pa 3, pa opet 1.',missions:[5],parent:'Ako zapne, vratite se na prvu žicu pola minute, pa opet na drugu.',game:'Igra: nova staza (druga žica).'},
-    {text:'Pokaži niz 0, 1, 3, 1 — sama, pa se nakloni.',missions:[6],parent:'Dok svira, samo slušaj. Plješći nakon naklona. Ne ispravljaj usred nastupa.',game:'Igra: mini nastup (niz 0, 1, 3, 1).'},
-    {text:'Ponovi omiljenu misiju ili igru iz ovog tjedna.',missions:[7],parent:'Neka Marija izabere što voli ponoviti. To jača samopouzdanje.',game:'Igra: njezin izbor!'}
-  ],[
-    /* Dan = ista misija: 3.1 → 3.3 → 3.4 (pjev) → 3.2 (B) → 3.5 (A) → 3.6 (koncert) → 3.7 */
-    {text:'Namjesti gitaru i opusti ramena. Pronađi prvi prag na drugoj žici.',missions:[1],parent:'Kratko provjeri sjedenje kao na početku tjedna. Bez žurbe.',game:'Igra: ramena miruju.'},
-    {text:'Mali most: druga žica na 3, pa prva žica prazna (0).',missions:[3],parent:'Most je teži. Dopusti joj da svaku žicu svira zasebno, pa ih spoji.',game:'Igra: skok preko potoka.'},
-    {text:'Pjevuši dio A, pa dio B — echo. Na listu ili u Pjesmicama (♪) pokaži gdje se ponavljaju.',missions:[4],parent:'Danas samo glas i prst na papiru — gitara može pričekati. Otvorite Pjesmice → Bratec Martin ili tiskani list.',game:'Igra: echo A / echo B, pa detektiv na listu.'},
-    {text:'Danas samo dio B na gitari: na prvoj žici 0, 1, 3 — zadnji ton drži dva koraka.',missions:[2],parent:'To je cijeli dio B pjesmice. Na zadnjem tonu brojite 1-2-3-4; na 4. samo drži.',game:'Igra: drži ton (dio B).'},
-    {text:'Poslušaj dio A, zapjevaj ga, pa potraži mjesta na gitari.',missions:[5],parent:'Redoslijed: najprije pjevanje, tek onda prsti na žicama. Dio B si već probala jučer (3.2).',game:'Igra: pjevaj pa sviraj (dio A).'},
-    {text:'Mali koncert — sama odsviraj dio A, zatim sama dio B (kao jučer i danas). Na kraju se nakloni!',missions:[6],parent:'A pa B — svaki zasebno, bez spajanja u jedan komad. Ako B još zapne, koncert može biti samo A; sutra ponovite 3.2.',game:'Igra: koncert!'},
-    {text:'Ponovi omiljenu misiju ili igru iz ovog tjedna.',missions:[7],parent:'Neka Marija izabere što voli ponoviti — npr. dio A (3.5) ili koncert (3.6).',game:'Igra: njezin izbor!'}
-  ],[
-    /* Dan = misija: 4.1 → 4.2 → 4.3 (spoj) → 4.3 (motiv) → 4.4 → 4.6 → 4.7 — kartice 4.1–4.7 istim redom */
-    {text:'Pripremi gitaru i list pjesmice — kao prije malog koncerta.',missions:[1],parent:'Ugodi gitaru i stolac. List stavi na stol — danas još ne svira cijeli koncert.',game:'Igra: detektiv liste.'},
-    {text:'Spoji dva puta dio A, bez stajanja između.',missions:[2],parent:'Tiho tapkaj puls. Ako stane između A i A, usporite tempo.',game:'Igra: A pa A.'},
-    {text:'Vježbaj samo prijelaz: kraj A → početak B.',missions:[3],parent:'Nekoliko puta samo taj spoj — ne cijeli motiv.',game:'Igra: most A→B.'},
-    {text:'Cijeli motiv: A, A, B, B!',missions:[3],parent:'Ako zapne, prvo A-A, pa B-B, pa tek onda sve skupa.',game:'Igra: A-A-B-B voz.'},
-    {text:'Mama ili tata tiho tapka — ti sviraš cijeli motiv A-A-B-B uz taj puls.',missions:[4],parent:'Ti samo tapkaš (ne sviraš gitaru). Marija gleda list i svira motiv. Ako zapne, tapkaj sporije.',game:'Igra: tapkanje + motiv.'},
-    {text:'Moj mali koncert — odloži ekran, sviraj A-A-B-B s lista i nakloni se!',missions:[6],parent:'Samo slušaj i plješći na kraju. Bez ispravaka usred nastupa. Zvjezdice ★ birate zajedno na kartici.',game:'Igra: koncert!'},
-    {text:'Ponovi omiljenu misiju ili igru iz ovog tjedna.',missions:[7],parent:'Može ponoviti koncert (4.6) ili bilo koju drugu misiju. Ako je koncert uspio i drugi dan, ★★★ na 4.6.',game:'Igra: njezin izbor!'}
-  ]];
   const focusDay=(week,dayIndex)=>{const hook=data.daily[week-1][dayIndex][0];const kid=dailyKid[week-1][dayIndex];const firstMission=kid.missions[0];return {hook,kid,firstMission,ctaHref:firstMission?`#tjedan-${week}/kartica-${week}-${firstMission}`:`#tjedan-${week}/kartice`,ctaLabel:firstMission?'Kreni u današnju misiju →':'Pogledaj sve misije →'};};
   const activeWeek=()=>Math.min(4,Math.max(1,Number(state.activeWeek)||1));
   const todayFocus=(week,opts={})=>{
@@ -611,6 +538,7 @@
       homeMascot()+
       todayFocus(w,{home:true})+
       `<section class="sheet hero hero-home" id="moja-gitara"><div class="hero-home-text"><div class="sheet-label">KRENI!</div><h2>${heroTitle}</h2><p>${heroLead}</p>${guitarNameField()}<div class="hero-links"><a class="button" href="#tjedan-${w}/danas">Nastavi tjedan ${w} →</a><a class="button secondary" href="#zvuk">Prvo poslušaj</a></div></div><figure class="hero-home-figure">${diagram('guitar',null)}</figure></section>`+
+      tuneSection()+
       `<div class="section-heading"><h2>Četiri tjedna avanture</h2><span class="eyebrow">BEZ ŽURBE</span></div><div class="grid">${titles.map((t,i)=>`<a class="week-tile" href="#tjedan-${i+1}"><div class="sheet-label">TJEDAN ${i+1}</div><h3>${escape(t)}</h3><p>${kidGoals[i]}</p><small>Misije · kućna igra · slušanje →</small></a>`).join('')}</div>`+
       section('Kako sviramo ovdje','<p>Jednom tjedno imate susret od oko sat vremena. Kod kuće ti je dovoljno 15–20 minuta — kao kratka priča prije spavanja, samo s gitarom!</p><div class="goal goal-star"><strong>Naučila si kad:</strong> možeš sama i možeš ponoviti sutra.</div><p>Od tjedna 2 naučiš čitati kartu: <a href="#tjedan-2/kako-citam">Kako čitam kartu?</a></p>');
   }

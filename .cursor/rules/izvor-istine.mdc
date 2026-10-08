@@ -1,0 +1,23 @@
+---
+description: Gdje je izvor teksta i što ne čitati
+alwaysApply: true
+---
+
+# Izvor istine
+
+Otvori samo datoteku zadatka. Ne čitaj `tmp/`, `output/`, `figures.js`, WAV, JPG, PNG, PDF ni zip.
+
+| Što mijenjaš | Gdje | Poslije |
+|---|---|---|
+| Koraci i naslov kartice | `marija_app_cards.py` (`MARIJA_STEPS`) | `python build_webapp.py` |
+| Danas, igra, „Za mama/tata”, Zvonkov savjet, „Ako zapne” | `kid-copy.js` | ništa |
+| Teach crtež misije | `app.js`, funkcija `missionHero`, ključ `tjedan-broj` | ništa |
+| Izgled | `styles.css` | ništa |
+| Pjesmice | `songs.js`, `song-ui.js` | ništa |
+
+- `data.js` i `content/misije.json` su generirani. `content/misije.json` je kratki indeks kartica za čitanje.
+- `output/sadrzaj.json` je izvor PDF paketa, ne dječjeg ekrana.
+- Dan i kartica moraju se poklapati: naslov u `data.daily`, tekst u `dailyKid`, koraci u `MARIJA_STEPS`.
+- Tjedan 3 dani nisu 1–7 redom misija: 3.1, 3.3, 3.4, 3.2, 3.5, 3.6, 3.7.
+- Tjedan 4: dan 3 i 4 dijele karticu 4.3; dan 6 je 4.6 (4.5 nije dan).
+- Zadatak neka kaže broj misije i datoteku, npr. „samo 1.3 u kid-copy.js”.

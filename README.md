@@ -13,15 +13,18 @@ Nisu potrebni instalacija, server ni internetska veza za osnovne materijale.
 
 ## Datoteke i nadogradnja
 
-- `index.html`: okvir aplikacije.
-- `styles.css`: izgled, prilagodba malim zaslonima i ispis.
-- `app.js`: navigacija i lokalni napredak.
-- `data.js`: sadržaj i SVG crteži, učitani bez mrežnih zahtjeva.
-- `songs.js`: melodije za pojedinačne listove, uključujući božićne početne motive.
-- `song-ui.js`: izbornik pjesmica, interaktivne tabulature i slikovna objašnjenja.
-- `assets/audio`: pet lokalnih WAV primjera.
-- `assets/illustrations`: jasni SVG prikazi dijelova gitare i desnorukog položaja sjedenja; brojevi na slici odgovaraju objašnjenjima uz sliku.
-- `output`: prethodni HTML i PDF paket, povezan iz aplikacije.
+Dječji ekran i PDF paket imaju odvojene izvore.
+
+- `kid-copy.js`: Danas, igra, savjet za mamu/tatu, Zvonko na kartici i „Ako zapne”. Uređuje se ručno.
+- `marija_app_cards.py`: naslov i koraci kartice. Nakon izmjene: `python build_webapp.py`.
+- `content/misije.json`: kratki indeks učitanih kartica (generiran, ne uređuje se).
+- `app.js`: navigacija, zvjezdice i teach crteži (`missionHero`).
+- `data.js`: generirani tekst vodiča i kartica, bez crteža.
+- `figures.js`: generirani SVG crteži paketa.
+- `index.html`, `styles.css`: okvir i izgled.
+- `songs.js`, `song-ui.js`: melodije i listovi.
+- `assets/audio`, `assets/illustrations`: zvuk i ilustracije.
+- `output`: PDF paket. `output/sadrzaj.json` je izvor tog paketa, ne dječjeg ekrana.
 
 Za prijenos kopiraj sve navedene datoteke i mape zajedno.
 Ne premještaj samo `index.html`, jer koristi CSS, JavaScript i zvukove iz susjednih datoteka.

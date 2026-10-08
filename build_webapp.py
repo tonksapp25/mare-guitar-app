@@ -18,8 +18,17 @@ for page in data['pages']:
 assert next(svgs,None) is None
 for kind in ('guitar','posture'):
     figures[key(kind,None)]=(root/'assets/illustrations'/f'{kind}.svg').read_text(encoding='utf-8')
-data['figures']=figures
-(root/'data.js').write_text('window.GUITAR_DATA = '+json.dumps(data,ensure_ascii=False,separators=(',',':'))+';\n',encoding='utf-8')
+(root/'figures.js').write_text('window.GUITAR_FIGURES = '+json.dumps(figures,ensure_ascii=False,separators=(',',':'))+';\n',encoding='utf-8')
+(root/'data.js').write_text(
+    '/* GENERIRANO — ne uređuj ručno. Koraci: marija_app_cards.py. Naredba: python build_webapp.py */\n'
+    'window.GUITAR_DATA = '+json.dumps(data,ensure_ascii=False,indent=2)+';\n',
+    encoding='utf-8')
+index={
+    'napomena':'Generirani indeks učitanih kartica. Korake uređuj u marija_app_cards.py, pa pokreni python build_webapp.py. Danas, Zvonko i Ako zapne uređuj u kid-copy.js.',
+    'misije':[{'id':'%s-%s'%(c['week'],c['num']),'week':c['week'],'num':c['num'],'title':c['title'],'kind':c['kind'],'steps':c['steps']} for c in data['cards']],
+}
+(root/'content').mkdir(exist_ok=True)
+(root/'content'/'misije.json').write_text(json.dumps(index,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
 assets=root/'assets/audio';assets.mkdir(parents=True,exist_ok=True)
 for path in (root/'output/audio').glob('*.wav'):shutil.copy2(path,assets/path.name)
 n_cards=len(data['cards'])

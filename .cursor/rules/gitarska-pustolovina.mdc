@@ -30,7 +30,7 @@ Aplikacija za djevojčicu Mariju (8 godina): klasična gitara, 4 tjedna, dnevne 
 
 ## Pedagogija i sadržaj
 
-- **Dan = ista misija** u tom tjednu (1. dan → 1.1, 2. dan → 1.2, …). Naslov Dana, `dailyKid` misije/igre i kartica moraju se poklapati.
+- **Dan = ista misija** u tom tjednu (1. dan → 1.1, 2. dan → 1.2, …). Naslov Dana, `dailyKid` u `kid-copy.js` i kartica moraju se poklapati. Iznimke: tjedan 3 i 4 (vidi pravilo izvora).
 - Upute djetetu: jedan cilj, 2–4 kratka koraka, jasna igra.
 - Roditeljski tipovi: konkretno što raditi / što ne ispravljati; odvojeni od dječjeg teksta.
 - „Ako zapne“: kratko, umirujuće, bez kritike.
@@ -38,7 +38,7 @@ Aplikacija za djevojčicu Mariju (8 godina): klasična gitara, 4 tjedna, dnevne 
 
 ## Kod
 
-- Statički HTML/JS/CSS (`index.html`, `app.js`, `data.js`, `styles.css`); localStorage `gitarska-pustolovina-v1`.
+- Statički HTML/JS/CSS; localStorage `gitarska-pustolovina-v1`. Dječji tekst: `kid-copy.js` i `marija_app_cards.py` (vidi pravilo izvora). `data.js` ne uređuj ručno.
 - Ne mijenjaj široko dizajn sustav osim ako djetetu/UX to treba; uskladi s postojećim teach figurama i karticama.
 - Pri novom sadržaju: provjeri usklađenost Danas ↔ kartica ↔ audio ↔ slika.
 

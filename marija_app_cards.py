@@ -181,9 +181,9 @@ REVIEW_CARDS = [
     },
 ]
 
-# Dnevni hookovi u skladu s dailyKid u app.js (dan N → misija N.N).
+# Dnevni hookovi u skladu s dailyKid u kid-copy.js (dan N → misija N.N).
 DAILY_WEEK1 = [
-    ["Udobno", "1.1: sjedi udobno i dotakni prvu žicu."],
+    ["Udobno sjedenje s gitarom", "1.1: sjedi udobno i dotakni prvu žicu."],
     ["Koraci", "1.2: pljesak pa četiri zvuka na prvoj žici."],
     ["Tišina", "1.3: zvuk pa tišina — kao semafor."],
     ["Žice", "1.4: prva i druga žica, zasebno."],
@@ -202,7 +202,7 @@ DAILY_WEEK2 = [
     ["Ponovi", "2.7: ponovi omiljenu misiju."],
 ]
 
-# Dnevni hookovi u skladu s dailyKid[2] u app.js (jedna misija po danu).
+# Dnevni hookovi u skladu s dailyKid[2] u kid-copy.js (jedna misija po danu).
 DAILY_WEEK3 = [
     ["Pripremi", "3.1: ramena miruju, prvi prag druge žice."],
     ["Mali most", "3.3: druga žica 3, pa prva prazna (0)."],
@@ -213,7 +213,7 @@ DAILY_WEEK3 = [
     ["Ponovi", "3.7: ponovi omiljenu misiju."],
 ]
 
-# Dnevni hookovi u skladu s dailyKid[3] u app.js (jedna misija po danu).
+# Dnevni hookovi u skladu s dailyKid[3] u kid-copy.js (jedna misija po danu).
 DAILY_WEEK4 = [
     ["Pripremi", "4.1: ugodi gitaru i list pjesmice."],
     ["Spoji", "4.2: poveži A pa A."],

@@ -603,6 +603,21 @@ body.theme-marija .posture-illustration .picture-legend strong{color:#c2185b}
 .finger-fret-hero{margin:0 0 14px}
 .finger-fret-hero img{display:block;width:100%;max-width:520px;height:auto;border-radius:18px;border:2px solid #f48fb1}
 
+/* ========== Štimanje ========== */
+.tune-home{background:linear-gradient(145deg,#fffafc,#ffe4f0 42%,#fff8e8);border:3px solid #f48fb1}
+.tune-layout{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:18px;align-items:center;margin:8px 0 4px}
+.tune-figure{margin:0}
+.tune-figure figcaption{margin-top:8px;font-size:14px;font-weight:650;color:#c2185b}
+.tune-svg{max-width:360px;margin-inline:auto}
+.tune-steps{margin:0;padding-left:22px}
+.tune-steps li{margin:10px 0;font-size:16px;line-height:1.45}
+.tune-app{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0 8px}
+.tune-reminder{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 14px;margin:0 0 14px;padding:12px 14px;border-radius:16px;background:#fff8e8;border:2px dashed #f0c86a}
+.tune-reminder p{margin:0;font-size:15px;line-height:1.4}
+.tune-reminder a{font-weight:700;white-space:nowrap}
+@media(max-width:700px){.tune-layout{grid-template-columns:1fr}.tune-reminder a{white-space:normal}}
+@media print{.tune-app,.tune-reminder{display:none}}
+
 /* ========== Kako čitam kartu ========== */
 .how-to-read{background:linear-gradient(145deg,#fffafc,#ffe4f0 40%,#fff8e8);border:3px solid #f48fb1}
 .read-map-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:16px 0}
