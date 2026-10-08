@@ -134,3 +134,12 @@ usklađuje vidljivost i dostupnost tipkovnicom, bez prekrivanja desktop sadržaj
 Na desktopu gumb izbornika u headeru može potpuno sakriti ili ponovno prikazati
 sidebar. Skrivanje uklanja i rezervirani prostor; izbor se pamti na uređaju.
 Na užim ekranima isti gumb otvara puni izbornik preko sadržaja.
+
+## Shared hosting
+
+Pokreni `python build_hosting.py` za izradu `dist/mare-guitar-app-public.zip`.
+ZIP sadrži samo aplikaciju, ilustracije, zvukove i materijale za ispis.
+Raspakiraj sadržaj izravno u javnu mapu hostinga (`public_html`, `public` ili
+odabranu podmapu): `index.html` treba biti na toj razini, uz `assets` i `output`.
+Nije potreban build na serveru, Node, PHP ni pravilo za preusmjeravanje ruta.
+Skripta provjerava integritet arhive i jednakost svih datoteka s izvornicima.

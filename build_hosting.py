@@ -1,0 +1,52 @@
+"""Create a ZIP whose contents can be extracted directly into the public directory."""
+from html.parser import HTMLParser
+from pathlib import Path
+from urllib.parse import urlsplit
+import hashlib
+import zipfile
+
+ROOT = Path(__file__).resolve().parent
+
+
+class Dependencies(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.paths = {Path('index.html')}
+
+    def handle_starttag(self, tag, attrs):
+        attrs = dict(attrs)
+        url = attrs.get('src') if tag == 'script' else (
+            attrs.get('href') if tag == 'link' and attrs.get('rel') == 'stylesheet' else None)
+        if url:
+            parsed = urlsplit(url)
+            if not parsed.scheme and not parsed.netloc:
+                self.paths.add(Path(parsed.path))
+
+
+def build():
+    deps = Dependencies()
+    deps.feed((ROOT / 'index.html').read_text(encoding='utf-8'))
+    paths = set(deps.paths)
+    for folder in ['assets', 'output/audio', 'output/pdf']:
+        paths.update(p.relative_to(ROOT) for p in (ROOT / folder).rglob('*') if p.is_file())
+    paths.add(Path('output/gitarska_pustolovina.html'))
+    for relative in paths:
+        if not (ROOT / relative).is_file():
+            raise FileNotFoundError(relative)
+    target = ROOT / 'dist' / 'mare-guitar-app-public.zip'
+    target.parent.mkdir(exist_ok=True)
+    with zipfile.ZipFile(target, 'w', zipfile.ZIP_DEFLATED) as archive:
+        for relative in sorted(paths):
+            archive.write(ROOT / relative, relative.as_posix())
+    with zipfile.ZipFile(target) as archive:
+        assert archive.testzip() is None, 'Archive integrity check failed'
+        assert 'index.html' in archive.namelist(), 'Missing root index.html'
+        for relative in paths:
+            assert archive.read(relative.as_posix()) == (ROOT / relative).read_bytes(), relative
+    print(f'ZIP: {target}')
+    print(f'Files: {len(paths)}; bytes: {target.stat().st_size}')
+    print(f'SHA256: {hashlib.sha256(target.read_bytes()).hexdigest()}')
+
+
+if __name__ == '__main__':
+    build()
