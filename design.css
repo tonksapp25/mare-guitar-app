@@ -367,3 +367,13 @@
   }
   body.theme-marija .sidebar-dedication > [aria-hidden] { font-size: 15px; font-style: normal; color: #f3a5c3; }
 }
+
+@media screen and (min-width:1000px) {
+  body.theme-marija .sidebar {
+    transform: none; visibility: visible; pointer-events: auto; transition: none;
+  }
+  body.theme-marija .workspace { margin-left: 300px !important; }
+  body.theme-marija :is(.nav-toggle,.nav-close,.nav-backdrop) { display: none !important; }
+  body.theme-marija #topbar-greeting { grid-column: 2; }
+  body.theme-marija .header-tools { grid-column: 3; }
+}

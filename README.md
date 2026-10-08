@@ -126,3 +126,7 @@ Savjeti za roditelje na karticama vježbi otvaraju se u modalu s nazivom vježbe
 Gumbi „Za mamu ili tatu” i „Ako zapne” dijele jedan red, uključujući ekran od
 320 px. Zatvaranje modala vraća fokus na izvorni gumb bez pomicanja stranice;
 pomoć „Ako zapne” ostaje kratki savjet ispod tog reda.
+
+Na ekranima od 1000 px sidebar je stalno vidljiv uz sadržaj. Na užim ekranima
+ostaje zatvoreni izbornik koji otvara gumb u headeru. Promjena širine automatski
+usklađuje vidljivost i dostupnost tipkovnicom, bez prekrivanja desktop sadržaja.

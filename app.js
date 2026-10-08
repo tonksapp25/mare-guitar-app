@@ -859,14 +859,17 @@
     stabiliseLesson();
     updateChrome();
   }
+  const desktopNav=matchMedia('(min-width:1000px)');
   const setNavOpen=open=>{
+    const desktop=desktopNav.matches;
+    open=!!open&&!desktop;
     if(open)setShortcutsOpen(false);
     document.body.classList.toggle('nav-open',!!open);
     const toggle=document.getElementById('nav-toggle');
     const backdrop=document.getElementById('nav-backdrop');
     if(toggle){toggle.setAttribute('aria-expanded',open?'true':'false');toggle.setAttribute('aria-label',open?'Zatvori izbornik':'Otvori izbornik');}
     if(backdrop)backdrop.hidden=!open;
-    document.getElementById('app-sidebar').inert=!open;
+    document.getElementById('app-sidebar').inert=!(desktop||open);
     if(open)document.getElementById('nav-close').focus({preventScroll:true});
   };
   const setShortcutsOpen=(open,restoreFocus=false)=>{
@@ -1280,6 +1283,12 @@
       window.scrollTo({top:scroll,behavior:'instant'});
       requestAnimationFrame(()=>{restoringScreen=false;rememberScreenPosition();});
     });
+  });
+  desktopNav.addEventListener('change',()=>{
+    const sidebarFocus=document.getElementById('app-sidebar').contains(document.activeElement);
+    setNavOpen(false);
+    if(sidebarFocus&&!desktopNav.matches)document.getElementById('nav-toggle').focus({preventScroll:true});
+    updateChrome();stabiliseLesson();
   });
   window.addEventListener('orientationchange',()=>{setNavOpen(false);setShortcutsOpen(false);},{passive:true});
   window.addEventListener('resize',()=>{updateChrome();stabiliseLesson();},{passive:true});
