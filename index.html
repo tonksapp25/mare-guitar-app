@@ -7,11 +7,15 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="mobile-web-app-capable" content="yes">
+  <meta name="robots" content="noindex, nofollow">
   <title>Gitarska pustolovina · Marija</title>
+  <script>
+    try{if(localStorage.getItem('gitarska-pustolovina-ulaz')==='1')document.documentElement.classList.add('gate-open')}catch(e){}
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?hand=4">
   <script src="data.js" defer></script>
   <script src="figures.js" defer></script>
   <script src="kid-copy.js" defer></script>
@@ -20,6 +24,19 @@
   <script src="app.js" defer></script>
 </head>
 <body class="theme-marija">
+  <div id="gate" class="gate">
+    <form class="gate-card" id="gate-form" autocomplete="off">
+      <p class="gate-mark" aria-hidden="true">♪</p>
+      <p class="eyebrow">GITARSKA PUSTOLOVINA</p>
+      <h1 id="gate-title">Upiši lozinku</h1>
+      <p class="gate-lead">Ovo je Marijina bilježnica. Upiši broj pa uđi.</p>
+      <label class="form-label" for="gate-pass">Lozinka</label>
+      <input id="gate-pass" type="password" inputmode="numeric" autocomplete="current-password" maxlength="12" enterkeyhint="go" required>
+      <p class="gate-error" id="gate-error" hidden>Pogrešna lozinka. Probaj opet.</p>
+      <button type="submit" class="button">Ulaz</button>
+    </form>
+  </div>
+  <script src="gate.js"></script>
   <a class="skip" href="#content">Preskoči na sadržaj</a>
   <div class="nav-backdrop" id="nav-backdrop" hidden></div>
   <aside class="sidebar" id="app-sidebar" aria-label="Navigacija">
@@ -47,6 +64,30 @@
   <nav class="mobile-dock" id="mobile-dock" aria-label="Brza navigacija"></nav>
   <noscript>Za listanje materijala uključi JavaScript. Za statično izdanje otvori <a href="output/gitarska_pustolovina.html">postojeći HTML</a>.</noscript>
   <dialog id="explain-dialog" aria-labelledby="explain-title"><button class="modal-close secondary" type="button" aria-label="Zatvori objašnjenje">✕</button><div id="explain-body"></div><button type="button" class="modal-done">Super, krenimo!</button></dialog>
+  <dialog id="hand-dialog" aria-labelledby="hand-title">
+    <button class="hand-close secondary" type="button" id="hand-close" aria-label="Zatvori">✕</button>
+    <h2 id="hand-title">Koji je koji prst?</h2>
+    <p class="hand-lead">Podigni lijevu ruku, kao da daješ pet.</p>
+    <svg class="hand-svg" viewBox="0 -18 460 558" role="img" aria-label="Lijeva šaka, kao da daješ pet. S lijeva na desno: mali prst, prstenjak, srednji prst, kažiprst. Palac je sa strane.">
+      <rect x="0" y="-18" width="460" height="558" rx="24" fill="#fff5fb"/>
+      <path class="hand-palm" d="M239 64.7 L245.3 81.2 L249.9 178.5 L243.2 244.4 L247.4 251.8 L253.7 250.9 L258.3 243.4 L301.9 107.9 L311.3 98.7 L321.9 96.7 L331.9 101.6 L337.7 111.5 L338.9 126.6 L334.7 151.3 L319.2 214.7 L300.4 270.1 L294.6 299.9 L297.2 321.5 L302.9 338.9 L311.8 344.9 L317.4 343.4 L357.7 293.1 L380.3 278.7 L392.9 275.7 L408 277.8 L417.2 285.2 L418.8 294.8 L415.3 301.8 L394.1 324.5 L387 340.2 L362.8 373.9 L347.8 405.2 L300.2 458 L277.6 473.1 L269.6 482.2 L263.6 506.9 L232.9 518 L202.2 522 L171.5 519 L140.8 508.9 L138.6 482.7 L114.4 417.7 L95.1 313.5 L53.3 210.7 L49.3 196.1 L49.2 183 L52.8 175.1 L60 170.8 L69 170.3 L77 175 L127.6 272.2 L135 279.9 L141.9 278 L145.9 271.6 L146.7 263.1 L120.9 112.5 L122.9 100.9 L127.6 93.8 L134.4 90.3 L147.1 91.2 L154.3 96.9 L158.7 105.4 L188.5 241.4 L191.8 248.6 L196.1 248.9 L198.9 240.9 L198.5 181.5 L202.5 132.1 L200 81.7 L202.8 70.7 L208.5 62.4 L215.1 58.5 L224.2 58Z"/>
+      <path class="hand-digit" data-finger-part="mali" d="M95.1 313.5 L53.3 210.7 L49.3 196.1 L49.2 183 L52.8 175.1 L60 170.8 L69 170.3 L77 175 L127.6 272.2 L135 279.9Z"/>
+      <path class="hand-digit" data-finger-part="prstenjak" d="M135 279.9 L141.9 278 L145.9 271.6 L146.7 263.1 L120.9 112.5 L122.9 100.9 L127.6 93.8 L134.4 90.3 L147.1 91.2 L154.3 96.9 L158.7 105.4 L188.5 241.4 L191.8 248.6Z"/>
+      <path class="hand-digit" data-finger-part="srednji" d="M191.8 248.6 L196.1 248.9 L198.9 240.9 L198.5 181.5 L202.5 132.1 L200 81.7 L202.8 70.7 L208.5 62.4 L215.1 58.5 L224.2 58 L239 64.7 L245.3 81.2 L249.9 178.5 L243.2 244.4 L247.4 251.8Z"/>
+      <path class="hand-digit" data-finger-part="kaziprst" d="M247.4 251.8 L253.7 250.9 L258.3 243.4 L301.9 107.9 L311.3 98.7 L321.9 96.7 L331.9 101.6 L337.7 111.5 L338.9 126.6 L334.7 151.3 L319.2 214.7 L300.4 270.1 L294.6 299.9 L297.2 321.5 L302.9 338.9 L311.8 344.9Z"/>
+      <path class="hand-digit" data-finger-part="palac" d="M311.8 344.9 L317.4 343.4 L357.7 293.1 L380.3 278.7 L392.9 275.7 L408 277.8 L417.2 285.2 L418.8 294.8 L415.3 301.8 L394.1 324.5 L387 340.2Z"/>
+      <path class="hand-crease" d="M168 408C210 394 250 398 305 418" fill="none"/>
+      <path class="hand-crease" d="M178 442C216 430 252 434 292 452" fill="none"/>
+      <path class="hand-line" d="M239 64.7 L245.3 81.2 L249.9 178.5 L243.2 244.4 L247.4 251.8 L253.7 250.9 L258.3 243.4 L301.9 107.9 L311.3 98.7 L321.9 96.7 L331.9 101.6 L337.7 111.5 L338.9 126.6 L334.7 151.3 L319.2 214.7 L300.4 270.1 L294.6 299.9 L297.2 321.5 L302.9 338.9 L311.8 344.9 L317.4 343.4 L357.7 293.1 L380.3 278.7 L392.9 275.7 L408 277.8 L417.2 285.2 L418.8 294.8 L415.3 301.8 L394.1 324.5 L387 340.2 L362.8 373.9 L347.8 405.2 L300.2 458 L277.6 473.1 L269.6 482.2 L263.6 506.9 L232.9 518 L202.2 522 L171.5 519 L140.8 508.9 L138.6 482.7 L114.4 417.7 L95.1 313.5 L53.3 210.7 L49.3 196.1 L49.2 183 L52.8 175.1 L60 170.8 L69 170.3 L77 175 L127.6 272.2 L135 279.9 L141.9 278 L145.9 271.6 L146.7 263.1 L120.9 112.5 L122.9 100.9 L127.6 93.8 L134.4 90.3 L147.1 91.2 L154.3 96.9 L158.7 105.4 L188.5 241.4 L191.8 248.6 L196.1 248.9 L198.9 240.9 L198.5 181.5 L202.5 132.1 L200 81.7 L202.8 70.7 L208.5 62.4 L215.1 58.5 L224.2 58Z"/>
+      <text data-finger-part="mali" x="78" y="156" text-anchor="middle">mali</text>
+      <text data-finger-part="prstenjak" x="128" y="74" text-anchor="middle">prstenjak</text>
+      <text data-finger-part="srednji" x="230" y="42" text-anchor="middle">srednji</text>
+      <text data-finger-part="kaziprst" x="318" y="80" text-anchor="middle">kažiprst</text>
+      <text data-finger-part="palac" x="430" y="348" text-anchor="middle">palac</text>
+    </svg>
+    <p id="hand-note" class="hand-note">Svaki prst ima svoje ime.</p>
+    <button type="button" class="button hand-done" id="hand-done">Vidim!</button>
+  </dialog>
   <dialog id="guitar-name-dialog" aria-labelledby="guitar-name-title">
     <button class="modal-close secondary" type="button" id="guitar-name-close" aria-label="Zatvori">✕</button>
     <h2 id="guitar-name-title">Tvoja gitara</h2>

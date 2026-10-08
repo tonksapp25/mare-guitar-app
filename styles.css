@@ -7,9 +7,9 @@
 @media print{@page{size:A4;margin:14mm}body{background:white;font-size:11pt}.sidebar,.topbar,footer,.print,.quicklinks,.backtop,.hero-links,.week-footer,.storage-note,.saved,a.skip{display:none}.workspace{margin:0}main{padding:0;max-width:none}.page-heading{margin-bottom:14px}h1{font-size:25pt}.sheet{box-shadow:none;border:0;padding:0;margin-bottom:25px;border-radius:0}.exercise-card{padding:16px}.card-grid{grid-template-columns:1fr;gap:15px;max-width:none}.exercise-card svg{height:125px}.exercise-card h3{font-size:15pt}.exercise-card ol{font-size:11pt}.sound audio{display:none}.sounds{grid-template-columns:1fr 1fr}.tablewrap{overflow:visible}.progress-table{min-width:0}h2,h3,summary{break-after:avoid}tr,.day,.note,.sound{break-inside:avoid}details{border:0}.grid{grid-template-columns:1fr 1fr}.week-tile{transform:none}a{color:var(--ink)}textarea{min-height:70px}button{display:none}}
 /* Individual song pages and explanation dialog. */
 .song-choices{margin-bottom:28px}.song-choice{padding:24px;background:var(--paper);border:1px solid var(--line);border-radius:12px}.song-choice h2{font-size:23px;margin:10px 0}.song-choice a{text-decoration:none}.song-choice a:hover{text-decoration:underline}.song-choice p{font-size:13px;color:var(--muted);margin:0}.christmas-heading{margin-top:30px}.song-back{font-size:13px;text-decoration:none;display:inline-block;margin-bottom:10px}.data-help{font:inherit;color:inherit;background:transparent;border:0;border-bottom:1px dotted #8baca0;padding:0 1px;border-radius:0;cursor:help;font-weight:inherit}.data-help:hover{background:#e4eee6}.song-meta{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}.song-meta .data-help{font-size:11px;background:var(--soft);border:1px solid #d5e2d8;border-radius:20px;padding:5px 10px;font-weight:650;letter-spacing:.3px}.song-heading h1 .data-help{border:0}.song-legend{font-size:13px;color:var(--muted);margin-bottom:10px;line-height:2}.tap-hint{font-size:12px;color:var(--teal);margin-bottom:18px}.svg-help{cursor:help;outline:none}.svg-help:hover .tab-fret,.svg-help:hover .tab-lyric,.svg-help:hover .tab-duration,.svg-help:hover .tab-string{fill:#b17913}.svg-help:focus-visible{outline:2px solid #e9b65f;outline-offset:2px}.tab-line[data-explain]{cursor:help}.song-title .data-help{font-size:16px}.song-sheet .song-tip{font-size:13px;max-width:760px;margin-top:20px}.song-sheet .song-footnote{font-size:12px;max-width:760px;margin-top:22px}.song-sheet .compact-tab-scroll{margin:15px 0}.song-sheet .song{padding:18px 0}.song-sheet .tab-note.active rect{fill:#edbd59}
-#explain-dialog{padding:30px;max-width:540px;width:calc(100% - 30px);max-height:90vh;overflow:auto;border:1px solid var(--line);border-radius:18px;background:var(--paper);color:var(--ink);box-shadow:0 20px 80px #12231f40}#explain-dialog::backdrop{background:#17352c88;backdrop-filter:blur(3px)}.modal-close{position:absolute;right:18px;top:16px;padding:5px 10px;font-size:15px}#explain-title{padding-right:25px;margin-top:12px;font-size:27px;line-height:1.3}#explain-body p{font-size:17px;line-height:1.7}.modal-picture{width:100%;max-height:260px;margin:20px 0;color:var(--ink)}.modal-done{width:100%;padding:12px;margin-top:5px}.syllable-picture,.position-picture{display:flex;flex-wrap:wrap;gap:12px;padding:20px;margin:20px 0;background:var(--soft);border-radius:12px;font-size:27px}.syllable-picture b,.position-picture b{width:100%;font-size:21px}.syllable-picture span,.position-picture span{background:#fff2d4;padding:8px 20px;border-radius:10px}
+#explain-dialog{padding:30px;max-width:540px;width:calc(100% - 30px);max-height:90vh;overflow:auto;border:1px solid var(--line);border-radius:18px;background:var(--paper);color:var(--ink);box-shadow:0 20px 80px #12231f40}#explain-dialog::backdrop{background:#17352c88;backdrop-filter:blur(3px)}.modal-close,.hand-close{position:absolute;right:18px;top:16px;padding:5px 10px;font-size:15px}#explain-title{padding-right:25px;margin-top:12px;font-size:27px;line-height:1.3}#explain-body p{font-size:17px;line-height:1.7}.modal-picture{width:100%;max-height:260px;margin:20px 0;color:var(--ink)}.modal-done{width:100%;padding:12px;margin-top:5px}.syllable-picture,.position-picture{display:flex;flex-wrap:wrap;gap:12px;padding:20px;margin:20px 0;background:var(--soft);border-radius:12px;font-size:27px}.syllable-picture b,.position-picture b{width:100%;font-size:21px}.syllable-picture span,.position-picture span{background:#fff2d4;padding:8px 20px;border-radius:10px}
 @media(max-width:700px){#explain-dialog{padding:24px 20px}#explain-title{font-size:23px}#explain-body p{font-size:16px}.song-meta{gap:6px}.song-meta .data-help{font-size:10px}.song-choices{gap:12px}}
-@media print{#explain-dialog,.song-back,.tap-hint{display:none!important}.data-help{border:0!important;color:var(--ink)!important;background:transparent!important;padding:0!important}.song-meta{margin-bottom:10px}.song-meta .data-help{font-size:8pt;margin-right:12px}.song-sheet .song{padding:8px 0}.song-sheet .compact-tab-scroll{margin:8px 0}.song-sheet .song-tip,.song-sheet .song-footnote{font-size:9pt;margin-top:12px}.song-title .data-help{display:none}.song-heading h1 .data-help{display:inline}}
+@media print{#explain-dialog,#hand-dialog,.song-back,.tap-hint{display:none!important}.finger-word{border:0!important;background:transparent!important;padding:0!important;color:inherit!important;min-height:0!important}.data-help{border:0!important;color:var(--ink)!important;background:transparent!important;padding:0!important}.song-meta{margin-bottom:10px}.song-meta .data-help{font-size:8pt;margin-right:12px}.song-sheet .song{padding:8px 0}.song-sheet .compact-tab-scroll{margin:8px 0}.song-sheet .song-tip,.song-sheet .song-footnote{font-size:9pt;margin-top:12px}.song-title .data-help{display:none}.song-heading h1 .data-help{display:inline}}
 /* Teaching pictures: enough room to see hands, strings and both feet. */
 .instruction-card{grid-column:1/-1}.learning-illustration{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);align-items:center;gap:20px}.learning-illustration svg,.exercise-card .learning-illustration svg{height:auto;max-height:430px}.learning-illustration .picture-legend{list-style:none;padding:0;margin:0}.learning-illustration .picture-legend li{display:flex;align-items:flex-start;gap:11px;margin:0 0 15px;padding:0}.picture-number{flex:0 0 29px;height:29px;display:grid;place-items:center;background:var(--green);color:white;border-radius:50%;font-weight:700;font-size:15px}.picture-legend strong{display:block;font-size:16px;line-height:1.4}.picture-legend p{font-size:14px;line-height:1.5;margin:3px 0 0;color:var(--muted)}.picture-caption{grid-column:1/-1;font-size:13px;color:var(--muted);margin:0}.hero .learning-illustration{grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);gap:16px;align-items:center}.hero .learning-illustration svg{height:auto;max-height:280px;max-width:100%}.hero figure{margin:0;min-width:0}.hero .picture-legend strong{font-size:14px}.hero .picture-legend p{font-size:13px}.hero .picture-legend li{margin-bottom:8px}
 .hero-home{align-items:center}
@@ -366,6 +366,9 @@ body.theme-marija .speech-bubble{
 body.theme-marija .speech-bubble::before{border-right-color:#f48fb1}
 body.theme-marija .speech-bubble::after{border-right-color:#ffe4f0}
 body.theme-marija .speech-bubble strong{color:#c2185b}
+.speech-bubble p{margin:8px 0 0}
+.speech-bubble .help-reasons{margin:10px 0 0;padding-left:1.2em}
+.speech-bubble .help-reasons li{margin:4px 0}
 body.theme-marija .card-zvonko{
   background:linear-gradient(120deg,#ffe4f0,#fff8e8);
   border-color:#f48fb1
@@ -619,12 +622,13 @@ body.theme-marija .posture-illustration .picture-legend strong{color:#c2185b}
 .tune-svg{max-width:360px;margin-inline:auto}
 .tune-steps{margin:0;padding-left:22px}
 .tune-steps li{margin:10px 0;font-size:16px;line-height:1.45}
-.tune-app{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0 8px}
+.tune-app,.listen-links{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0 8px}
+.listen-links .button{flex:1 1 200px;text-align:center}
 .tune-reminder{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 14px;margin:0 0 14px;padding:12px 14px;border-radius:16px;background:#fff8e8;border:2px dashed #f0c86a}
 .tune-reminder p{margin:0;font-size:15px;line-height:1.4}
 .tune-reminder a{font-weight:700;white-space:nowrap}
 @media(max-width:700px){.tune-layout{grid-template-columns:1fr}.tune-reminder a{white-space:normal}}
-@media print{.tune-app,.tune-reminder{display:none}}
+@media print{.tune-app,.listen-links,.tune-reminder{display:none}}
 
 /* ========== Kako čitam kartu ========== */
 .how-to-read{background:linear-gradient(145deg,#fffafc,#ffe4f0 40%,#fff8e8);border:3px solid #f48fb1}
@@ -1033,9 +1037,64 @@ button.guitar-ready{margin-top:8px;min-height:52px;width:100%;max-width:320px}
   border:2px solid #f48fb1;border-radius:18px;padding:12px 16px;font-size:18px;margin:0 0 16px
 }
 #guitar-name-dialog .modal-done{width:100%}
+#hand-dialog{
+  position:relative;
+  padding:28px 22px 22px;max-width:440px;width:calc(100% - 24px);max-height:92vh;overflow:auto;
+  border:3px solid #f48fb1;border-radius:24px;background:#fffafc;color:#5c3d55
+}
+#hand-dialog::backdrop{background:rgba(88,20,50,.45)}
+#hand-dialog h2{margin:4px 0 8px;padding-right:40px;font-size:1.45rem}
+.hand-lead,.hand-note{margin:0 0 12px;font-size:1.05rem;line-height:1.4}
+.hand-svg{display:block;width:100%;height:auto;max-height:52vh}
+.hand-svg text{font-family:Fredoka,Nunito,sans-serif;font-size:16px;font-weight:700;fill:#c2185b}
+.hand-svg .hand-palm{fill:#ffccbc;stroke:none}
+.hand-svg .hand-line{fill:none;stroke:#e7a898;stroke-width:3;stroke-linejoin:round;stroke-linecap:round}
+.hand-svg .hand-digit{fill:#ffccbc;stroke:none}
+.hand-svg .hand-crease{stroke:#e7b0a4;stroke-width:3;stroke-linecap:round}
+.hand-svg .hand-digit.is-on{fill:#f48fb1}
+.hand-svg text.is-on{fill:#880e4f}
+#hand-dialog .hand-done{width:100%;margin-top:4px}
+.finger-word{
+  display:inline-flex;align-items:center;gap:4px;
+  margin:0 2px;padding:2px 10px;min-height:36px;
+  border:2px solid #ec407a;border-radius:999px;background:#fff;color:#c2185b;
+  font:inherit;font-weight:700;line-height:1.2;vertical-align:middle;cursor:pointer
+}
+.finger-word:hover,.finger-word:focus-visible{background:#ffe4f0;outline:3px solid #f0c86a;outline-offset:2px}
+@media print{#hand-dialog{display:none!important}}
 @media(max-width:700px){
   #guitar-name-parts .learning-illustration{grid-template-columns:1fr}
   #guitar-name-parts .learning-illustration svg{max-height:200px}
 }
 .guitar-rename{margin-bottom:24px}
 @media print{#guitar-name-dialog{display:none!important}}
+html:not(.gate-open) body>*:not(#gate){display:none!important}
+html.gate-open #gate{display:none!important}
+.gate{
+  position:fixed;inset:0;z-index:80;display:grid;place-items:center;
+  padding:24px 16px;background:linear-gradient(165deg,#ffe4f0 0%,#ffd6ea 55%,#fff5fb 100%)
+}
+.gate-card{
+  width:min(420px,100%);margin:0;padding:32px 28px 28px;text-align:center;
+  background:#fffafc;border:2px solid #f48fb1;border-radius:24px;
+  box-shadow:0 16px 36px rgba(236,64,122,.18)
+}
+.gate-mark{
+  width:64px;height:64px;margin:0 auto 12px;display:grid;place-items:center;
+  border-radius:20px;background:#ffe4f0;border:2px solid #f48fb1;
+  color:#ec407a;font-size:32px;font-weight:700
+}
+.gate .eyebrow{color:#c2185b;margin:0 0 8px}
+.gate h1{
+  margin:0 0 8px;font-size:clamp(28px,6vw,40px);letter-spacing:0;
+  background:none;-webkit-text-fill-color:#c2185b;color:#c2185b
+}
+.gate-lead{margin:0 0 4px;color:#8a6b84}
+.gate .form-label{text-align:left;margin-top:16px}
+.gate input{
+  display:block;width:100%;box-sizing:border-box;text-align:center;letter-spacing:6px;
+  border:2px solid #f48fb1;border-radius:18px;padding:14px 16px;font-size:28px;margin:0
+}
+.gate-error{margin:12px 0 0;color:#c2185b;font-weight:700}
+.gate .button{width:100%;margin-top:16px;min-height:52px;font-size:18px}
+@media print{.gate{display:none!important}}

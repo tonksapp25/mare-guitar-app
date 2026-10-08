@@ -7,10 +7,28 @@
   const titles=['Upoznajem gitaru','Prsti stvaraju zvukove','Moja prva pjesmica','Moj mali koncert'];
   const goals=['Pronađi dvije žice, odsviraj četiri ravnomjerna zvuka i zaustavi ih.','Pročitaj 0, 1 i 3 te odsviraj kratak niz po poljima.','Odsviraj dio A i dio B pjesmice, svaki zasebno.','Poveži A-A-B-B i ponovi samostalno drugi dan.'];
   const kidGoals=['Pronađi dvije žice i odsviraj četiri lijepa zvuka!','Nauči brojeve 0, 1 i 3 — to su tvoja mjesta na vratu!','Odsviraj dio A i dio B — tvoje prve dijelove pjesmice!','Spoji sve u mali koncert i pokaži ga drugi dan!'];
-  const nav=[['pocetak','Početak','·'],...titles.map((t,i)=>['tjedan-'+(i+1),(i+1)+'. tjedan','★'+(i+1)]),['pjesmica','Pjesmice','♪'],['zvuk','Poslušaj','♪'],['napredak','Moje zvjezdice','★'],['pomoc','Za odrasle','?']];
+  const nav=[['pocetak','Početak','·'],...titles.map((t,i)=>['tjedan-'+(i+1),(i+1)+'. tjedan','★'+(i+1)]),['pjesmica','Pjesmice','♪'],['zvuk','Poslušaj','♪'],['napredak','Moje zvjezdice','★'],['trebas-pomoc','Trebaš pomoć?','♥'],['pomoc','Za odrasle','?']];
   const mascotName='Zvonko';
   const mascotLines={pocetak:[`Bok, Marija! Ja sam ${mascotName}, tvoj glazbeni zmaj.`,'Skupa učimo — danas polako istraži gitaru. Lijep zvuk je važniji od brzine!'],tjedan1:['Tjedan 1 — upoznaj gitaru!','Dotakni žice nježno. Četiri ravna zvuka su tvoja prva super pobjeda!'],tjedan2:['Tjedan 2 — prsti na mapi!','Brojevi na kartici pokazuju gdje staviš prst. Polako, pa se sve zapamti.'],tjedan3:['Tjedan 3 — pjesmica!','Danas učiš mali dio melodije. Jedan dio odjednom — to je dovoljno i super je!'],tjedan4:['Tjedan 4 — tvoj koncert!','Spoji dijelove koje znaš. Ako nešto zapne, ponovi — ja uvijek ponovim dok ne zazvoni lijepo.'],zvuk:['Vrijeme za uši!','Klikni play i slušaj. Možeš pljeskati prstima uz zvuk prije nego sviraš na gitari.'],pjesmica:['Odaberi pjesmicu!','Klikni onu koja ti se sviđa. Ne znaš što znači broj? Dodirni ga — objasnit ću ti!'],pjesmicaPjevanje:['Sviraj ovaj dio!','Red po red, polako. Dodirni broj ili slog kad trebaš pomoć — tu sam!'],napredak:['Tvoje zvjezdice!','Ovdje bilježimo što si vježbala. Nisu ocjene — samo tvoji mali uspjesi. Svaka ★ se računa!'],pomoc:['Ovo je za odraslu osobu','Dok Marija vježba, tip „Za mama/tata” na Danas i Ako zapne na karticama pomažu. Ti nastavi svirati!']};
   const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const fingerWord=/(?<![\p{L}])(mal(?:i|og|im) prst(?:a|om|u)?|srednj(?:i|eg|im) prst(?:a|om|u)?|srednjak(?:a|om|u)?|ka[žz]iprst(?:a|om|u)?|prstenjak(?:a|om|u)?|pal(?:ac|ca|cem|cu))(?![\p{L}])/giu;
+  const fingerKey=word=>{
+    const w=word.toLocaleLowerCase('hr');
+    if(w.startsWith('pal'))return 'palac';
+    if(w.includes('žip')||w.includes('zip'))return 'kaziprst';
+    if(w.startsWith('sred'))return 'srednji';
+    if(w.startsWith('prsten'))return 'prstenjak';
+    if(w.startsWith('mal'))return 'mali';
+    return '';
+  };
+  const fingerButton=word=>{
+    const key=fingerKey(word);
+    if(!key)return escape(word);
+    return `<button type="button" class="finger-word" data-finger="${key}" aria-label="${escape('Otvori sliku ruke: '+word)}">${escape(word)}</button>`;
+  };
+  const withFingers=html=>String(html).replace(/(<[^>]+>)|([^<]+)/g,(m,tag,text)=>tag||text.replace(fingerWord,fingerButton));
+  const fingerPlain=text=>withFingers(escape(text));
+  window.withFingers=withFingers;
   const key=(kind,values)=>kind+'|'+JSON.stringify(values);
   const diagram=(kind,values)=>{
     const drawing=figures[key(kind,values)]||'';
@@ -47,7 +65,7 @@
       const picture=kind==='posture'
         ?`<img class="posture-girl" src="assets/illustrations/udobno-sjedenje-curica.jpg" alt="Curica udobno sjedi s gitarom — isti položaj kao na uputama" width="600" height="800" loading="lazy">`
         :art;
-      return `<div class="learning-illustration ${kind}-illustration">${picture}<ol class="picture-legend">${labels.map(([title,desc],i)=>`<li><span class="picture-number">${i+1}</span><div><strong>${title}</strong><p>${desc}</p></div></li>`).join('')}</ol>${stringLegend}${caption?`<p class="picture-caption">${caption}</p>`:''}</div>`;
+      return `<div class="learning-illustration ${kind}-illustration">${picture}<ol class="picture-legend">${labels.map(([title,desc],i)=>`<li><span class="picture-number">${i+1}</span><div><strong>${withFingers(title)}</strong><p>${withFingers(desc)}</p></div></li>`).join('')}</ol>${stringLegend}${caption?`<p class="picture-caption">${withFingers(caption)}</p>`:''}</div>`;
     }
     if(!art)return '';
     return `<div class="card-figure">${art}${stringLegend}${caption?`<p class="card-figure-caption">${caption}</p>`:''}</div>`;
@@ -166,7 +184,7 @@
     if(c.kind==='rhythm'){
       if(c.week===1&&c.num===3)return 5; /* zvuk–tišina */
       if(c.week===1&&c.num===5)return 2; /* Bratec A */
-      if(c.week===2&&c.num===2)return 8; /* prva žica 0-1-0-1 */
+      if(c.week===2&&c.num===2)return 0; /* puls — četiri ravna zvuka */
       if(c.week===4&&c.num===4)return null; /* 4.4: dva playera u cardMedia */
       return 0; /* puls */
     }
@@ -222,23 +240,18 @@
     const parts=[];
     parts.push('<svg class="teach-svg" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+aria+'">');
     parts.push('<rect width="'+W+'" height="'+H+'" rx="20" fill="#fff5fb"/>');
-    const hX=x=>neckL+(x-123);
-    const hY=y=>neckTop+(y-126)*((neckBot-neckTop)/44);
-    const r1=v=>Math.round(v);
-    const headL=r1(hX(36));
-    const headD='M'+r1(hX(123))+' '+r1(hY(170))+' L'+r1(hX(51))+' '+r1(hY(175))+' Q'+r1(hX(38))+' '+r1(hY(175))+' '+r1(hX(36))+' '+r1(hY(165))+' L'+r1(hX(36))+' '+r1(hY(131))+' Q'+r1(hX(38))+' '+r1(hY(121))+' '+r1(hX(51))+' '+r1(hY(121))+' L'+r1(hX(123))+' '+r1(hY(126))+' Z';
-    parts.push('<path d="'+headD+'" fill="#8d6e4a" opacity="0.22" transform="translate(3 4)"/>');
-    parts.push('<path d="'+headD+'" fill="#c9a06a" stroke="#8d6e4a" stroke-width="2.5" stroke-linejoin="round"/>');
-    const slot=(x1,y1,x2,y2)=>parts.push('<polygon points="'+r1(hX(x1))+','+r1(hY(y1))+' '+r1(hX(x1))+','+r1(hY(y2))+' '+r1(hX(x2))+','+r1(hY(y2))+' '+r1(hX(x2))+','+r1(hY(y1))+'" fill="#342a23"/>');
-    slot(51,167,106,158);
-    slot(51,138,106,129);
-    const peg=(xs,y1,y2,ky)=>{
-      const x=r1(hX(xs));
-      parts.push('<line x1="'+x+'" y1="'+r1(hY(y1))+'" x2="'+x+'" y2="'+r1(hY(y2))+'" stroke="#848681" stroke-width="8" stroke-linecap="round"/>');
-      parts.push('<circle cx="'+x+'" cy="'+r1(hY(ky))+'" r="9" fill="#e8e8e4" stroke="#727a75" stroke-width="1.8"/>');
-    };
-    [58,79,100].forEach(xs=>peg(xs,132,117,113));
-    [58,79,100].forEach(xs=>peg(xs,179,164,183));
+    const head='M174 64 L152 64 C140 64 136 50 124 46 L56 46 C36 46 28 58 28 78 L28 190 C28 210 36 222 56 222 L124 222 C136 218 140 204 152 204 L174 204 Z';
+    parts.push('<path d="'+head+'" fill="#f0c878" stroke="#8d6e4a" stroke-width="2.5" stroke-linejoin="round"/>');
+    const slots=[[40,54],[68,54],[96,54],[40,196],[68,196],[96,196]];
+    slots.forEach(([x,y])=>parts.push('<rect x="'+x+'" y="'+y+'" width="24" height="18" rx="3" fill="#fff5fb" stroke="#8d6e4a" stroke-width="1.5"/>'));
+    const rollers=[[38,58],[66,58],[94,58],[38,200],[66,200],[94,200]];
+    rollers.forEach(([x,y])=>parts.push('<rect x="'+x+'" y="'+y+'" width="28" height="8" rx="4" fill="#e6b85c" stroke="#8d6e4a"/>'));
+    const pegs=[[52,32,'#f48fb1',42],[80,32,'#f48fb1',42],[108,32,'#f48fb1',42],[52,236,'#ec407a',226],[80,236,'#ec407a',226],[108,236,'#ec407a',226]];
+    pegs.forEach(([cx,cy,fill,stemY])=>{
+      parts.push('<line x1="'+cx+'" y1="'+stemY+'" x2="'+cx+'" y2="'+(cy<100?58:208)+'" stroke="#8d6e4a" stroke-width="3" stroke-linecap="round"/>');
+      parts.push('<circle cx="'+cx+'" cy="'+cy+'" r="10" fill="'+fill+'"/>');
+      parts.push('<circle cx="'+cx+'" cy="'+cy+'" r="3" fill="#fff"/>');
+    });
     parts.push('<rect x="'+neckL+'" y="'+neckTop+'" width="'+(neckR-neckL)+'" height="'+(neckBot-neckTop)+'" fill="#654839"/>');
     frets.forEach((x,i)=>{
       const on=hot(i+1);
@@ -246,9 +259,13 @@
     });
     const colOf=n=>n===1?'#ec407a':n===2?'#ff9800':'#d0d0d0';
     const wOf=n=>highlight.includes(n)?7:n<=2?4:3;
+    const fan={6:[108,62],5:[80,62],4:[52,62],3:[52,204],2:[80,204],1:[108,204]};
     [6,5,4,3,2,1].forEach(n=>{
       const y=sy[n];
-      parts.push('<line x1="'+headL+'" y1="'+y+'" x2="'+(neckR-6)+'" y2="'+y+'" stroke="'+colOf(n)+'" stroke-width="'+wOf(n)+'" stroke-linecap="round"/>');
+      const [fx,fy]=fan[n];
+      const fanCol=colOf(n)==='#d0d0d0'?'#8d6e63':colOf(n);
+      parts.push('<line x1="164" y1="'+y+'" x2="'+fx+'" y2="'+fy+'" stroke="'+fanCol+'" stroke-width="'+Math.max(2,wOf(n)-1)+'" stroke-linecap="round"/>');
+      parts.push('<line x1="176" y1="'+y+'" x2="'+(neckR-6)+'" y2="'+y+'" stroke="'+colOf(n)+'" stroke-width="'+wOf(n)+'" stroke-linecap="round"/>');
     });
     parts.push('<rect x="'+(neckL-7)+'" y="'+(neckTop-3)+'" width="14" height="'+(neckBot-neckTop+6)+'" fill="#f8efe1" stroke="#8d6e4a"/>');
     const yStr=sy[string];
@@ -304,7 +321,7 @@
   };
 
   const figSit=`<svg class="teach-svg teach-svg-tall" viewBox="0 0 360 380" role="img" aria-label="Udobno sjedim"><rect width="360" height="380" rx="20" fill="#fff5fb"/><rect x="95" y="250" width="160" height="16" rx="4" fill="#ce93d8"/><rect x="110" y="266" width="14" height="55" fill="#ab47bc"/><rect x="226" y="266" width="14" height="55" fill="#ab47bc"/><ellipse cx="180" cy="190" rx="48" ry="60" fill="#f8bbd0"/><circle cx="180" cy="100" r="32" fill="#ffccbc"/><ellipse cx="170" cy="96" rx="2.5" ry="3.5" fill="#5d4037"/><ellipse cx="190" cy="96" rx="2.5" ry="3.5" fill="#5d4037"/><path d="M168 112 Q180 120 192 112" fill="none" stroke="#e57373" stroke-width="2"/><path d="M150 92 Q155 64 180 62 Q205 64 210 92" fill="#8d6e63"/><ellipse cx="230" cy="210" rx="58" ry="48" fill="#f0c878" stroke="#8d6e4a" stroke-width="2" transform="rotate(-12 230 210)"/><circle cx="235" cy="205" r="14" fill="#3e2723"/><rect x="185" y="125" width="18" height="75" rx="2" fill="#a1887f" transform="rotate(-12 194 162)"/><path d="M145 165 Q110 200 130 230" fill="none" stroke="#ffccbc" stroke-width="12" stroke-linecap="round"/><path d="M205 170 Q250 180 245 220" fill="none" stroke="#ffccbc" stroke-width="12" stroke-linecap="round"/><path d="M158 248 Q145 290 135 335" fill="none" stroke="#f48fb1" stroke-width="14" stroke-linecap="round"/><path d="M200 248 Q220 290 240 335" fill="none" stroke="#f48fb1" stroke-width="14" stroke-linecap="round"/><ellipse cx="130" cy="345" rx="18" ry="8" fill="#ec407a"/><ellipse cx="245" cy="345" rx="18" ry="8" fill="#ec407a"/></svg>`;
-  const teachFig=(svg,caption)=>`<div class="teach-hero">${svg}${caption?`<p class="card-figure-caption">${caption}</p>`:''}</div>`;
+  const teachFig=(svg,caption)=>`<div class="teach-hero">${svg}${caption?`<p class="card-figure-caption">${withFingers(caption)}</p>`:''}</div>`;
   const missionHero=c=>{
     const k=`${c.week}-${c.num}`;
     /* Sjedenje: originalni crtež s legendom (bez AI slike). */
@@ -313,23 +330,24 @@
     if(k==='1-6')return teachFig(figShow,'<span class="c-s1">1</span> = najtanja, najbliža podu');
     if(k==='1-3')return teachFig(figSilence,'');
     if(k==='1-4')return teachFig(figStrings,'<span class="c-s1">1</span> = najtanja, najbliža podu · <span class="c-s2">2</span> = odmah iznad');
-    if(k==='2-1')return teachFig(figNeck({aria:'Kažiprst na prvoj žici, tik uz prvu prečku',string:1,spots:[{fret:1,text:'kažiprst',mark:'prečka'}]}),'<span class="c-s1">1</span> = najtanja, najbliža podu. Kažiprst tik uz prvu prečku.');
-    if(k==='2-2')return teachFig(figNeck({aria:'Prva žica: prazno, pa kažiprst uz prvu prečku',string:1,spots:[{fret:1,text:'kažiprst',mark:'prečka'}],seq:[0,1,0,1]}),'0 = prazno, bez prsta. 1 = kažiprst uz prečku.');
-    if(k==='2-3'||k==='2-6')return teachFig(figNeck({aria:'Na prvoj žici mjesta 1 i 3, niz 0 1 3 1',string:1,spots:[{fret:1,text:'1'},{fret:3,text:'3'}],seq:[0,1,3,1]}),'1 = kažiprst uz prvu prečku. 3 = prstenjak uz treću.');
-    if(k==='2-4')return teachFig(figNeck({aria:'Na prvoj žici redoslijed 0, 1, 3: krug 1 je kažiprst, krug 3 je prstenjak',string:1,spots:[{fret:0},{fret:1,text:'kažiprst'},{fret:3,text:'prstenjak'}],seq:[0,1,3]}),'0 = prazno, bez prsta. Krug 1 = kažiprst. Krug 3 = prstenjak.');
+    if(k==='2-1')return teachFig(figNeck({aria:'Kažiprst na prvoj žici, tik uz prvu prečku',string:1,spots:[{fret:1,text:'kažiprst',mark:'prečka'}]}),'<span class="c-s1">1</span> = najtanja, najbliža podu.');
+    if(k==='2-2')return teachFig(figNeck({aria:'Četiri puta prazna prva žica',string:1,seq:[0,0,0,0]}),'<span class="c-s1">1</span> = najtanja, najbliža podu.');
+    if(k==='2-3')return teachFig(figNeck({aria:'Na prvoj žici mjesta 1 i 3, niz 0 1 3 1',string:1,spots:[{fret:1,text:'1'},{fret:3,text:'3'}],seq:[0,1,3,1]}),'');
+    if(k==='2-6')return teachFig(figNeck({aria:'Na prvoj žici mjesta 1 i 3, niz 0 1 3 1',string:1,spots:[{fret:1,text:'1'},{fret:3,text:'3'}],seq:[0,1,3,1]}),'1 = kažiprst uz prvu prečku. 3 = prstenjak uz treću.');
+    if(k==='2-4')return teachFig(figNeck({aria:'Na prvoj žici redoslijed 0, 1, 3: krug 1 je kažiprst, krug 3 je prstenjak',string:1,spots:[{fret:0},{fret:1,text:'kažiprst'},{fret:3,text:'prstenjak'}],seq:[0,1,3]}),'');
     if(k==='2-5')return teachFig(figNeck({aria:'Na drugoj žici kažiprst uz prvu prečku i prstenjak uz treću',string:2,spots:[{fret:1,text:'kažiprst'},{fret:3,text:'prstenjak'}],seq:[1,3,1]}),'<span class="c-s2">2</span> = narančasta, odmah iznad prve. 1 = kažiprst. 3 = prstenjak.');
     if(k==='3-1')return teachFig(figNeck({aria:'Kažiprst na prvom pragu druge žice',string:2,strings:[1,2],spots:[{string:2,fret:1,text:'kažiprst',mark:'prečka'}]}),'<span class="c-s2">2</span> = narančasta. Kažiprst tik uz prvu prečku.');
-    if(k==='3-2')return teachFig(figNeck({aria:'Prva žica: 0, 1, 3 — zadnji ton drži',string:1,spots:[{fret:0},{fret:1,text:'1'},{fret:3,text:'3'}],seqSteps:[{s:1,f:0},{s:1,f:1},{s:1,f:3},{s:1,f:3,hold:true}]}),'Na 4. koraku ne trzaj — neka <strong>3</strong> još zvoni.');
-    if(k==='3-3')return teachFig(figNeck({aria:'Most: druga žica 3, pa prva prazna',strings:[1,2],spots:[{string:2,fret:3,text:'3'},{string:1,fret:0}],seqSteps:[{s:2,f:3,label:'2. žica'},{s:1,f:0,label:'1. žica'}]}),'Prvo <span class="c-s2">2</span> na 3, pa skok na praznu <span class="c-s1">1</span>.');
-    if(k==='3-5')return teachFig(figNeck({aria:'Bratec Martin, dio A',strings:[1,2],spots:[{string:2,fret:1,text:'1'},{string:2,fret:3,text:'3'},{string:1,fret:0},{string:2,fret:1,text:'1'}],seqSteps:[{s:2,f:1},{s:2,f:3},{s:1,f:0},{s:2,f:1}]}),'Red: druga 1 · druga 3 · prva 0 · druga 1.');
-    if(k==='3-4')return teachFig(figRepeatMotif,'Otpjevaj <strong>A</strong>, pa ga ponovi. Zatim <strong>B</strong> i ponovi njega. Na kraju pogledaj <strong>Pjesmice</strong> (♪) ili list — tamo su crte.');
-    if(k==='3-6')return teachFig(figRepeatMotif,'Prvo <strong>A</strong>, pa <strong>B</strong> — kao na malom koncertu. U B-u zadnji ton traje duže.');
-    if(k==='4-2')return teachFig(figNeck({aria:'Dio A — pa odmah isti red još jednom',strings:[1,2],spots:[{string:2,fret:1,text:'1'},{string:2,fret:3,text:'3'},{string:1,fret:0},{string:2,fret:1,text:'1'}],seqSteps:[{s:2,f:1},{s:2,f:3},{s:1,f:0},{s:2,f:1}]}),'Odsviraj ovaj red, pa odmah <strong>isti red</strong> još jednom — bez stajanja.');
-    if(k==='4-3')return teachFig(figRepeatMotif,'Cijeli motiv: <strong>A</strong> · <strong>A</strong> · <strong>B</strong> · <strong>B</strong>.');
-    if(k==='4-4')return teachFig(figTogetherPulse,'Lijevo: mama ili tata <strong>tiho tapka</strong>. Desno: ti sviraš <strong>A-A-B-B</strong> — u istom koraku.');
-    if(k==='4-5')return teachFig(figFourSlots,'Ispod odaberi <strong>četiri zvuka</strong> — tvoja mini skladba.');
-    if(k==='4-6')return teachFig(figRepeatMotif,'Sviraj <strong>A-A-B-B</strong> s lista — kao na malom koncertu.');
-    if(c.kind==='review')return teachFig(figReviewFavorite,'Izaberi misiju koja ti je najdraža. Odsviraj ju još jednom — polako.');
+    if(k==='3-2')return teachFig(figNeck({aria:'Prva žica: 0, 1, 3 — zadnji ton drži',string:1,spots:[{fret:0},{fret:1,text:'1'},{fret:3,text:'3'}],seqSteps:[{s:1,f:0},{s:1,f:1},{s:1,f:3},{s:1,f:3,hold:true}]}),'');
+    if(k==='3-3')return teachFig(figNeck({aria:'Most: druga žica 3, pa prva prazna',strings:[1,2],spots:[{string:2,fret:3,text:'3'},{string:1,fret:0}],seqSteps:[{s:2,f:3,label:'2. žica'},{s:1,f:0,label:'1. žica'}]}),'');
+    if(k==='3-5')return teachFig(figNeck({aria:'Bratec Martin, dio A',strings:[1,2],spots:[{string:2,fret:1,text:'1'},{string:2,fret:3,text:'3'},{string:1,fret:0},{string:2,fret:1,text:'1'}],seqSteps:[{s:2,f:1},{s:2,f:3},{s:1,f:0},{s:2,f:1}]}),'');
+    if(k==='3-4')return teachFig(figRepeatMotif,'');
+    if(k==='3-6')return teachFig(figRepeatMotif,'');
+    if(k==='4-2')return teachFig(figNeck({aria:'Dio A — pa odmah isti red još jednom',strings:[1,2],spots:[{string:2,fret:1,text:'1'},{string:2,fret:3,text:'3'},{string:1,fret:0},{string:2,fret:1,text:'1'}],seqSteps:[{s:2,f:1},{s:2,f:3},{s:1,f:0},{s:2,f:1}]}),'');
+    if(k==='4-3')return teachFig(figRepeatMotif,'');
+    if(k==='4-4')return teachFig(figTogetherPulse,'');
+    if(k==='4-5')return teachFig(figFourSlots,'');
+    if(k==='4-6')return teachFig(figRepeatMotif,'');
+    if(c.kind==='review')return teachFig(figReviewFavorite,'');
     return '';
   };
   const reviewPickList=week=>{
@@ -353,43 +371,31 @@
     const sound=()=>{
       if(c.kind==='review'||(c.week===4&&c.num===5))return '';
       if(c.week===4&&c.num===4){
-        const note='Prvo poslušajte <strong>puls</strong> (tapkanje). Zatim <strong>motiv</strong> — to svira Marija. Na gitari: mama ili tata tapka kao u prvom zvuku, Marija svira A-A-B-B kao u drugom, <strong>istovremeno</strong>.';
+        const note='Prvo poslušaj svaki zvuk zasebno. Na gitari idu <strong>istovremeno</strong>.';
         return `${cardAudioBlock(0,null,{omitNote:true,label:'▶ 1. Puls — mama/tata tapka'})}${cardAudioBlock(4,null,{omitNote:true,label:'▶ 2. Motiv — Marija na gitari'})}<p class="card-audio-note">${note}</p>`;
       }
       const ai=cardAudioIndex(c);
       if(ai===null)return '';
-      if(c.kind==='rhythm'){
-        if(c.week===1&&c.num===5)return cardAudioBlock(ai,'Poslušaj, zapjevaj i plješći uz pjesmu.');
-        const note=c.week===1&&c.num===6?'Četiri zvuka na prvoj žici.':c.week===2&&c.num===2?'Na svaki otkucaj odsviraj praznu prvu žicu.':'';
-        return cardAudioBlock(ai,note);
-      }
+      if(c.kind==='rhythm')return cardAudioBlock(ai,'');
       if(Array.isArray(ai)){
         const dualNote=c.week===3&&c.num===4
-          ?'Prvo slušaj <strong>dio A</strong>, pa <strong>dio B</strong>. Onda pjevaj i ponovi. Za 3. korak otvori <a href="#pjesmica/bratec"><strong>Pjesmice → Bratec Martin</strong></a> ili tiskani list s tabulaturom.'
+          ?'Za 3. korak: <a href="#pjesmica/bratec">Pjesmice → Bratec Martin</a>.'
           :c.week===3&&c.num===6
-          ?'Prvo A, pa B — kao na listu pjesmice. U B-u zadnji ton traje duže.'
+          ?'U B-u zadnji ton traje duže.'
           :'';
         return cardAudioBlocks(ai,dualNote);
       }
       const tip=c.week===3&&c.num===2
         ?'Slušaj dio B: zadnji ton traje duže — ne trzaj!'
-        :c.week===3&&c.num===3
-        ?'Čuješ: <strong>druga žica 3</strong>, pa <strong>prva prazna (0)</strong> — to je most!'
-        :c.week===3&&c.num===5
-        ?'Slušaj <strong>dio A</strong>, pa sviraj isti red na gitari.'
         :c.week===2&&c.num===5
-        ?'Sve na <strong>drugoj</strong> (žutoj) žici: 1 · 3 · 1.'
-        :c.week===2&&c.num===4
-        ?'Uz otkucaje sviraj 0, 1, 3.'
+        ?'Sve na <strong>drugoj</strong> žici.'
         :c.week===2&&c.num===6
-        ?'Poslušaj jednom. Onda sviraj sama i nakloni se.'
-        :c.week===4&&c.num===2
-        ?'Slušaj <strong>dio A</strong>, pa spoji <strong>A pa A</strong> bez stajanja.'
-        :c.week===4&&c.num===3
-        ?'Slušaj cijeli motiv <strong>A-A-B-B</strong>. U B-u zadnji ton traje duže.'
+        ?'Poslušaj jednom, pa sviraj sama.'
+        :c.week===2&&c.num===3
+        ?'Prvo uši, pa prsti uz crtež.'
         :c.week===4&&c.num===6
-        ?'Poslušaj jednom. Onda sviraj s lista — bez ekrana — i nakloni se.'
-        :'Prvo uši, pa prsti uz crtež.';
+        ?'Poslušaj jednom. Onda sviraj s lista.'
+        :'';
       return cardAudioBlock(ai,tip);
     };
     return {picture:picture(),sound:sound()};
@@ -399,7 +405,54 @@
   /* 1.5 je pjevanje i pljesak, 3.4 je list i glas — gitara čeka. */
   const lessonUsesGuitar=c=>!(c.week===1&&c.num===5)&&!(c.week===3&&c.num===4);
   const tuneReminder=()=>`<aside class="tune-reminder" role="note"><a href="#pocetak/stimanje">Prvo naštimaj gitaru →</a></aside>`;
-  const tuneFigure=()=>`<svg class="teach-svg tune-svg" viewBox="0 0 320 200" role="img" aria-label="Mehanike na glavi gitare se okreću. Na telefonu crtica na sredini znači da je žica naštimana"><rect width="320" height="200" rx="20" fill="#fff5fb"/><text x="72" y="22" text-anchor="middle" font-family="Fredoka, Nunito, sans-serif" font-size="14" font-weight="700" fill="#c2185b">mehanike</text><rect x="36" y="36" width="72" height="112" rx="18" fill="#f0c878" stroke="#8d6e4a" stroke-width="2"/><circle cx="28" cy="60" r="8" fill="#ec407a"/><circle cx="28" cy="92" r="8" fill="#ec407a"/><circle cx="28" cy="124" r="8" fill="#ec407a"/><path d="M10 108 A 12 12 0 0 0 10 140" fill="none" stroke="#c2185b" stroke-width="2.5" stroke-linecap="round"/><path d="M10 140 l6 -2 l-1 -6" fill="#c2185b"/><circle cx="116" cy="60" r="8" fill="#f48fb1"/><circle cx="116" cy="92" r="8" fill="#f48fb1"/><circle cx="116" cy="124" r="8" fill="#f48fb1"/><text x="72" y="168" text-anchor="middle" font-family="Fredoka, Nunito, sans-serif" font-size="13" font-weight="700" fill="#8d6e4a">okreći polako</text><rect x="168" y="28" width="120" height="140" rx="16" fill="#fff" stroke="#ec407a" stroke-width="3"/><rect x="186" y="46" width="84" height="90" rx="10" fill="#ffe4f0"/><path d="M204 116 A 24 24 0 0 1 252 116" fill="none" stroke="#f8bbd0" stroke-width="8" stroke-linecap="round"/><line x1="228" y1="116" x2="228" y2="84" stroke="#c2185b" stroke-width="4" stroke-linecap="round"/><circle cx="228" cy="116" r="5" fill="#c2185b"/><text x="228" y="154" text-anchor="middle" font-family="Fredoka, Nunito, sans-serif" font-size="14" font-weight="700" fill="#c2185b">sredina</text></svg>`;
+  const tuneFigure=()=>`<svg class="teach-svg tune-svg" viewBox="0 0 320 210" role="img" aria-label="Glava klasične gitare: vrat, šest žica i ružičaste mehanike s obje strane. Na telefonu crtica na sredini znači da je žica naštimana">
+    <rect width="320" height="210" rx="20" fill="#fff5fb"/>
+    <text x="76" y="18" text-anchor="middle" font-family="Fredoka, Nunito, sans-serif" font-size="13" font-weight="700" fill="#c2185b">glava</text>
+    <path d="M44 30h64q14 0 14 14v66q0 14-16 18h-14v62h-32v-62h-14q-16-4-16-18v-66q0-14 14-14z" fill="#f0c878" stroke="#8d6e4a" stroke-width="2"/>
+    <rect x="38" y="42" width="26" height="16" rx="3" fill="#fff5fb" stroke="#8d6e4a" stroke-width="1.5"/>
+    <rect x="38" y="66" width="26" height="16" rx="3" fill="#fff5fb" stroke="#8d6e4a" stroke-width="1.5"/>
+    <rect x="38" y="90" width="26" height="16" rx="3" fill="#fff5fb" stroke="#8d6e4a" stroke-width="1.5"/>
+    <rect x="88" y="42" width="26" height="16" rx="3" fill="#fff5fb" stroke="#8d6e4a" stroke-width="1.5"/>
+    <rect x="88" y="66" width="26" height="16" rx="3" fill="#fff5fb" stroke="#8d6e4a" stroke-width="1.5"/>
+    <rect x="88" y="90" width="26" height="16" rx="3" fill="#fff5fb" stroke="#8d6e4a" stroke-width="1.5"/>
+    <rect x="36" y="46" width="30" height="8" rx="4" fill="#e6b85c" stroke="#8d6e4a"/>
+    <rect x="36" y="70" width="30" height="8" rx="4" fill="#e6b85c" stroke="#8d6e4a"/>
+    <rect x="36" y="94" width="30" height="8" rx="4" fill="#e6b85c" stroke="#8d6e4a"/>
+    <rect x="86" y="46" width="30" height="8" rx="4" fill="#e6b85c" stroke="#8d6e4a"/>
+    <rect x="86" y="70" width="30" height="8" rx="4" fill="#e6b85c" stroke="#8d6e4a"/>
+    <rect x="86" y="94" width="30" height="8" rx="4" fill="#e6b85c" stroke="#8d6e4a"/>
+    <line x1="26" y1="50" x2="36" y2="50" stroke="#8d6e4a" stroke-width="3" stroke-linecap="round"/>
+    <line x1="26" y1="74" x2="36" y2="74" stroke="#8d6e4a" stroke-width="3" stroke-linecap="round"/>
+    <line x1="26" y1="98" x2="36" y2="98" stroke="#8d6e4a" stroke-width="3" stroke-linecap="round"/>
+    <line x1="116" y1="50" x2="126" y2="50" stroke="#8d6e4a" stroke-width="3" stroke-linecap="round"/>
+    <line x1="116" y1="74" x2="126" y2="74" stroke="#8d6e4a" stroke-width="3" stroke-linecap="round"/>
+    <line x1="116" y1="98" x2="126" y2="98" stroke="#8d6e4a" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="18" cy="50" r="8" fill="#ec407a"/><circle cx="18" cy="74" r="8" fill="#ec407a"/><circle cx="18" cy="98" r="8" fill="#ec407a"/>
+    <circle cx="134" cy="50" r="8" fill="#f48fb1"/><circle cx="134" cy="74" r="8" fill="#f48fb1"/><circle cx="134" cy="98" r="8" fill="#f48fb1"/>
+    <circle cx="18" cy="50" r="2.5" fill="#fff"/><circle cx="18" cy="74" r="2.5" fill="#fff"/><circle cx="18" cy="98" r="2.5" fill="#fff"/>
+    <circle cx="134" cy="50" r="2.5" fill="#fff"/><circle cx="134" cy="74" r="2.5" fill="#fff"/><circle cx="134" cy="98" r="2.5" fill="#fff"/>
+    <rect x="58" y="122" width="36" height="7" rx="1.5" fill="#fff8ee" stroke="#c4a574"/>
+    <line x1="60" y1="154" x2="92" y2="154" stroke="#c4a06a" stroke-width="2"/>
+    <line x1="60" y1="170" x2="92" y2="170" stroke="#c4a06a" stroke-width="2"/>
+    <path d="M66 128 L50 98" fill="none" stroke="#7a4e16" stroke-width="2.6" stroke-linecap="round"/>
+    <path d="M70 128 L50 74" fill="none" stroke="#7a4e16" stroke-width="2.2" stroke-linecap="round"/>
+    <path d="M74 128 L50 50" fill="none" stroke="#a56b28" stroke-width="1.8" stroke-linecap="round"/>
+    <path d="M78 128 L102 50" fill="none" stroke="#c48a3a" stroke-width="1.6" stroke-linecap="round"/>
+    <path d="M82 128 L102 74" fill="none" stroke="#d7a85a" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M86 128 L102 98" fill="none" stroke="#e6c98a" stroke-width="1.3" stroke-linecap="round"/>
+    <line x1="66" y1="129" x2="66" y2="186" stroke="#7a4e16" stroke-width="2.6" stroke-linecap="round"/>
+    <line x1="70" y1="129" x2="70" y2="186" stroke="#7a4e16" stroke-width="2.2" stroke-linecap="round"/>
+    <line x1="74" y1="129" x2="74" y2="186" stroke="#a56b28" stroke-width="1.8" stroke-linecap="round"/>
+    <line x1="78" y1="129" x2="78" y2="186" stroke="#c48a3a" stroke-width="1.6" stroke-linecap="round"/>
+    <line x1="82" y1="129" x2="82" y2="186" stroke="#d7a85a" stroke-width="1.4" stroke-linecap="round"/>
+    <line x1="86" y1="129" x2="86" y2="186" stroke="#e6c98a" stroke-width="1.3" stroke-linecap="round"/>
+    <rect x="168" y="36" width="120" height="140" rx="16" fill="#fff" stroke="#ec407a" stroke-width="3"/>
+    <rect x="186" y="54" width="84" height="90" rx="10" fill="#ffe4f0"/>
+    <path d="M204 124 A 24 24 0 0 1 252 124" fill="none" stroke="#f8bbd0" stroke-width="8" stroke-linecap="round"/>
+    <line x1="228" y1="124" x2="228" y2="92" stroke="#c2185b" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="228" cy="124" r="5" fill="#c2185b"/>
+    <text x="228" y="162" text-anchor="middle" font-family="Fredoka, Nunito, sans-serif" font-size="14" font-weight="700" fill="#c2185b">sredina</text>
+  </svg>`;
   const tuneSection=()=>`<section class="sheet tune-home" id="stimanje"><div class="sheet-label">PRIJE SVIRANJA</div><h2>Kako se štima gitara</h2><p class="lede">Na glavi gitare su mehanike — kotačići koji se okreću. Svaka žica ide do svoje. Mama ili tata ih polako okreću. Ti pomažeš jednim nježnim zvukom.</p><div class="tune-layout"><figure class="tune-figure">${tuneFigure()}<figcaption>Ružičaste mehanike se okreću. Crtica na sredini = žica je naštimana.</figcaption></figure><ol class="tune-steps"><li><strong>Pronađi mehaniku.</strong> Pogledaj kuda ide žica koju želiš naštimati. Na kraju je njezin kotačić.</li><li><strong>Otvori Guitar Tuna i odsviraj.</strong> Mama ili tata otvore <em>Guitar Tuna</em> Ti nježno odsviraš samo tu praznu žicu.</li><li><strong>Okreni polako.</strong> Ako je crtica lijevo, žica je preniska — zategni mehaniku. Ako je desno, previsoka — popusti. Kad je na sredini, gotovo. Onda sljedeća žica.</li></ol></div><p class="tune-app"><a class="button" href="https://play.google.com/store/apps/details?id=com.ovelin.guitartuna" target="_blank" rel="noopener noreferrer">Otvori Guitar Tuna</a><a class="button secondary" href="https://www.youtube.com/watch?v=RA3l0QOo4aw" target="_blank" rel="noopener noreferrer">Pogledaj kako se okreću mehanike</a></p>${printQuiet()}<p class="day-parent" role="note"><strong>Za mamu ili tatu:</strong> Video je na hrvatskom, prva lekcija škole za početnike. Gledajte dio sa štimerom; štimanje po sluhu preskočite. Smjer okretanja ovisi o gitari — okrenite malo i gledajte ide li crtica prema sredini. Ne okrećite naglo, da žica ne pukne. U Guitar Tuni odaberite gitaru i standardno štimanje. Prva prazna žica: E, druga: B (često H). Mehanike okreće odrasla osoba.</p></section>`;
   const card=c=>{
     const key=`${c.week}-${c.num}`;const n=getStars(key);const stuck=stuckTips[key];
@@ -412,13 +465,13 @@
     const showNav=steps.length>1;
     const prevHtml=showNav?`<button type="button" class="secondary step-prev" data-step-prev="${key}"${i===0?' disabled':''} aria-label="Prethodni korak">Natrag</button>`:'';
     const nextHtml=showNav&&!last?`<button type="button" class="button step-next" data-step-next="${key}" data-step-max="${lastIndex}" aria-label="Sljedeći korak">Dalje</button>`:'';
-    const stepHtml=steps.length?`<div class="step-head"><p class="step-kicker">Korak ${i+1} od ${steps.length}</p>${showNav?`<div class="step-actions">${prevHtml}${nextHtml}</div>`:''}</div><p class="step-one" tabindex="-1">${escape(steps[i])}</p>`:'';
+    const stepHtml=steps.length?`<div class="step-head"><p class="step-kicker">Korak ${i+1} od ${steps.length}</p>${showNav?`<div class="step-actions">${prevHtml}${nextHtml}</div>`:''}</div><p class="step-one" tabindex="-1">${fingerPlain(steps[i])}</p>`:'';
     const starsHtml=last&&withStars?`<div class="mission-footer">${starButtons(key,n)}${n?`<p class="mission-cheer">${escape(mascotName)}: ${n===3?'Tri zvjezdice! Ti si sjajna!':n===2?'Sama — super! Sutra možeš treću.':'Bravo! Probala si. Još ★★ kad budeš sama!'}</p>`:''}</div>`:'';
     const reviewHtml=last&&c.kind==='review'?reviewPickList(c.week):'';
     const open=!!stuckOpen[key];
     const tip=cardTip(key);
-    const zvonkoHtml=`<aside class="card-zvonko" aria-label="${escape(mascotName)}"><img src="assets/dragon-guitar-pixar.jpg" alt="" width="56" height="56"><p><strong>${escape(tip[0])}</strong>${escape(tip[1])}</p></aside>`;
-    const stuckHtml=stuck?`<button type="button" class="stuck-toggle secondary" data-stuck-toggle="${key}" aria-expanded="${open?'true':'false'}">Ako zapne</button>${open?`<div class="stuck-tip" id="stuck-${key}" role="note"><img src="assets/dragon-guitar-pixar.jpg" alt="" width="48" height="48"><p><strong>${escape(mascotName)}:</strong> ${escape(stuck)}</p></div>`:''}`:'';
+    const zvonkoHtml=`<aside class="card-zvonko" aria-label="${escape(mascotName)}"><img src="assets/dragon-guitar-pixar.jpg" alt="" width="56" height="56"><p><strong>${escape(tip[0])}</strong>${fingerPlain(tip[1])}</p></aside>`;
+    const stuckHtml=stuck?`<button type="button" class="stuck-toggle secondary" data-stuck-toggle="${key}" aria-expanded="${open?'true':'false'}">Ako zapne</button>${open?`<div class="stuck-tip" id="stuck-${key}" role="note"><img src="assets/dragon-guitar-pixar.jpg" alt="" width="48" height="48"><p><strong>${escape(mascotName)}:</strong> ${fingerPlain(stuck)}</p></div>`:''}`:'';
     return `<article class="exercise-card${c.kind==='review'?' review-card':''}${c.kind==='posture'?' instruction-card':''}${withStars&&n?' has-stars':''}" id="kartica-${c.week}-${c.num}">
       <div class="card-tag">MISIJA ${c.week}.${c.num}</div>
       <h3>${escape(c.title)}</h3>
@@ -427,6 +480,7 @@
       ${stepHtml}
       ${picture}
       ${sound}
+      ${listenLinks(videosForMission(c.week,c.num))}
       ${reviewHtml}
       ${starsHtml}
       ${stuckHtml}
@@ -443,8 +497,6 @@
   };
   const starGallery=()=>`<section class="sheet star-gallery"><div class="sheet-label">SVE MISIJE</div><h2>Gdje su tvoje ★</h2><div class="gallery-weeks">${[1,2,3,4].map(w=>`<div class="gallery-week"><h3>Tjedan ${w}</h3><div class="gallery-missions">${Array.from({length:weekMissionCount(w)},(_,i)=>i+1).map(n=>{const k=`${w}-${n}`;const stars=getStars(k);const c=data.cards.find(x=>x.week===w&&x.num===n);const withStars=!c||c.kind!=='review';return `<a class="gallery-mission${withStars&&stars?' has-stars':''}" href="#tjedan-${w}/kartica-${w}-${n}">${withStars?`<span class="gallery-stars">${[1,2,3].map(i=>`<span class="${i<=stars?'is-on':''}">★</span>`).join('')}</span>`:''}<span class="gallery-title">${escape(c?c.title:k)}</span></a>`;}).join('')}</div><p class="gallery-sum">${weekStarTotal(w)} / ${weekStarMax(w)} ★</p></div>`).join('')}</div></section>`;
   const concertInvite=(id='pozivnica')=>{const g=guitarNameTrim()||'moja gitara';return `<section class="sheet concert-invite" id="${id}"><div class="sheet-label">POZIVNICA</div><h2>Moj mali koncert!</h2><p class="concert-lede">Pozivam te da dođeš slušati kako sviram na gitari <strong>${escape(g)}</strong>!</p><p class="concert-sub">Sviram početak pjesmice <em>Bratec Martin</em>.</p><div class="concert-dates"><p class="concert-date-row"><span>Datum:</span><span class="concert-blank" aria-hidden="true"></span></p><p class="concert-date-row"><span>Vrijeme:</span><span class="concert-blank" aria-hidden="true"></span></p></div><p class="concert-field">Tko dolazi (mama, tata, baka…)?</p><div class="concert-lines" aria-hidden="true"></div><p class="print-row"><button class="print print-quiet print-invite" type="button">Ispiši pozivnicu</button></p></section>`;};
-  const adultStarLevel=status=>(status==='drugi-dan'?3:status==='samostalno'?2:status==='pomoc'?1:0);
-  const adultStarRow=status=>{const n=adultStarLevel(status);return `<span class="star-row" aria-label="${n} od 3">${[1,2,3].map(i=>`<span class="star-icon${i<=n?' is-on':''}">★</span>`).join('')}</span>`;};
   const audioNames=['01_cetiri_otkucaja.wav','02_prva_zica_0_1_3_1.wav','03_bratec_martin_dio_A.wav','04_bratec_martin_dio_B.wav','05_bratec_martin_motiv.wav','06_zvuk_tisina.wav','07_most_druga3_prva0.wav','08_druga_zica_1_3_1.wav','09_prva_zica_0_1_0_1.wav','10_prva_zica_0_1_3.wav'];
   const audioTitles=['Četiri zvuka u pulsu','Prva žica: 0, 1, 3, 1','Bratec Martin · dio A','Bratec Martin · dio B','Bratec Martin · A-A-B-B','Zvuk · tišina · zvuk · tišina','Most: druga 3 → prva 0','Druga žica: 1, 3, 1','Prva žica: 0, 1, 0, 1','Prva žica: 0, 1, 3'];
   const audioHints=['Dva kratka otkucaja, pa četiri zvuka — tri puta.','Dva otkucaja, pa 0, 1, 3, 1 — tri puta.','Dva otkucaja, pa dio A — tri puta.','Dva otkucaja, pa dio B — tri puta. Zadnji ton traje duže.','Dva otkucaja, pa cijeli motiv A-A-B-B — tri puta.','Dva otkucaja, pa zvuk, tišina, zvuk, tišina — tri puta. Na tišini zaustavi žicu!','Dva otkucaja, pa druga žica na 3 i prazna prva — tri puta.','Dva otkucaja, pa na drugoj žici 1, 3, 1 — tri puta.','Dva otkucaja, pa na prvoj žici 0, 1, 0, 1 — tri puta.','Dva otkucaja, pa na prvoj žici 0, 1, 3 — tri puta.'];
@@ -491,7 +543,7 @@
     }
     requestAnimationFrame(animate);
   }
-  const mascotBubble=(title,text)=>`<section class="mascot-panel" aria-label="${escape(mascotName)} daje upute"><div class="mascot-frame"><img src="assets/dragon-guitar-pixar.jpg" width="160" height="160" alt="${escape(mascotName)}, slatki zmaj s malom gitarom"></div><p class="speech-bubble"><strong>${escape(title)}</strong> ${escape(text)}</p></section>`;
+  const mascotBubble=(title,text)=>`<section class="mascot-panel" aria-label="${escape(mascotName)} daje upute"><div class="mascot-frame"><img src="assets/dragon-guitar-pixar.jpg" width="160" height="160" alt="${escape(mascotName)}, slatki zmaj s malom gitarom"></div><p class="speech-bubble"><strong>${escape(title)}</strong> ${fingerPlain(text)}</p></section>`;
   const mascotFor=key=>{const line=mascotLines[key]||mascotLines.pocetak;return mascotBubble(line[0],line[1]);};
   const cardTitle=(week,num)=>{const c=data.cards.find(x=>x.week===week&&x.num===num);return c?c.title:`Misija ${week}.${num}`};
   const starAcc=n=>{const a=n%10,b=n%100;if(a===1&&b!==11)return 'zvjezdicu';if(a>=2&&a<=4&&(b<12||b>14))return 'zvjezdice';return 'zvjezdica';};
@@ -510,6 +562,11 @@
   };
   const missionLink=(week,num)=>`<a class="mission-link" href="#tjedan-${week}/kartica-${week}-${num}">${escape(cardTitle(week,num))}</a>`;
   const missionLinks=(week,nums)=>nums.map(num=>missionLink(week,num)).join(' · ');
+  const listenLinks=list=>{
+    if(!list||!list.length) return '';
+    return `<div class="listen-links">${list.map(v=>`<a class="button secondary" href="${escape(v.href)}" target="_blank" rel="noopener noreferrer">${escape(v.label)}</a>`).join('')}</div>`;
+  };
+  const videosForMission=(week,num)=>(dailyKid[week-1]||[]).find(d=>d.videos&&d.missions&&d.missions[0]===num)?.videos||[];
   const focusDay=(week,dayIndex)=>{const hook=data.daily[week-1][dayIndex][0];const kid=dailyKid[week-1][dayIndex];const firstMission=kid.missions[0];return {hook,kid,firstMission};};
   const activeWeek=()=>Math.min(4,Math.max(1,Number(state.activeWeek)||1));
   const backToWeek=n=>`<p class="mission-back"><a class="button secondary" href="#tjedan-${n}">Natrag na tjedan</a></p>`;
@@ -539,9 +596,9 @@
     const mission=firstMission?data.cards.find(c=>c.week===week&&c.num===firstMission):null;
     const picture=mission?cardParts(mission).picture:'';
     const cta=firstMission?`#tjedan-${week}/kartica-${week}-${firstMission}`:`#tjedan-${week}`;
-    const parent=kid.parent?`<details class="sheet adult-fold parent-fold" id="za-mamu"><summary>Za mamu ili tatu</summary><div class="adult-fold-body"><p>${escape(kid.parent)}</p></div></details>`:'';
+    const parent=kid.parent?`<details class="sheet adult-fold parent-fold" id="za-mamu"><summary>Za mamu ili tatu</summary><div class="adult-fold-body"><p>${fingerPlain(kid.parent)}</p></div></details>`:'';
     const other=opts.home?`<p class="home-other"><a href="#tjedan-${week}">Drugi dan</a></p>`:'';
-    return `${opts.back?backToWeek(week):''}<section class="sheet today-focus today-focus-home" id="danas"><div class="sheet-label">DAN ${day} · TJEDAN ${week}</div><h2>${escape(hook)}</h2><p class="lede">${escape(kid.text)}</p>${picture}<div class="today-focus-actions"><a class="button" href="${cta}">Kreni</a></div>${other}${printQuiet()}</section>${parent}`;
+    return `${opts.back?backToWeek(week):''}<section class="sheet today-focus today-focus-home" id="danas"><div class="sheet-label">DAN ${day} · TJEDAN ${week}</div><h2>${escape(hook)}</h2><p class="lede">${fingerPlain(kid.text)}</p>${picture}${listenLinks(kid.videos)}<div class="today-focus-actions"><a class="button" href="${cta}">Kreni</a></div>${other}${printQuiet()}</section>${parent}`;
   };
   const guitarNameField=()=>`<div class="hero-guitar-field"><label class="form-label" for="guitar-name">Kako se zove tvoja gitara?</label><input type="text" id="guitar-name" data-guitar-name maxlength="24" placeholder="npr. Luna, Zvjezdica…" value="${escape(state.guitarName||'')}"></div>`;
   const guitarRenameCard=()=>`<section class="sheet hero hero-home guitar-rename" id="moja-gitara"><div class="hero-home-text"><div class="sheet-label">TVOJA GITARA</div><h2>Dijelovi i ime</h2><p>Pogledaj dijelove. Ime možeš promijeniti.</p>${guitarNameField()}<button type="button" class="button guitar-ready" id="guitar-name-ready"${guitarNameTrim()?'':' disabled'}>Spremi ime</button></div><figure class="hero-home-figure">${diagram('guitar',null)}</figure></section>`;
@@ -551,9 +608,10 @@
     const hook=data.daily[week-1][dayIndex][0];
     const kid=dailyKid[week-1][dayIndex];
     const missions=kid.missions.length?`<p class="day-missions">${missionLinks(week,kid.missions)}</p>`:`<p>${escape(data.daily[week-1][dayIndex][1])}</p>`;
-    const game=kid.game?`<p class="day-game">${escape(kid.game)}</p>`:'';
-    const parent=kid.parent?`<p class="day-parent"><strong>Za mamu ili tatu:</strong> ${escape(kid.parent)}</p>`:'';
-    return `<div class="day"><strong>Dan ${dayIndex+1}</strong><div><b>${escape(hook)}</b><p>${escape(kid.text)}</p>${missions}${game}${parent}</div></div>`;
+    const game=kid.game?`<p class="day-game">${fingerPlain(kid.game)}</p>`:'';
+    const parent=kid.parent?`<p class="day-parent"><strong>Za mamu ili tatu:</strong> ${fingerPlain(kid.parent)}</p>`:'';
+    const listen=listenLinks(kid.videos);
+    return `<div class="day"><strong>Dan ${dayIndex+1}</strong><div><b>${escape(hook)}</b><p>${fingerPlain(kid.text)}</p>${missions}${game}${listen}${parent}</div></div>`;
   };
   function home(){
     const name=guitarNameTrim();
@@ -569,7 +627,6 @@
   function week(n,anchor=''){
     const cards=data.cards.filter(c=>c.week===n);
     const aud=n===1?[0,5]:n===2?[8,9,1,7]:n===3?[6,2,3]:[4];
-    const susret=`<details class="sheet adult-fold" id="susret"><summary><span class="sheet-label">ZA ODRASLU OSOBU</span> Plan susreta (~60 min)</summary><div class="adult-fold-body">${pageBody(n+3)}</div></details>`;
     if(anchor==='danas')return `<div class="kid-flow">${todayView(n,{back:true})}</div>`;
     const missionMatch=/^kartica-(\d+)-(\d+)$/.exec(anchor||'');
     if(missionMatch&&Number(missionMatch[1])===n){
@@ -578,7 +635,6 @@
     }
     if(anchor==='kako-citam'&&n>=2)return `<div class="kid-flow">${backToWeek(n)}${howToReadMap()}</div>`;
     if(anchor==='poslusaj')return `<div class="kid-flow">${backToWeek(n)}${section('Svi zvukovi',`<div class="sounds">${aud.map(audio).join('')}</div><p class="storage-note">Prvo slušaj, pa probaj uz zvuk. Ruke ti pokaže odrasla osoba.</p>`,'poslusaj')}</div>`;
-    if(anchor==='susret')return `<div class="kid-flow">${backToWeek(n)}${susret.replace('<details class="sheet adult-fold"','<details open class="sheet adult-fold"')}${printQuiet()}</div>`;
     const today=Math.min(7,Math.max(1,Number(state.days[n])||1));
     const weekPick=`<div class="week-picker" role="group" aria-label="Odaberi tjedan">${[1,2,3,4].map(w=>`<button type="button" class="week-pick${w===n?' is-active':''}" data-home-week="${w}" aria-pressed="${w===n}">Tjedan ${w}</button>`).join('')}</div>`;
     const tiles=[0,1,2,3,4,5,6].map(i=>{
@@ -594,15 +650,11 @@
         :'';
       return `<a class="day-tile${i+1===today?' is-today':''}" href="${href}" data-pick-day="${n}" data-day="${i+1}"><span class="day-tile-num">Dan ${i+1}</span><span class="day-tile-title">${escape(hook)}</span>${star}</a>`;
     }).join('');
-    const links=`<nav class="week-links" aria-label="Poveznice tjedna">${n>=2?`<a href="#tjedan-${n}/kako-citam">Kako čitam kartu</a>`:''}<a href="#tjedan-${n}/poslusaj">Svi zvukovi</a><a href="#tjedan-${n}/susret">Plan susreta</a></nav>`;
+    const links=`<nav class="week-links" aria-label="Poveznice tjedna">${n>=2?`<a href="#tjedan-${n}/kako-citam">Kako čitam kartu</a>`:''}<a href="#tjedan-${n}/poslusaj">Svi zvukovi</a></nav>`;
     return `<div class="kid-flow">${heading('TJEDAN '+n,titles[n-1],'Otvori jedan dan.')}${mascotFor('tjedan'+n)}${weekPick}<div class="day-path">${tiles}</div>${links}${n===4?concertInvite():''}<div class="week-footer"><a class="button secondary" href="#${n===1?'pocetak':'tjedan-'+(n-1)}">${n===1?'Početak':'Prethodni tjedan'}</a><a class="button" href="#${n===4?'napredak':'tjedan-'+(n+1)}">${n===4?'Moje zvjezdice':'Sljedeći tjedan'}</a></div></div>`;
   }
-  const skillsTable=data.pages.find(p=>p.title==='Moj list napretka')?.blocks.find(b=>b[0]==='table');
-  const skills=(skillsTable?.[2]||[]).map(row=>({week:row[0],title:row[1]}));
   function progress(){
     const total=totalStars();const maxAll=[1,2,3,4].reduce((a,w)=>a+weekStarMax(w),0);const unlocked=unlockedBadges().length;
-    const options=[['','Jo probavamo'],['pomoc','Uz pomoć'],['samostalno','Sama mogu!'],['drugi-dan','Ponovila sam sutra!']];
-    const rows=skills.map((s,i)=>{const v=state.skills[i]||{};return `<tr><td><span class="sheet-label">TJEDAN ${s.week}</span><br>${escape(s.title)}<div class="progress-stars">${adultStarRow(v.status||'')}</div></td><td class="progress-status"><label class="visually-hidden" for="skill-${i}">Status: ${escape(s.title)}</label><select id="skill-${i}" data-skill="${i}">${options.map(([val,label])=>`<option value="${val}"${v.status===val?' selected':''}>${label}</option>`).join('')}</select><small>Datum</small><input type="date" aria-label="Datum: ${escape(s.title)}" data-date="${i}" value="${escape(v.date||'')}"><small>${v.firstDate?'Prvi put sama: '+escape(v.firstDate):''}</small></td></tr>`}).join('');
     const next=nextBadge();
     const mascotProg=next
       ? [total?`Skupila si ${total} ${starAcc(total)}!`:'Još nemaš zvjezdica.',`Sljedeći bedž je „${next.title}”. ${badgeNeedText(next)}`]
@@ -614,11 +666,15 @@
       badgesPanel()+
       starGallery()+
       concertInvite('pozivnica-napredak')+
-      section('Moja poruka sebi',`<p>Napiši nešto lijepo sebi — za kasnije!</p>${[['samostalno','Ovo znam sama'],['pomoc','Ovo mi još treba pomoć'],['sljedece','Sljedeći mali korak']].map(([k,label])=>`<label class="form-label" for="note-${k}">${label}</label><textarea id="note-${k}" data-note="${k}" placeholder="Napiši nešto lijepo sebi…">${escape(state.notes[k]||'')}</textarea>`).join('')}`)+
-      `<details class="sheet adult-fold" id="za-odrasle-napredak"><summary><span class="sheet-label">ZA ODRASLU OSOBU</span> Tablica vještina</summary><div class="adult-fold-body"><p class="storage-note">Ovo je za mamu/tatu/učitelja. Marija koristi ★ na misijama.</p><div class="tablewrap"><table class="progress-table"><thead><tr><th>Vještina</th><th>Status</th></tr></thead><tbody>${rows}</tbody></table></div></div></details>`;
+      section('Moja poruka sebi',`<p>Napiši nešto lijepo sebi — ostaje ovdje i kad odeš pa se vratiš.</p>${[['samostalno','Ovo znam sama'],['pomoc','Ovo mi još treba pomoć'],['sljedece','Sljedeći mali korak']].map(([k,label])=>`<label class="form-label" for="note-${k}">${label}</label><textarea id="note-${k}" data-note="${k}" placeholder="Napiši nešto lijepo sebi…">${escape(state.notes[k]||'')}</textarea>`).join('')}`);
+  }
+  function needHelp(){
+    return heading('ZVONKO KAŽE','Trebaš pomoć?','Ako nešto zapne, Zvonko zna kome se javiti.')+
+      `<section class="mascot-panel" aria-label="${escape(mascotName)} daje upute"><div class="mascot-frame"><img src="assets/dragon-guitar-pixar.jpg" width="160" height="160" alt="${escape(mascotName)}, slatki zmaj s malom gitarom"></div><div class="speech-bubble"><strong>Tu sam, Marija!</strong><p>Javi se mojim prijateljima Kreši i Antoniji. Možeš nazvati ili poslati poruku.</p><ul class="help-reasons"><li>ako ti u lekcijama nešto nije jasno</li><li>ako želiš nove lekcije ili nove pjesmice</li><li>ili te samo zanima neka sitnica</li></ul><p class="help-note">Oni su mi pomogli složiti ove lekcije baš za tebe. Jako će se razveseliti da čuju kako ti ide!</p></div></section>`;
   }
   function help(){return mascotFor('pomoc')+heading('ZA ODRASLU OSOBU','Pomoć i poveznice','Priprema instrumenta, jednostavna objašnjenja i pomoć kada nešto zapne.')+
     section('Kod kuće','<p>Jednom tjedno imate susret od oko sat vremena. Kod kuće je dovoljno 15–20 minuta. Dan je uspio kad Marija može sama i može ponoviti sutra.</p><p>Od tjedna 2 karta se čita ovako: <a href="#tjedan-2/kako-citam">Kako čitam kartu?</a></p>')+
+    section('Plan susreta','<p>Jedan susret traje oko 60 minuta. Otvori tjedan koji vam treba.</p>'+[1,2,3,4].map(n=>{const page=data.pages[n+2];return `<details class="sheet adult-fold parent-fold" id="susret-${n}"><summary><span class="sheet-label">TJEDAN ${n}</span> ${escape(page.title)}</summary><div class="adult-fold-body">${pageBody(n+3)}</div></details>`;}).join(''))+
     section('Prije sviranja',pageBody(2))+
     section('Žica, prag ili prst?',pageBody(3))+
     section('Kad nešto zapne',pageBody(9))+
@@ -628,6 +684,7 @@
   function render(keepPosition=false){
     stopSong();
     const openDialog=document.getElementById('explain-dialog');if(openDialog.open)openDialog.close();
+    const handDialog=document.getElementById('hand-dialog');if(handDialog?.open)handDialog.close();
     const previousScroll=window.scrollY;
     const [requested='pocetak',anchor='']=location.hash.slice(1).split('/');const route=nav.some(n=>n[0]===requested)?requested:'pocetak';
     content.dataset.view=route==='pjesmica'?'songs':'';
@@ -638,7 +695,9 @@
     else if(route.startsWith('tjedan-')){const w=Number(route.slice(-1));state.activeWeek=w;save();content.innerHTML=week(w,anchor);}
     else if(route==='pjesmica')content.innerHTML=mascotFor(anchor?'pjesmicaPjevanje':'pjesmica')+window.GuitarSongUI.render(anchor,positionShift,songTempo);
     else if(route==='zvuk')content.innerHTML=heading('POSLUŠAJ I SVIRAJ','Moji zvučni prijatelji','Deset kratkih primjera. Najprije uši, pa prsti!')+mascotFor('zvuk')+section('Od otkucaja do pjesmice',`<div class="sounds">${audioNames.map((_,i)=>audio(i)).join('')}</div><div class="note">Svaki zvuk počinje s dva kratka otkucaja. Onda čuješ važni dio tri puta. Pokušaj na gitari uz pomoć odrasle osobe.</div>`);
-    else if(route==='napredak')content.innerHTML=progress();else content.innerHTML=help();
+    else if(route==='napredak')content.innerHTML=progress();
+    else if(route==='trebas-pomoc')content.innerHTML=needHelp();
+    else content.innerHTML=help();
     document.title=(route==='pjesmica'?window.GUITAR_SONGS.find(s=>s.id===anchor)?.title||'Pjesmice':nav.find(n=>n[0]===route)[1])+' · Gitarska pustolovina';
     const dock=document.getElementById('mobile-dock');
     if(dock){
@@ -741,7 +800,18 @@
     if(!state.metZvonko){showZvonkoWelcome('intro');return;}
     if(state.zvonkoDay!==today())showZvonkoWelcome('daily');
   };
+  const fingerNames={palac:'palac',kaziprst:'kažiprst',srednji:'srednji prst',prstenjak:'prstenjak',mali:'mali prst'};
+  const openHand=which=>{
+    const dlg=document.getElementById('hand-dialog');if(!dlg)return;
+    dlg.querySelectorAll('[data-finger-part]').forEach(el=>el.classList.toggle('is-on',!!which&&el.dataset.fingerPart===which));
+    const note=document.getElementById('hand-note');
+    if(note)note.textContent=which&&fingerNames[which]?`Označeno je: ${fingerNames[which]}.`:'Svaki prst ima svoje ime. Usporedi s lijevom rukom.';
+    if(!dlg.open)dlg.showModal();
+  };
   document.addEventListener('click',e=>{
+    const fingerBtn=e.target.closest('.finger-word');
+    if(fingerBtn){openHand(fingerBtn.dataset.finger||'');return;}
+    if(e.target.closest('#hand-close,#hand-done')||e.target.id==='hand-dialog'){document.getElementById('hand-dialog')?.close();return;}
     if(e.target.closest('#zvonko-badge-go')){
       document.querySelector('#zvonko-badge .zvonko-welcome-card')?.classList.add('is-highfive');
       setTimeout(hideBadgeCheer,720);
@@ -904,14 +974,6 @@
   content.addEventListener('change',e=>{
     if(e.target.id==='song-position'){positionShift=Number(e.target.value);render(true);return;}
     if(e.target.id==='song-tempo'){songTempo=Number(e.target.value);stopSong();return;}
-    if(e.target.dataset.skill!==undefined){
-      const i=e.target.dataset.skill;const v=state.skills[i]||(state.skills[i]={});const chosen=e.target.value;const date=v.date||today();
-      if(chosen==='drugi-dan'&&(!v.firstDate||date<=v.firstDate)){
-        e.target.value=v.status||'';document.getElementById('save-status').textContent='Prvo odaberi „Sama mogu!”, pa sutra ponovi — onda ide najjača zvjezdica.';return;
-      }
-      v.status=chosen;v.date=date;if(chosen==='samostalno'&&!v.firstDate)v.firstDate=date;if(chosen==='')delete v.firstDate;save();render(true);
-    }
-    if(e.target.dataset.date!==undefined){const i=e.target.dataset.date;const v=state.skills[i]||(state.skills[i]={});v.date=e.target.value;if(v.status==='drugi-dan'&&(!v.firstDate||v.date<=v.firstDate))v.status='samostalno';save();render(true);}
   });
   window.addEventListener('keydown',e=>{
     if(e.key==='Enter'&&e.target.id==='guitar-name-edit'){e.preventDefault();saveGuitarName();return;}

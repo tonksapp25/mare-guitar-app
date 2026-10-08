@@ -52,7 +52,8 @@ window.GuitarSongUI=(()=>{
     else if(type==='count'){title=`${a.count} malih zvukova`;text='Ovaj broj govori koliko puta odsviramo ton u ovom zapisu. Ako se isti broj praga ponovi, opet ga odsviraj. Trajanje jednog tona može biti kratko ili dugo.';picture=steps(3);task='Pokaži tri uzastopna broja u tabulaturi.';}
     else if(type==='listen'){title='Poslušaj pa odgovori';text='Prvo čuješ dva kratka otkucaja. Zatim slijedi melodija, a žuto mjesto pokazuje koji ton upravo svira. Zvuk je napravljen računalom. Možeš samo slušati ili polako svirati zajedno.';picture=steps(2);task='Najprije poslušaj jedan red, pa ga pokušaj ponoviti.';}
     else {const song=window.GUITAR_SONGS.find(s=>s.id===a.song);title=song?.title||'Naša pjesmica';text=type==='scope'?`Oznaka kaže što učimo: ${song?.tag.toLowerCase()}. Jedna žica znači jedan put; dvije žice znače da ponekad prijeđemo na susjedni put. „Početak” ili „dio refrena” znači da još ne sviramo cijelu pjesmu.`:song?.description||'Otvori kartu pjesme i prati brojeve slijeva nadesno. Svaki broj govori gdje staviti prst.';picture=neck(1,0);task='Uči jedan mali dio, a zatim poveži dijelove.';}
-    document.getElementById('explain-body').innerHTML=`<div class="sheet-label">ZVONKO OBJAŠNJAVA</div><h2 id="explain-title">${esc(title)}</h2>${picture}<p>${esc(text)}</p><div class="note note-playful">${esc(task)}</div>`;
+    const link=window.withFingers||(s=>s);
+    document.getElementById('explain-body').innerHTML=`<div class="sheet-label">ZVONKO OBJAŠNJAVA</div><h2 id="explain-title">${esc(title)}</h2>${picture}<p>${link(esc(text))}</p><div class="note note-playful">${link(esc(task))}</div>`;
     document.getElementById('explain-dialog').showModal();
   }
   const close=()=>{const d=document.getElementById('explain-dialog');d.close();if(trigger?.isConnected)trigger.focus();};
