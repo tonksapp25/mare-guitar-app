@@ -730,10 +730,6 @@ body.theme-marija .card-figure-caption{
     overflow-y:auto;
     -webkit-overflow-scrolling:touch
   }
-  body:not(.nav-open) .sidebar,
-  body:not(.nav-open).theme-marija .sidebar{
-    visibility:hidden;pointer-events:none
-  }
   body.nav-open .sidebar,
   body.nav-open.theme-marija .sidebar{
     transform:translateX(0);visibility:visible;pointer-events:auto
