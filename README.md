@@ -130,3 +130,7 @@ pomoć „Ako zapne” ostaje kratki savjet ispod tog reda.
 Na ekranima od 1000 px sidebar je stalno vidljiv uz sadržaj. Na užim ekranima
 ostaje zatvoreni izbornik koji otvara gumb u headeru. Promjena širine automatski
 usklađuje vidljivost i dostupnost tipkovnicom, bez prekrivanja desktop sadržaja.
+
+Na desktopu gumb izbornika u headeru može potpuno sakriti ili ponovno prikazati
+sidebar. Skrivanje uklanja i rezervirani prostor; izbor se pamti na uređaju.
+Na užim ekranima isti gumb otvara puni izbornik preko sadržaja.

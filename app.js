@@ -826,7 +826,7 @@
     const previousScroll=window.scrollY;
     const [requested='pocetak',anchor='']=location.hash.slice(1).split('/');const route=nav.some(n=>n[0]===requested)?requested:'pocetak';
     content.dataset.view=route==='pjesmica'?'songs':'';
-    document.getElementById('navigation').innerHTML=nav.map(([id,title,num])=>`<a href="#${id}"${route===id?' aria-current="page"':''}><span class="nav-number" aria-hidden="true">${num}</span>${title}</a>`).join('');
+    document.getElementById('navigation').innerHTML=nav.map(([id,title,num])=>`<a href="#${id}" aria-label="${title}" title="${title}"${route===id?' aria-current="page"':''}><span class="nav-number" aria-hidden="true">${id==='pocetak'?'⌂':id==='zvuk'?'▶':id==='pomoc'?'ⓘ':num}</span><span class="nav-label">${title}</span></a>`).join('');
     if(route==='pocetak'&&anchor==='stimanje')content.innerHTML=tunePage();
         else if(route==='pocetak')content.innerHTML=home();
     else if(route.startsWith('tjedan-')){
@@ -860,6 +860,10 @@
     updateChrome();
   }
   const desktopNav=matchMedia('(min-width:1000px)');
+  let sidebarHidden=false;
+  try{sidebarHidden=localStorage.getItem('mare-sidebar-hidden')==='true';}catch{}
+  document.body.classList.toggle('sidebar-hidden',sidebarHidden);
+
   const setNavOpen=open=>{
     const desktop=desktopNav.matches;
     open=!!open&&!desktop;
@@ -867,9 +871,9 @@
     document.body.classList.toggle('nav-open',!!open);
     const toggle=document.getElementById('nav-toggle');
     const backdrop=document.getElementById('nav-backdrop');
-    if(toggle){toggle.setAttribute('aria-expanded',open?'true':'false');toggle.setAttribute('aria-label',open?'Zatvori izbornik':'Otvori izbornik');}
+    if(toggle){const expanded=desktop?!sidebarHidden:open;const label=desktop?(sidebarHidden?'Prikaži izbornik':'Sakrij izbornik'):(open?'Zatvori izbornik':'Otvori izbornik');toggle.setAttribute('aria-expanded',expanded?'true':'false');toggle.setAttribute('aria-label',label);toggle.title=label;}
     if(backdrop)backdrop.hidden=!open;
-    document.getElementById('app-sidebar').inert=!(desktop||open);
+    document.getElementById('app-sidebar').inert=!(desktop&&!sidebarHidden||open);
     if(open)document.getElementById('nav-close').focus({preventScroll:true});
   };
   const setShortcutsOpen=(open,restoreFocus=false)=>{
@@ -1000,7 +1004,15 @@
     if(e.target.closest('#topbar-greeting')){openGuitarName();return;}
     if(e.target.closest('#guitar-name-save')){saveGuitarName();return;}
     if(e.target.closest('#guitar-name-close')){document.getElementById('guitar-name-dialog')?.close();return;}
-    if(e.target.closest('#nav-toggle')){setNavOpen(!document.body.classList.contains('nav-open'));return;}
+    if(e.target.closest('#nav-toggle')){
+      if(desktopNav.matches){
+        sidebarHidden=!sidebarHidden;
+        document.body.classList.toggle('sidebar-hidden',sidebarHidden);
+        try{localStorage.setItem('mare-sidebar-hidden',String(sidebarHidden));}catch{}
+        setNavOpen(false);updateChrome();stabiliseLesson();
+      }else setNavOpen(!document.body.classList.contains('nav-open'));
+      return;
+    }
     if(e.target.closest('#nav-close')||e.target.closest('#nav-backdrop')){setNavOpen(false);document.getElementById('nav-toggle').focus({preventScroll:true});return;}
     if(e.target.closest('#navigation a')||e.target.closest('.brand'))setNavOpen(false);
     const invitePrint=e.target.closest('.print-invite');
