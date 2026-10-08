@@ -84,7 +84,7 @@
         Object.keys(s.doneMissions).forEach(k=>{if(s.doneMissions[k]&&!state.missionStars[k])state.missionStars[k]=1;});
       }
       state.missionSteps=s.missionSteps&&typeof s.missionSteps==='object'?s.missionSteps:{};
-      state.resumeRoute=/^tjedan-[1-4]\/kartica-[1-4]-[1-7]$/.test(s.resumeRoute||'')?s.resumeRoute:'';
+      state.resumeRoute=/^tjedan-[1-4]\/kartica-[1-4]-[1-7](\/dan-[1-7])?$/.test(s.resumeRoute||'')?s.resumeRoute:'';
       state.activeWeek=Math.min(4,Math.max(1,Number(s.activeWeek)||1));
       state.guitarName=typeof s.guitarName==='string'?s.guitarName:'';
       state.guitarNamed=s.guitarNamed===true||(s.guitarNamed===undefined&&!!state.guitarName.trim());
@@ -126,7 +126,7 @@
     return false;
   };
   const guitarNameTrim=()=>(state.guitarName||'').trim();
-  const updateChrome=()=>{const el=document.getElementById('topbar-greeting');if(!el)return;const name=guitarNameTrim();el.textContent=name||'Moja gitara';el.setAttribute('aria-label',name?`${name}. Promijeni ime gitare`:'Dodaj ime gitare');document.documentElement.style.setProperty('--app-topbar-height',Math.ceil(document.querySelector('.topbar').getBoundingClientRect().height)+'px');};
+  const updateChrome=()=>{const el=document.getElementById('topbar-greeting');if(!el)return;const name=guitarNameTrim();el.textContent=name||'Moja gitara';el.setAttribute('aria-label',name?`${name}. Promijeni ime gitare`:'Dodaj ime gitare');document.documentElement.style.setProperty('--app-topbar-height',Math.ceil(document.querySelector('.topbar').getBoundingClientRect().height)+'px');document.documentElement.style.setProperty('--app-utility-height',Math.ceil(document.querySelector('.utility-bar').getBoundingClientRect().height)+'px');};
   const save=()=>{try{localStorage.setItem(storageKey,JSON.stringify(state));storageAvailable=true}catch{storageAvailable=false}const status=document.getElementById('save-status');if(status)status.textContent=storageAvailable?'':'Zvjezdice se nisu mogle spremiti.';};
   const section=(title,body,id='',label='')=>`<section class="sheet"${id?` id="${id}"`:''}>${label?`<div class="sheet-label">${escape(label)}</div>`:''}<h2>${escape(title)}</h2>${body}</section>`;
   const heading=(label,title,desc)=>`<div class="page-heading"><div><div class="eyebrow">${escape(label)}</div><h1>${escape(title)}</h1><p class="lede">${escape(desc)}</p></div></div>`;
@@ -403,6 +403,7 @@
     return {picture:picture(),sound:sound()};
   };
   const missionStep=state.missionSteps;
+  const missionStepKey=key=>/\/dan-[1-7]$/.test(location.hash)?key+'-'+location.hash.split('/')[2]:key;
   let stuckOpen={};
   /* 1.5 je pjevanje i pljesak, 3.4 je list i glas — gitara čeka. */
   const lessonUsesGuitar=c=>!(c.week===1&&c.num===5)&&!(c.week===3&&c.num===4);
@@ -461,7 +462,7 @@
     const withStars=c.kind!=='review';
     const steps=Array.isArray(c.steps)?c.steps:[];
     const lastIndex=Math.max(0,steps.length-1);
-    const i=Math.min(missionStep[key]||0,lastIndex);
+    const i=Math.min(missionStep[missionStepKey(key)]||0,lastIndex);
     const last=steps.length===0||i>=lastIndex;
     const {picture,sound}=cardParts(c);
     const showNav=steps.length>1;
@@ -475,7 +476,7 @@
     const zvonkoHtml=`<aside class="card-zvonko" aria-label="${escape(mascotName)}"><img src="assets/dragon-guitar-pixar.jpg" alt="" width="56" height="56"><p><strong>${escape(tip[0])}</strong>${fingerPlain(tip[1])}</p></aside>`;
     const stuckHtml=stuck?`<button type="button" class="stuck-toggle secondary" data-stuck-toggle="${key}" aria-expanded="${open?'true':'false'}">Ako zapne</button>${open?`<div class="stuck-tip" id="stuck-${key}" role="note"><img src="assets/dragon-guitar-pixar.jpg" alt="" width="48" height="48"><p><strong>${escape(mascotName)}:</strong> ${fingerPlain(stuck)}</p></div>`:''}`:'';
     return `<article class="exercise-card${c.kind==='review'?' review-card':''}${c.kind==='posture'?' instruction-card':''}${withStars&&n?' has-stars':''}" id="kartica-${c.week}-${c.num}">
-      <div class="card-tag">MISIJA ${c.week}.${c.num}</div>
+      <div class="card-tag">${c.week}. TJEDAN · ${missionDay(c.week,c.num)?`DAN ${missionDay(c.week,c.num)}`:'DODATNA VJEŽBA'}</div>
       <h3>${escape(c.title.replace('Sam/a','Sama'))}</h3>
       ${zvonkoHtml}
       ${lessonUsesGuitar(c)?tuneReminder():''}
@@ -498,6 +499,8 @@
       current.querySelector(selector)?.replaceWith(next.querySelector(selector));
     }
     current.className=next.className;
+    const orientation=document.querySelector('.week-orientation');
+    if(orientation)orientation.outerHTML=weekOrientation(w,missionDay(w,n),!missionDay(w,n));
     updateShortcuts();
   };
   const weekMeter=week=>{
@@ -596,25 +599,20 @@
   const focusDay=(week,dayIndex)=>{const hook=data.daily[week-1][dayIndex][0];const kid=dailyKid[week-1][dayIndex];const firstMission=kid.missions[0];return {hook,kid,firstMission};};
   const activeWeek=()=>Math.min(4,Math.max(1,Number(state.activeWeek)||1));
   const backToWeek=n=>`<p class="mission-back"><a class="button secondary" href="#tjedan-${n}">Svi dani ovog tjedna</a></p>`;
-  const nextMission=(week,num)=>{
-    const seq=dailyKid[week-1].map(d=>d.missions[0]);
-    const pack=(w,i)=>({week:w,num:dailyKid[w-1][i].missions[0],day:i+1,hook:data.daily[w-1][i][0]});
-    const at=seq.indexOf(num);
-    if(at>=0){
-      for(let i=at+1;i<seq.length;i++) if(seq[i]!==num) return pack(week,i);
-      return week<4?pack(week+1,0):null;
-    }
-    const later=data.cards.filter(c=>c.week===week&&c.num>num).map(c=>c.num).sort((a,b)=>a-b)[0];
-    if(later!=null){
-      const i=seq.indexOf(later);
-      return i>=0?pack(week,i):{week,num:later,day:1,hook:cardTitle(week,later)};
-    }
-    return week<4?pack(week+1,0):null;
+  const dayRoute=(w,d)=>`#tjedan-${w}/kartica-${w}-${dailyKid[w-1][d-1].missions[0]}/dan-${d}`;
+  const missionDay=(w,num)=>{
+    const requested=Number((location.hash.split('/')[2]||'').replace('dan-',''));
+    if(requested>=1&&requested<=7&&dailyKid[w-1][requested-1].missions[0]===num)return requested;
+    const at=dailyKid[w-1].findIndex(d=>d.missions[0]===num);
+    return at<0?0:at+1;
   };
+  const weekTabs=n=>`<nav class="week-picker" aria-label="Odaberi tjedan">${[1,2,3,4].map(w=>`<a class="week-pick${w===n?' is-active':''}" href="#tjedan-${w}"${w===n?' aria-current="page"':''}>Tjedan ${w}</a>`).join('')}</nav>`;
+  const weekOrientation=(n,day=0,extra=false)=>`<nav class="location-path" aria-label="Putanja"><a href="#pocetak">Početak</a><span aria-hidden="true">›</span><a href="#tjedan-${n}">${n}. tjedan</a>${day?`<span aria-hidden="true">›</span><strong>Dan ${day} od 7</strong>`:extra?'<span aria-hidden="true">›</span><strong>Dodatna vježba</strong>':''}</nav><section class="week-orientation" aria-label="Tjedni i dani">${weekTabs(n)}${day||extra?`<nav class="week-timeline" aria-label="Dani ${n}. tjedna">${[1,2,3,4,5,6,7].map(d=>{const key=`${n}-${dailyKid[n-1][d-1].missions[0]}`;return `<a href="${dayRoute(n,d)}"${d===day?' aria-current="step"':''} aria-label="Dan ${d}: ${escape(data.daily[n-1][d-1][0])}${d===day?', ovdje si':''}"><span>Dan ${d}</span><span class="timeline-status">${d===day?'Ovdje si':getStars(key)?'★':'•'}</span></a>`;}).join('')}</nav><p class="day-location">${day?`Dan ${day}: ${escape(data.daily[n-1][day-1][0])}`:'Ova vježba je dodatna. Gore možeš odabrati bilo koji dan.'}</p>${day&&dailyKid[n-1].filter(d=>d.missions[0]===dailyKid[n-1][day-1].missions[0]).length>1?`<p class="day-purpose">${fingerPlain(dailyKid[n-1][day-1].text)}</p>`:''}`:''}</section>`;
   const missionNav=(week,num)=>{
-    const next=nextMission(week,num);
-    const nextLink=next?`<a class="button" href="#tjedan-${next.week}/kartica-${next.week}-${next.num}" data-pick-day="${next.week}" data-day="${next.day}">Sljedeća: ${escape(next.hook)}</a>`:'';
-    return `<p class="mission-back"><a class="button secondary" href="#tjedan-${week}">Svi dani ovog tjedna</a>${nextLink}</p>`;
+    const day=missionDay(week,num);
+    const prev=day>1?`<a class="button secondary" href="${dayRoute(week,day-1)}">← Dan ${day-1}</a>`:'';
+    const next=day&&day<7?`<a class="button" href="${dayRoute(week,day+1)}">Dan ${day+1}: ${escape(data.daily[week-1][day][0])} →</a>`:day===7&&week<4?`<a class="button" href="#tjedan-${week+1}">Prijeđi na ${week+1}. tjedan →</a>`:day===7?'<a class="button" href="#napredak">Moje zvjezdice →</a>':'';
+    return `<p class="mission-back">${prev}<a class="button secondary" href="#tjedan-${week}">Svi dani ${week}. tjedna</a>${next}</p>`;
   };
   const todayView=(week,opts={})=>{
     const day=Math.min(7,Math.max(1,Number(state.days[week])||1));
@@ -640,10 +638,10 @@
     return `<div class="day"><strong>Dan ${dayIndex+1}</strong><div><b>${escape(hook)}</b><p>${fingerPlain(kid.text)}</p>${missions}${game}${listen}${parent}</div></div>`;
   };
   function home(){
-    const name=guitarNameTrim();
-    const w=activeWeek();
-    const hello=name?`Danas svira ${name}.`:'Danas svira tvoja gitara.';
-    return `<div class="kid-flow"><h1 class="home-hello">${escape(hello)}</h1>${state.resumeRoute?`<p class="resume-card"><a class="button" href="#${state.resumeRoute}">Nastavi vježbu</a></p>`:''}${todayView(w,{home:true})}</div>`;
+    const resumed=/^tjedan-([1-4])\/kartica-\d-(\d)/.exec(state.resumeRoute||'');
+    const resumeDay=Number((state.resumeRoute.split('/')[2]||'').replace('dan-',''));
+    const resume=resumed?`<section class="resume-summary"><p>Zadnja otvorena vježba: <strong>${resumed[1]}. tjedan${resumeDay?` · Dan ${resumeDay}`:''} · ${escape(cardTitle(Number(resumed[1]),Number(resumed[2])))}</strong></p><a class="button secondary" href="#${state.resumeRoute}">Nastavi tu vježbu</a></section>`:'';
+    return `<div class="kid-flow course-home">${heading('POČETAK','Moja gitarska pustolovina','Odaberi tjedan, pa dan koji želiš vježbati.')}<nav class="course-weeks" aria-label="Četiri tjedna">${[1,2,3,4].map(w=>`<a href="#tjedan-${w}" class="course-week"><span class="course-week-number">${w}</span><span><strong>${w}. tjedan</strong><span>${escape(titles[w-1])}</span><small>${starCards(w).filter(c=>getStars(`${w}-${c.num}`)>0).length} od ${starCards(w).length} vježbi sa zvjezdicama</small></span><span aria-hidden="true">›</span></a>`).join('')}</nav>${resume}</div>`;
   }
   const howToReadMap=()=>`<section class="sheet how-to-read" id="kako-citam"><div class="sheet-label">PRIJE MISIJA</div><h2>Kako čitam kartu?</h2><p class="lede">Tri znaka — i možeš svirati!</p><div class="read-map-grid">
     <article class="read-map-card"><div class="rm-visual rm-line" aria-hidden="true"><span class="rm-string rm-s1"></span><span class="rm-string rm-s2"></span><span class="rm-string"></span></div><h3>1. Crta = žica</h3><p>Gornja crta je <strong class="c-s1">1. žica</strong> (ružičasta). Ispod nje <strong class="c-s2">2. žica</strong> (žuta).</p></article>
@@ -653,31 +651,32 @@
   function week(n,anchor=''){
     const cards=data.cards.filter(c=>c.week===n);
     const aud=n===1?[0,5]:n===2?[8,9,1,7]:n===3?[6,2,3]:[4];
-    if(anchor==='danas')return `<div class="kid-flow">${todayView(n,{back:true})}</div>`;
+    if(anchor==='danas')return `<div class="kid-flow">${weekOrientation(n)}${todayView(n,{back:true})}</div>`;
     const missionMatch=/^kartica-(\d+)-(\d+)$/.exec(anchor||'');
     if(missionMatch&&Number(missionMatch[1])===n){
       const c=cards.find(x=>x.num===Number(missionMatch[2]));
-      if(c)return `<div class="kid-flow">${card(c)}</div>`;
+      if(c)return `<div class="kid-flow">${weekOrientation(n,missionDay(n,c.num),!missionDay(n,c.num))}${card(c)}</div>`;
     }
-    if(anchor==='kako-citam'&&n>=2)return `<div class="kid-flow">${backToWeek(n)}${howToReadMap()}</div>`;
-    if(anchor==='poslusaj')return `<div class="kid-flow">${backToWeek(n)}${section('Svi zvukovi',`<div class="sounds">${aud.map(audio).join('')}</div><p class="storage-note">Prvo slušaj, pa probaj uz zvuk. Ruke ti pokaže odrasla osoba.</p>`,'poslusaj')}</div>`;
+    if(anchor==='kako-citam'&&n>=2)return `<div class="kid-flow">${weekOrientation(n)}${backToWeek(n)}${howToReadMap()}</div>`;
+    if(anchor==='poslusaj')return `<div class="kid-flow">${weekOrientation(n)}${backToWeek(n)}${section('Svi zvukovi',`<div class="sounds">${aud.map(audio).join('')}</div><p class="storage-note">Prvo slušaj, pa probaj uz zvuk. Ruke ti pokaže odrasla osoba.</p>`,'poslusaj')}</div>`;
     const today=Math.min(7,Math.max(1,Number(state.days[n])||1));
-    const weekPick=`<div class="week-picker" role="group" aria-label="Odaberi tjedan">${[1,2,3,4].map(w=>`<button type="button" class="week-pick${w===n?' is-active':''}" data-home-week="${w}" aria-pressed="${w===n}">Tjedan ${w}</button>`).join('')}</div>`;
     const tiles=[0,1,2,3,4,5,6].map(i=>{
       const hook=data.daily[n-1][i][0];
       const kid=dailyKid[n-1][i];
       const num=kid.missions[0];
-      const href=num?`#tjedan-${n}/kartica-${n}-${num}`:`#tjedan-${n}`;
+      const href=num?dayRoute(n,i+1):`#tjedan-${n}`;
       const stars=num?getStars(`${n}-${num}`):0;
       const found=num?cards.find(x=>x.num===num):null;
       const withStars=!found||found.kind!=='review';
       const star=withStars
         ?`<span class="day-tile-star" aria-label="${stars?stars+' od 3':'još nema zvjezdica'}">${[1,2,3].map(s=>`<span class="${s<=stars?'is-on':''}" aria-hidden="true">★</span>`).join('')}</span>`
         :'';
-      return `<a class="day-tile${i+1===today?' is-today':''}" href="${href}" data-pick-day="${n}" data-day="${i+1}"><span class="day-tile-num">Dan ${i+1}</span><span class="day-tile-title">${escape(hook)}</span>${star}</a>`;
+      return `<a class="day-tile${i+1===today?' is-today':''}" href="${href}" data-pick-day="${n}" data-day="${i+1}"><span class="day-tile-num">Dan ${i+1}</span><span class="day-tile-title">${escape(hook)}${i+1===today&&state.resumeRoute.startsWith(`tjedan-${n}/`)?'<small class="last-day-label">Zadnje otvoren</small>':''}</span>${star}</a>`;
     }).join('');
+    const extraCards=cards.filter(c=>!dailyKid[n-1].some(d=>d.missions.includes(c.num)));
+    const extra=extraCards.length?`<section class="extra-missions"><h2>Dodatne vježbe</h2>${missionLinks(n,extraCards.map(c=>c.num))}</section>`:'';
     const links=`<nav class="week-links" aria-label="Poveznice tjedna">${n>=2?`<a href="#tjedan-${n}/kako-citam">Kako čitam kartu</a>`:''}<a href="#tjedan-${n}/poslusaj">Svi zvukovi</a></nav>`;
-    return `<div class="kid-flow">${heading('TJEDAN '+n,titles[n-1],'Otvori jedan dan.')}${mascotFor('tjedan'+n)}${weekPick}<div class="day-path">${tiles}</div>${links}${n===4?concertInvite():''}<div class="week-footer"><a class="button secondary" href="#${n===1?'pocetak':'tjedan-'+(n-1)}">${n===1?'Početak':'Prethodni tjedan'}</a><a class="button" href="#${n===4?'napredak':'tjedan-'+(n+1)}">${n===4?'Moje zvjezdice':'Sljedeći tjedan'}</a></div></div>`;
+    return `<div class="kid-flow">${heading('TJEDAN '+n,titles[n-1],'Otvori jedan dan.')}${weekOrientation(n)}${mascotFor('tjedan'+n)}<div class="day-path">${tiles}</div>${extra}${links}${n===4?concertInvite():''}<div class="week-footer"><a class="button secondary" href="#${n===1?'pocetak':'tjedan-'+(n-1)}">${n===1?'Početak':'Prethodni tjedan'}</a><a class="button" href="#${n===4?'napredak':'tjedan-'+(n+1)}">${n===4?'Moje zvjezdice':'Sljedeći tjedan'}</a></div></div>`;
   }
   function progress(){
     const total=totalStars();const maxAll=[1,2,3,4].reduce((a,w)=>a+weekStarMax(w),0);const unlocked=unlockedBadges().length;
@@ -718,13 +717,12 @@
     content.dataset.view=route==='pjesmica'?'songs':'';
     document.getElementById('navigation').innerHTML=nav.map(([id,title,num])=>`<a href="#${id}"${route===id?' aria-current="page"':''}><span class="nav-number" aria-hidden="true">${num}</span>${title}</a>`).join('');
     if(route==='pocetak'&&anchor==='stimanje')content.innerHTML=tunePage();
-    else if(route==='pocetak'&&!state.guitarNamed)content.innerHTML=meetGuitar();
-    else if(route==='pocetak')content.innerHTML=home();
+        else if(route==='pocetak')content.innerHTML=home();
     else if(route.startsWith('tjedan-')){
       const w=Number(route.slice(-1));
       if(/^kartica-/.test(anchor)){
         const c=data.cards.find(c=>`kartica-${c.week}-${c.num}`===anchor&&c.week===w);
-        if(c){state.activeWeek=w;state.resumeRoute=route+'/'+anchor;const days=dailyKid[w-1];if(days[(state.days[w]||1)-1]?.missions[0]!==c.num){const dayIndex=days.findIndex(d=>d.missions[0]===c.num);if(dayIndex>=0)state.days[w]=dayIndex+1;}save();}
+        if(c){state.activeWeek=w;state.resumeRoute=location.hash.slice(1);const day=missionDay(w,c.num);if(day)state.days[w]=day;save();}
       }
       content.innerHTML=week(w,anchor);
     }
@@ -737,7 +735,7 @@
     const dock=document.getElementById('mobile-dock');
     if(dock){
       const dockNav=[
-        ['#pocetak','spark','Danas',(route==='pocetak'&&anchor!=='stimanje')||anchor==='danas'],
+        ['#pocetak','spark','Početak',route==='pocetak'&&anchor!=='stimanje'],
         ['#pjesmica','note','Pjesmice',route==='pjesmica'],
         ['#napredak','star','Zvjezdice',route==='napredak']
       ];
@@ -753,9 +751,9 @@
     }
     if(keepPosition===true)window.scrollTo({top:previousScroll,behavior:'instant'});else window.scrollTo({top:0,behavior:'instant'});
     document.querySelectorAll('audio').forEach(a=>a.addEventListener('play',()=>document.querySelectorAll('audio').forEach(other=>{if(other!==a)other.pause()})));
-    updateChrome();
     updateShortcuts();
-    updateScreenNavigation();
+    updateHomeNavigation();
+    updateChrome();
   }
   const setNavOpen=open=>{
     document.body.classList.toggle('nav-open',!!open);
@@ -846,6 +844,8 @@
     if(!dlg.open)dlg.showModal();
   };
   document.addEventListener('click',e=>{
+    const homeLink=e.target.closest('a[href="#pocetak"]');
+    if(homeLink&&location.hash==='#pocetak'){e.preventDefault();window.scrollTo({top:0,behavior:'instant'});return;}
     const back=e.target.closest('[data-screen-back]');
     if(back){if(screenHistory.index>0)history.back();else location.hash=state.resumeRoute||'pocetak';return;}
     if(e.target.closest('[data-screen-forward]')){if(screenHistory.index<screenHistory.entries.length-1)history.forward();return;}
@@ -893,7 +893,7 @@
     const stepPrev=e.target.closest('[data-step-prev]');
     if(stepPrev&&!stepPrev.disabled){
       const key=stepPrev.dataset.stepPrev;
-      missionStep[key]=Math.max(0,(missionStep[key]||0)-1);
+      missionStep[missionStepKey(key)]=Math.max(0,(missionStep[missionStepKey(key)]||0)-1);
       save();refreshMission(key);
       document.querySelector('.step-one')?.focus({preventScroll:true});
       return;
@@ -902,8 +902,8 @@
     if(stepNext){
       const key=stepNext.dataset.stepNext;
       const max=Number(stepNext.dataset.stepMax);
-      const next=Math.min(max,(missionStep[key]||0)+1);
-      missionStep[key]=next;
+      const next=Math.min(max,(missionStep[missionStepKey(key)]||0)+1);
+      missionStep[missionStepKey(key)]=next;
       save();refreshMission(key);
       document.querySelector('.step-one')?.focus({preventScroll:true});
 
@@ -1039,9 +1039,9 @@
     history.replaceState({...history.state,mareScreen:screenHistory.sequence},'',location.href.split('#')[0]+routeHash());
   }
   if('scrollRestoration' in history)history.scrollRestoration='manual';
-  const updateScreenNavigation=()=>{
+  const updateHomeNavigation=()=>{
     const el=document.getElementById('screen-navigation');
-    el.innerHTML=`<button type="button" class="screen-arrow secondary" data-screen-back aria-label="Prethodni ekran"${screenHistory.index===0?' disabled':''}><span aria-hidden="true">←</span><span>Natrag</span></button><button type="button" class="screen-arrow secondary" data-screen-forward aria-label="Sljedeći ekran"${screenHistory.index>=screenHistory.entries.length-1?' disabled':''}><span>Naprijed</span><span aria-hidden="true">→</span></button>`;
+    el.innerHTML=`<a class="home-shortcut" href="#pocetak" aria-label="Početak · svi tjedni"><span aria-hidden="true">⌂</span><span>Početak</span></a>`;
   };
   const shortcutIcon=kind=>kind==='guitar'?'<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M29 5h7v9h-3l-7 13c7 8 2 17-7 16C9 42 5 35 10 28c2-3 6-2 8-6l9-13z" fill="currentColor"/><circle cx="20" cy="31" r="4" fill="white"/><path d="m20 29 12-20" stroke="white" stroke-width="2"/></svg>':`<span aria-hidden="true">${{days:'▦',song:'♪',stars:'★',hand:'☝',help:'?'}[kind]||'♪'}</span>`;
   const updateShortcuts=()=>{

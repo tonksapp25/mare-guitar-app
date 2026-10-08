@@ -54,12 +54,17 @@ slušanje, zasebne stranice, uklonjene pjesme i jedanaest vrsta objašnjenja.
 
 ## Navigacija na mobitelu i tabletu
 
-Strelice Natrag/Naprijed prate posjećene ekrane u ovoj kartici preglednika
-i vraćaju položaj skrolanja. Povijest ekrana čuva se u sessionStorage,
-a koraci vježbi i posljednja otvorena misija u postojećem localStorage zapisu.
+Početak uvijek otvara kartu sva četiri tjedna. Posljednja vježba ima zaseban,
+jasno označen prečac. Na vježbi se prikazuju putanja, izbor tjedna i svih sedam
+dana s oznakom „Ovdje si”. Dane koji koriste istu karticu razlikuje završetak
+rute `/dan-N`; izravne stare poveznice na kartice i dalje rade.
+Korak se pamti zasebno za svaki dan, i kad dva dana koriste istu karticu.
+Dodatne kartice koje nisu u dnevnom rasporedu označene su kao dodatne vježbe.
+Povijest preglednika čuva položaj skrolanja; povratak iz štimanja vraća na
+prethodni ekran. Koraci vježbi ostaju u postojećem localStorage zapisu.
 Kružni prečaci stoje uz sadržaj na širokom ekranu i iznad njega na mobitelu;
 gitara uvijek otvara štimanje. Promjena koraka čuva postojeći audio player.
 
-Donja navigacija na mobitelu i tabletu: Danas, Pjesmice i Zvjezdice.
+Donja navigacija na mobitelu i tabletu: Početak, Pjesmice i Zvjezdice.
 Na ekranu širem od 1280 px zamjenjuje je postojeći lijevi izbornik.
 Štimanje je uvijek u kružnim prečacima; ostali krugovi prate trenutačnu vježbu.
