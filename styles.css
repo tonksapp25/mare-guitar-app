@@ -49,7 +49,14 @@ nav a[aria-current=page]{background:var(--yellow);color:var(--ink);font-weight:7
 .speech-bubble strong{display:block;margin-bottom:6px;font-size:1.15rem;color:var(--teal)}
 @media(max-width:640px){.mascot-panel{grid-template-columns:1fr;text-align:center}.mascot-frame{margin:0 auto}.speech-bubble::before,.speech-bubble::after{left:50%;top:-12px;transform:translateX(-50%);border:10px solid transparent;border-bottom:14px solid var(--mint-border);border-right:none;border-left:none;border-top:none}.speech-bubble::after{top:-9px;border-bottom-color:var(--mint)}}
 @media print{.mascot-panel,.mascot-frame img{break-inside:avoid}.speech-bubble::before,.speech-bubble::after{display:none}}
-.topbar-greeting{font-weight:600;color:var(--teal);font-size:15px}
+button.topbar-greeting{
+  font-weight:700;color:var(--teal);font-size:15px;line-height:1.2;
+  background:transparent;border:2px solid transparent;box-shadow:none;
+  border-radius:999px;padding:8px 12px;min-height:44px;cursor:pointer
+}
+button.topbar-greeting:hover,button.topbar-greeting:focus-visible{
+  transform:none;background:#ffe4f0;border-color:#f48fb1;box-shadow:none
+}
 h1{background:linear-gradient(120deg,var(--teal) 0%,#6bb5e8 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
 .card-tag{background:var(--yellow);border:2px solid var(--yellow-border);border-radius:999px;padding:6px 12px;display:inline-block}
 .goal{border-left:0;border-radius:var(--radius);background:linear-gradient(90deg,var(--yellow) 0%,#fff8e6 100%);border:2px dashed var(--gold);padding:16px 20px;font-size:16px}
@@ -119,7 +126,9 @@ nav a[aria-current=page]{box-shadow:0 2px 8px rgba(45,74,94,.12)}
 .day-game{margin:8px 0 0;padding:10px 12px;border-radius:12px;background:var(--soft);border:2px solid var(--mint-border);font-weight:600;font-size:15px;color:var(--teal)}
 .day-parent{margin:8px 0 0;padding:10px 12px;border-radius:12px;background:#fff8e8;border:2px dashed var(--gold);font-size:14px;line-height:1.45;color:var(--ink)}
 .day-parent strong{color:#c2185b}
-.stuck-tip{margin:14px 0 0;padding:12px 14px;border-radius:14px;background:linear-gradient(135deg,#fff3c4,#ffe4f0);border:2px solid #f48fb1;font-size:14px;line-height:1.45}
+.stuck-tip{display:flex;gap:10px;align-items:center;margin:14px 0 0;padding:12px 14px;border-radius:14px;background:linear-gradient(135deg,#fff3c4,#ffe4f0);border:2px solid #f48fb1;font-size:14px;line-height:1.45}
+.stuck-tip img{width:48px;height:48px;border-radius:14px;object-fit:cover;flex-shrink:0;background:#fff3c4}
+.stuck-tip p{margin:0}
 .stuck-tip strong{color:#c2185b}
 .star-hero{text-align:center;background:linear-gradient(160deg,var(--yellow),var(--mint));margin-bottom:24px}
 .star-hero-count{margin:8px 0 12px}
@@ -167,6 +176,7 @@ nav a[aria-current=page]{box-shadow:0 2px 8px rgba(45,74,94,.12)}
 .app-ico-hand::before{content:"✦"}
 .app-ico-note::before{content:"♪"}
 .app-ico-spark::before{content:"✦"}
+.app-ico-tune::before{content:"◎"}
 .day-goal .app-ico{margin-right:.45em}
 .star-howto-title .app-ico{margin-right:.35em}
 .badge-tile strong{display:block;font-size:14px;margin-bottom:4px}
@@ -252,15 +262,15 @@ body.theme-marija .brand-icon{
   border-radius:20px;
   animation:sparkle-spin 8s linear infinite;
 }
-body.theme-marija .sidebar .eyebrow{color:#ffe0ec}
-body.theme-marija nav a{color:#fff0f6}
-body.theme-marija nav a:hover{background:rgba(255,255,255,.14)}
-body.theme-marija nav a[aria-current=page]{
+body.theme-marija .sidebar .eyebrow{color:#fff}
+body.theme-marija .sidebar nav a{color:#fff}
+body.theme-marija .sidebar nav a:hover{background:rgba(255,255,255,.14)}
+body.theme-marija .sidebar nav a[aria-current=page]{
   background:linear-gradient(135deg,#fff,#ffe4f0);
   color:#c2185b;
   box-shadow:0 4px 14px rgba(255,255,255,.25);
 }
-body.theme-marija .sidebar-note{color:#ffd6e7;border-top-color:rgba(255,255,255,.25)}
+body.theme-marija .sidebar-note{color:#fff;border-top-color:rgba(255,255,255,.45)}
 body.theme-marija .sidebar-note strong{color:#fff59d}
 body.theme-marija .sidebar .secondary{
   color:#fff;border-color:rgba(255,255,255,.45);background:rgba(255,255,255,.12)
@@ -357,7 +367,7 @@ body.theme-marija .speech-bubble::before{border-right-color:#f48fb1}
 body.theme-marija .speech-bubble::after{border-right-color:#ffe4f0}
 body.theme-marija .speech-bubble strong{color:#c2185b}
 body.theme-marija .card-zvonko{
-  background:linear-gradient(120deg,#ffe4f0,#e8d4ff);
+  background:linear-gradient(120deg,#ffe4f0,#fff8e8);
   border-color:#f48fb1
 }
 body.theme-marija .card-zvonko strong{color:#c2185b}
@@ -600,8 +610,6 @@ body.zvonko-welcome-open{overflow:hidden}
   border-radius:20px;border:2px solid #f48fb1;background:#fff5fb;object-fit:contain
 }
 body.theme-marija .posture-illustration .picture-legend strong{color:#c2185b}
-.finger-fret-hero{margin:0 0 14px}
-.finger-fret-hero img{display:block;width:100%;max-width:520px;height:auto;border-radius:18px;border:2px solid #f48fb1}
 
 /* ========== Štimanje ========== */
 .tune-home{background:linear-gradient(145deg,#fffafc,#ffe4f0 42%,#fff8e8);border:3px solid #f48fb1}
@@ -729,8 +737,7 @@ body.theme-marija .card-figure-caption{
   body.nav-open{overflow:hidden}
 
   .sidebar .eyebrow,
-  .sidebar-note,
-  .sidebar>.print{display:block!important}
+  .sidebar-note{display:block!important}
   .sidebar #navigation{
     flex-direction:column!important;
     overflow:visible!important;
@@ -772,11 +779,9 @@ body.theme-marija .card-figure-caption{
   .danas-chip-go{background:rgba(255,255,255,.22);padding:4px 10px;border-radius:999px;font-size:13px}
 
   .read-map-grid{grid-template-columns:1fr}
-  .finger-fret-hero img{max-width:100%}
 
   main{padding:18px 14px 28px!important;max-width:100%}
   .page-heading{display:block}
-  .page-heading>.print{margin:0 0 10px;min-height:44px}
   .sheet{padding:18px!important;border-radius:20px;margin-bottom:16px}
   h1{font-size:clamp(26px,7vw,34px)!important;letter-spacing:-.6px}
   h2{font-size:1.35rem}
@@ -797,6 +802,7 @@ body.theme-marija .card-figure-caption{
   .star-choice-row{grid-template-columns:1fr!important}
   .star-choice{min-height:64px;padding:14px}
   .button,button.modal-done,a.button{min-height:48px;padding:12px 18px;font-size:16px;border-radius:14px}
+  .step-actions .step-prev,.step-actions .step-next{min-height:34px;padding:4px 12px;font-size:14px;border-radius:999px}
   .quicklinks{gap:8px;overflow-x:auto;flex-wrap:nowrap;padding-bottom:4px}
   .quicklinks a{flex:0 0 auto;min-height:40px;display:inline-flex;align-items:center;padding:8px 14px}
   .mascot-panel{gap:14px}
@@ -829,7 +835,6 @@ body.theme-marija .card-figure-caption{
   body.theme-marija{background-attachment:scroll}
   section[id]{scroll-margin-top:calc(68px + env(safe-area-inset-top,0px))}
   .page-heading,.song-heading{display:flex;flex-direction:column;align-items:stretch;gap:12px}
-  .page-heading>.print,.song-heading>.print{width:100%;justify-content:center;margin:0}
   .page-heading .lede,.song-heading .lede{max-width:none}
   .song-heading h1{font-size:clamp(22px,6vw,30px)!important}
   .section-heading{flex-wrap:wrap;gap:10px}
@@ -858,7 +863,6 @@ body.theme-marija .card-figure-caption{
   .exercise-card h3{font-size:1.15rem}
   .exercise-card ol{font-size:15px}
   .dock-item{min-height:54px;padding:8px 6px}
-  .sidebar>.print{width:100%;min-height:48px;margin-top:12px}
   .card-grid{grid-template-columns:1fr;gap:18px;max-width:720px}
   .song-controls select,.song-controls button{font-size:14px;min-height:44px}
   .song-title{flex-wrap:wrap}
@@ -905,3 +909,133 @@ body.theme-marija .card-figure-caption{
   .nav-toggle,.nav-close,.mobile-dock,.nav-backdrop,.danas-chip{display:none!important}
   body.nav-open .sidebar{transform:none}
 }
+
+/* Jedan posao odjednom */
+.kid-flow{max-width:720px;margin:0 auto}
+.mission-back{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 14px}
+.mission-back .button{min-height:48px;flex:1 1 180px}
+.today-focus .picture-legend,
+.today-focus .picture-caption,
+.today-focus .string-legend,
+.today-focus .card-figure-caption{display:none}
+.today-focus .teach-svg,
+.today-focus .learning-illustration svg,
+.today-focus .learning-illustration img,
+.today-focus .card-figure svg{
+  width:auto;max-width:100%;height:auto;max-height:200px;display:block;margin:0 auto;object-fit:contain
+}
+.today-focus .learning-illustration{grid-template-columns:1fr}
+.step-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:10px 0 6px}
+.step-kicker{margin:0;font-size:13px;font-weight:700;letter-spacing:.04em;color:#c2185b}
+.step-one{
+  margin:0;padding:16px 18px;border-radius:18px;
+  background:#fff3c4;border:2px solid #f0c86a;
+  font-size:1.2rem;line-height:1.45;font-weight:650
+}
+.step-one:focus{outline:3px solid #f0c86a;outline-offset:3px}
+.step-actions{display:flex;gap:6px;margin:0;flex:0 0 auto}
+.step-actions .step-prev,
+.step-actions .step-next{
+  min-height:34px;width:auto;flex:0 0 auto;
+  padding:4px 12px;font-size:14px;border-radius:999px;box-shadow:none
+}
+body.theme-marija .step-actions .step-prev,
+body.theme-marija .step-actions .step-next{min-height:34px;padding:4px 12px;box-shadow:none}
+.step-prev:disabled{opacity:.4;cursor:default;box-shadow:none;transform:none}
+.stuck-toggle{min-height:52px;width:100%;margin-top:12px}
+.day-path{display:flex;flex-direction:column;gap:12px;margin:8px 0 20px}
+.day-tile{
+  display:flex;align-items:center;gap:12px;
+  min-height:72px;padding:14px 16px;text-decoration:none;color:#5c3d55;
+  background:#fffafc;border:2px solid #f48fb1;border-radius:22px;
+  box-shadow:0 8px 20px rgba(236,64,122,.1)
+}
+.day-tile.is-today{border-color:#ec407a;background:linear-gradient(135deg,#fff3c4,#ffe4f0)}
+.day-tile-num{
+  flex:0 0 auto;min-width:64px;padding:6px 8px;border-radius:999px;
+  background:#ffe4f0;color:#c2185b;font-weight:700;text-align:center;font-size:14px
+}
+.day-tile-title{flex:1;font-weight:700;font-size:1.05rem;line-height:1.3}
+.print-row{margin:12px 0 0}
+.print-quiet{
+  display:inline-flex;align-items:center;min-height:32px;margin:0;padding:2px 0;
+  border:0;border-radius:0;background:transparent;box-shadow:none;
+  color:#b85a86;font-size:14px;font-weight:650;
+  text-decoration:underline;text-underline-offset:3px
+}
+.print-quiet:hover,.print-quiet:focus-visible{color:#c2185b;background:transparent;box-shadow:none;transform:none}
+body.theme-marija .print-quiet{background:transparent;border:0;box-shadow:none;color:#b85a86}
+.day-tile-star{display:flex;gap:3px;font-size:20px;line-height:1;letter-spacing:0}
+.day-tile-star span{color:transparent;-webkit-text-stroke:1.6px #f8bbd0}
+.day-tile-star .is-on{color:#c2185b;-webkit-text-stroke:0}
+.week-links{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 22px}
+.week-links a{
+  display:inline-flex;align-items:center;min-height:44px;padding:8px 14px;
+  border-radius:999px;background:#fff;border:2px solid #f48fb1;color:#c2185b;
+  font-weight:700;text-decoration:none
+}
+.adult-fold.parent-fold summary::after{content:"▸ Otvori"}
+.adult-fold.parent-fold[open] summary::after{content:"▾ Sakrij"}
+.parent-fold .tune-home{margin-top:16px}
+.dock-item .app-ico{margin:0;width:28px;height:28px;font-size:15px}
+body.theme-marija .mobile-dock .dock-item{color:#880e4f}
+body.theme-marija .mobile-dock .dock-item.is-on{color:#6a1040}
+body.theme-marija .week-links a{color:#c2185b;background:#fff}
+.danas-chip{display:none!important}
+.mobile-dock{display:flex}
+.workspace{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
+@media(min-width:1281px){
+  .mobile-dock{left:254px}
+}
+@media(max-width:1280px){
+  .mobile-dock{display:flex!important;left:0}
+  .workspace{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))!important}
+  .zvonko-toast{bottom:calc(92px + env(safe-area-inset-bottom,0px))!important}
+}
+@media(max-width:700px){
+  .day-tile-title{font-size:1rem}
+  .step-one{font-size:1.1rem}
+}
+body.theme-marija h1.home-hello{
+  margin:0 0 14px;font-size:1.35rem;letter-spacing:0;font-weight:700;line-height:1.3;
+  background:none;-webkit-text-fill-color:#c2185b;color:#c2185b
+}
+.home-other{margin:14px 0 0;text-align:center}
+.home-other a{font-weight:700;color:#c2185b;font-size:1.05rem;text-decoration:none}
+.home-other a:hover{text-decoration:underline}
+button.guitar-ready{margin-top:8px;min-height:52px;width:100%;max-width:320px}
+#guitar-name-ready:disabled{opacity:.45;cursor:default;transform:none;box-shadow:none}
+#topbar-greeting{
+  background:transparent;color:#d81b60;border:2px solid transparent;box-shadow:none;
+  border-radius:999px;font-weight:700
+}
+#topbar-greeting:hover,#topbar-greeting:focus-visible{
+  transform:none;background:#ffe4f0;border-color:#f48fb1;box-shadow:none;color:#c2185b
+}
+#content .week-pick{
+  background:#fff;color:#5c3d55;border:2px solid #f0c86a;box-shadow:none;border-radius:999px
+}
+#content .week-pick.is-active{background:#ffe4f0;border-color:#ec407a;color:#c2185b}
+#content .week-pick:hover{transform:none;background:#fff3c4;box-shadow:none}
+#guitar-name-dialog{
+  position:relative;
+  padding:28px 24px 22px;max-width:720px;width:calc(100% - 24px);max-height:92vh;overflow:auto;
+  border:2px solid #f48fb1;border-radius:24px;background:#fffafc;color:#5c3d55
+}
+#guitar-name-dialog::backdrop{background:rgba(88,20,50,.45)}
+#guitar-name-dialog h2{margin-top:4px;padding-right:40px;font-size:1.45rem}
+.guitar-name-lead{margin:0 0 12px}
+#guitar-name-parts .learning-illustration{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:12px}
+#guitar-name-parts .learning-illustration svg{max-height:240px;height:auto}
+#guitar-name-dialog .form-label{margin-top:8px}
+#guitar-name-dialog input{
+  display:block;width:100%;box-sizing:border-box;
+  border:2px solid #f48fb1;border-radius:18px;padding:12px 16px;font-size:18px;margin:0 0 16px
+}
+#guitar-name-dialog .modal-done{width:100%}
+@media(max-width:700px){
+  #guitar-name-parts .learning-illustration{grid-template-columns:1fr}
+  #guitar-name-parts .learning-illustration svg{max-height:200px}
+}
+.guitar-rename{margin-bottom:24px}
+@media print{#guitar-name-dialog{display:none!important}}

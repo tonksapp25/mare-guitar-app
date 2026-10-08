@@ -32,4 +32,4 @@ index={
 assets=root/'assets/audio';assets.mkdir(parents=True,exist_ok=True)
 for path in (root/'output/audio').glob('*.wav'):shutil.copy2(path,assets/path.name)
 n_cards=len(data['cards'])
-print(f'Local app data ready: {n_cards} cards, 27 source sheets, 5 audio examples.')
+print(f'Local app data ready: {n_cards} cards, 27 source sheets, 10 audio examples.')

@@ -30,7 +30,6 @@
     <p class="eyebrow">MARIJIN PRVI MJESEC</p>
     <nav id="navigation"></nav>
     <div class="sidebar-note"><strong>Ti to možeš!</strong><br>Prvo lijep zvuk,<br>pa malo igre.</div>
-    <button class="print secondary" type="button">Ispiši listić</button>
   </aside>
   <div class="workspace">
     <header class="topbar">
@@ -38,7 +37,7 @@
         <span class="nav-toggle-bars" aria-hidden="true"></span>
         <span class="nav-toggle-text">Izbornik</span>
       </button>
-      <span class="topbar-greeting" id="topbar-greeting">Marijina gitara</span>
+      <button type="button" class="topbar-greeting" id="topbar-greeting" aria-haspopup="dialog" aria-controls="guitar-name-dialog">Moja gitara</button>
       <span class="local-badge">Tvoja bilježnica</span>
     </header>
     <main id="content" tabindex="-1"></main>
@@ -48,6 +47,15 @@
   <nav class="mobile-dock" id="mobile-dock" aria-label="Brza navigacija"></nav>
   <noscript>Za listanje materijala uključi JavaScript. Za statično izdanje otvori <a href="output/gitarska_pustolovina.html">postojeći HTML</a>.</noscript>
   <dialog id="explain-dialog" aria-labelledby="explain-title"><button class="modal-close secondary" type="button" aria-label="Zatvori objašnjenje">✕</button><div id="explain-body"></div><button type="button" class="modal-done">Super, krenimo!</button></dialog>
+  <dialog id="guitar-name-dialog" aria-labelledby="guitar-name-title">
+    <button class="modal-close secondary" type="button" id="guitar-name-close" aria-label="Zatvori">✕</button>
+    <h2 id="guitar-name-title">Tvoja gitara</h2>
+    <p class="guitar-name-lead">Pogledaj dijelove. Ime možeš promijeniti.</p>
+    <div id="guitar-name-parts"></div>
+    <label class="form-label" for="guitar-name-edit">Ime</label>
+    <input type="text" id="guitar-name-edit" maxlength="24" autocomplete="off" placeholder="npr. Luna, Zvjezdica…">
+    <button type="button" class="button modal-done" id="guitar-name-save">Spremi ime</button>
+  </dialog>
   <div id="zvonko-toast" class="zvonko-toast" hidden role="status" aria-live="polite"></div>
   <div id="zvonko-badge" class="zvonko-welcome" hidden role="dialog" aria-modal="true" aria-labelledby="zvonko-badge-title">
     <div class="zvonko-welcome-card">

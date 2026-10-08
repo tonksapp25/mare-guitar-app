@@ -8,10 +8,10 @@ window.KID_COPY=(()=>{
     '1-5':['Pjevaj Brateca!','Najprije usta i pljesak. Gitara može pričekati.'],
     '1-6':['Tvoj nastup!','Danas sviraš sama. Mama i tata samo slušaju, pa plješću na kraju.'],
     '1-7':['Još jednom!','Izaberi omiljenu igru i ponovi je. To je tvoja pobjeda.'],
-    '2-1':['Kućica prsta!','Kažiprst blizu metalne prečke. Ne stišći prejako.'],
+    '2-1':['Šaka!','Kažiprst ide na 1, tik uz prečku. Ne stišći prejako.'],
     '2-2':['Korak pa žica!','Pljesni ravno — na svaki korak jedan zvuk na praznoj prvoj žici.'],
-    '2-3':['Tri kućice!','0, 1, 3, 1 — polako. Zvuk ne smije zujati.'],
-    '2-4':['Karta za prste!','Krugovi pokazuju red: 0, pa 1, pa 3. Prvo uši, pa prsti.'],
+    '2-3':['Tri kućice!','0 bez prsta. Na 1 kažiprst, na 3 prstenjak.'],
+    '2-4':['Karta za prste!','Krug 1 je kažiprst, krug 3 je prstenjak. 0 je bez prsta.'],
     '2-5':['Nova staza!','Ista igra na drugoj žici. Prsti već znaju put.'],
     '2-6':['Tvoj nastup!','Danas sviraš sama. Mama i tata samo slušaju, pa plješću na kraju.'],
     '2-7':['Još jednom!','Izaberi omiljenu igru i ponovi je. To je tvoja pobjeda.'],
@@ -55,10 +55,10 @@ window.KID_COPY=(()=>{
     {text:'Pokaži četiri zvuka na prvoj žici — sama, pa se nakloni.',missions:[6],parent:'Dok svira, samo slušaj. Plješći nakon naklona. Ne ispravljaj usred nastupa.',game:'Igra: mini nastup (četiri zvuka na prvoj žici).'},
     {text:'Ponovi omiljenu misiju ili igru iz ovog tjedna.',missions:[7],parent:'Neka Marija izabere što voli ponoviti. To jača samopouzdanje.',game:'Igra: njezin izbor!'}
   ],[
-    {text:'Kažiprst blizu metalne prečke — jedan čist zvuk.',missions:[1],parent:'Ako žica zuji: prst malo bliže prečci i blaži stisak. Neka odmara šaku između pokušaja.',game:'Igra: prst traži kućicu.'},
+    {text:'Pogledaj šaku: kažiprst ide na 1, tik uz prečku — jedan čist zvuk.',missions:[1],parent:'Ako žica zuji: prst malo bliže prečci i blaži stisak. Na crtežu broj 1 je prečka, riječ kaže koji prst. Neka odmara šaku između pokušaja.',game:'Igra: prst traži kućicu.'},
     {text:'Pljesni četiri puta ravno — na svaki korak odsviraj praznu prvu žicu.',missions:[2],parent:'Tiho tapkaj uz nju. Jedan zvuk po koraku, bez žurbe.',game:'Igra: korak pa žica.'},
-    {text:'Spoji cijeli niz: 0, 1, 3, 1 — bez žurbe.',missions:[3],parent:'Bolje jedan sporiji prolaz nego tri brza i mutna. Opusti šaku između.',game:'Igra: četiri kućice u nizu.'},
-    {text:'Objasni što znače 0, 1 i 3, pa ih odsviraj redom.',missions:[4],parent:'Neka ona tebi objasni brojeve. To je učenje, ne ispit.',game:'Igra: detektiv brojeva.'},
+    {text:'Spoji niz 0, 1, 3, 1: na 1 kažiprst, na 3 prstenjak.',missions:[3],parent:'Bolje jedan sporiji prolaz nego tri brza i mutna. Kažiprst na 1, prstenjak na 3. Opusti šaku između.',game:'Igra: četiri kućice u nizu.'},
+    {text:'Objasni krugove: 0 bez prsta, 1 kažiprst, 3 prstenjak — pa ih odsviraj redom.',missions:[4],parent:'Neka ona tebi kaže koji je prst: 1 kažiprst, 3 prstenjak. To je učenje, ne ispit.',game:'Igra: detektiv brojeva.'},
     {text:'Ista igra na drugoj žici: 1, pa 3, pa opet 1.',missions:[5],parent:'Ako zapne, vratite se na prvu žicu pola minute, pa opet na drugu.',game:'Igra: nova staza (druga žica).'},
     {text:'Pokaži niz 0, 1, 3, 1 — sama, pa se nakloni.',missions:[6],parent:'Dok svira, samo slušaj. Plješći nakon naklona. Ne ispravljaj usred nastupa.',game:'Igra: mini nastup (niz 0, 1, 3, 1).'},
     {text:'Ponovi omiljenu misiju ili igru iz ovog tjedna.',missions:[7],parent:'Neka Marija izabere što voli ponoviti. To jača samopouzdanje.',game:'Igra: njezin izbor!'}

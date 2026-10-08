@@ -246,7 +246,7 @@ page('Cijeli početni motiv','PJESMICA • A + A + B + B',[
     h('Dva puta B'), fig('tab',B+B),
     p('Svaki dio traje četiri ravnomjerna koraka. Motiv ima 14 odsviranih tonova i ukupno 16 otkucaja. Dva završna tona G traju po dva otkucaja.'),
     h('Sviraj uz zvučni primjer'),
-    p('U HTML izdanju poslušaj dio A, dio B ili cijeli motiv. Primjeri imaju četiri uvodna otkucaja i brzinu 60 otkucaja u minuti. Najprije slušaj; ne moraš odmah stići svirati zajedno.'),
+    p('U HTML izdanju poslušaj dio A, dio B ili cijeli motiv. Primjer počinje s dva kratka otkucaja, zatim se melodija čuje tri puta, brzinom 60 otkucaja u minuti. Najprije slušaj; ne moraš odmah stići svirati zajedno.'),
     note('Za odraslu osobu: standardna ugodba. A = C4-D4-E4-C4; B = E4-F4-G4, trajanja 1-1-2. Prstomet i visine provjereni prema prvoj E4 i drugoj B3 žici.'),
     h('Moja glazbena ideja'),
     fig('blank'),
@@ -444,19 +444,45 @@ def tone(freq,duration,sr=22050):
         val=(math.sin(2*math.pi*freq*t)+.25*math.sin(4*math.pi*freq*t))*.36*env*fade
         samples.append(val)
     return samples
-def make_audio(name,seq):
-    sr=22050;beat=1.;buf=[]
-    def click():return tone(880,.075,sr)+[0.]*(sr-int(.075*sr))
-    for i in range(4):buf.extend(click())
-    for s,f,d in seq:
-        freq=(329.6275569 if s==1 else 246.9416506)*2**(f/12)
-        buf.extend(tone(freq,d*beat,sr))
+def make_audio(name,seq,repeats=3):
+    sr=22050;beat=1.;beat_n=int(beat*sr);buf=[]
+    def click():
+        tick=tone(988,.045,sr)
+        return tick+[0.]*(beat_n-len(tick))
+    for _ in range(2):buf.extend(click())
+    def phrase():
+        part=[]
+        for s,f,d in seq:
+            n=int(round(d*beat*sr))
+            if s==0:
+                part.extend([0.]*n)
+            else:
+                freq=(329.6275569 if s==1 else 246.9416506)*2**(f/12)
+                body=tone(freq,d*beat,sr)
+                if len(body)<n:body+=[0.]*(n-len(body))
+                else:body=body[:n]
+                part.extend(body)
+        return part
+    for i in range(repeats):
+        buf.extend(phrase())
+        if i+1<repeats:buf.extend([0.]*beat_n)
     buf.extend([0.]*int(.3*sr))
     with wave.open(str(AUD/name),'wb') as wav:
         wav.setparams((1,2,sr,0,'NONE','not compressed'));wav.writeframes(b''.join(struct.pack('<h',int(max(-1,min(1,v))*26000)) for v in buf))
     return round(len(buf)/sr,2)
-AUDIO=[('01_cetiri_otkucaja.wav',[(1,0,1)]*4,'Četiri zvuka u pulsu'),('02_prva_zica_0_1_3_1.wav',[(1,0,1),(1,1,1),(1,3,1),(1,1,1)],'Prva žica: 0, 1, 3, 1'),('03_bratec_martin_dio_A.wav',A,'Bratec Martin: dio A'),('04_bratec_martin_dio_B.wav',B,'Bratec Martin: dio B'),('05_bratec_martin_motiv.wav',FULL,'Bratec Martin: cijeli motiv')]
-durations={name:make_audio(name,seq) for name,seq,_ in AUDIO}
+AUDIO=[
+ ('01_cetiri_otkucaja.wav',[(1,0,1)]*4,'Četiri zvuka u pulsu',3),
+ ('02_prva_zica_0_1_3_1.wav',[(1,0,1),(1,1,1),(1,3,1),(1,1,1)],'Prva žica: 0, 1, 3, 1',3),
+ ('03_bratec_martin_dio_A.wav',A,'Bratec Martin: dio A',3),
+ ('04_bratec_martin_dio_B.wav',B,'Bratec Martin: dio B',3),
+ ('05_bratec_martin_motiv.wav',FULL,'Bratec Martin: cijeli motiv',3),
+ ('06_zvuk_tisina.wav',[(1,0,1),(0,0,1),(1,0,1),(0,0,1)],'Zvuk, tišina, zvuk, tišina',3),
+ ('07_most_druga3_prva0.wav',[(2,3,1),(1,0,1)],'Most: druga 3, prva 0',3),
+ ('08_druga_zica_1_3_1.wav',[(2,1,1),(2,3,1),(2,1,1)],'Druga žica: 1, 3, 1',3),
+ ('09_prva_zica_0_1_0_1.wav',[(1,0,1),(1,1,1),(1,0,1),(1,1,1)],'Prva žica: 0, 1, 0, 1',3),
+ ('10_prva_zica_0_1_3.wav',[(1,0,1),(1,1,1),(1,3,1)],'Prva žica: 0, 1, 3',3),
+]
+durations={name:make_audio(name,seq,rep) for name,seq,_,rep in AUDIO}
 
 def html_block(b):
     tag=b[0]
@@ -470,7 +496,7 @@ def html_block(b):
 CSS='''
 :root{--ink:#173941;--teal:#147d83;--pale:#eaf5f3}*{box-sizing:border-box}body{margin:0;background:#f2f6f5;color:var(--ink);font-family:Arial,sans-serif;line-height:1.55}header{background:var(--ink);color:white;padding:36px max(24px,calc((100vw - 980px)/2))}header p{max-width:750px}h1{font-size:clamp(28px,4vw,44px);line-height:1.15}nav{display:flex;gap:10px;flex-wrap:wrap}nav a,button{padding:10px 16px;border:0;border-radius:8px;background:var(--pale);color:var(--ink);text-decoration:none;font:inherit;cursor:pointer}main{max-width:980px;margin:auto;padding:22px}.page{padding:32px;background:white;border-radius:14px;margin:20px 0;box-shadow:0 4px 22px #17394108}.label{font-size:12px;font-weight:bold;letter-spacing:1px;color:var(--teal)}h2{font-size:29px;line-height:1.25}h3{font-size:20px;margin-bottom:8px}aside{background:var(--pale);padding:16px;border-left:4px solid var(--teal);border-radius:6px;margin:18px 0}a{color:var(--teal)}figure{margin:18px 0}svg{display:block;width:100%;max-height:250px}.tablewrap{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:14px}td,th{border:1px solid #c8d9d9;padding:10px;text-align:left;vertical-align:top}th{background:var(--pale)}.cards{display:grid;grid-template-columns:1fr;gap:22px}.card{border:2px solid #c8d9d9;border-radius:12px;padding:24px}.card h3{font-size:25px}.card li{font-size:19px;margin:8px 0}.sounds{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}.sound{background:var(--pale);padding:16px;border-radius:10px}.sound audio{width:100%}.contents{columns:2;font-size:14px}.contents a{display:block;padding:5px}footer{text-align:center;padding:24px;color:#557077}@media(max-width:600px){main{padding:10px}.page{padding:20px}td,th{padding:7px}.contents{columns:1}}@media print{body{background:white}header,nav,.audio-section,.contents,footer{display:none}.page{box-shadow:none;border-radius:0;break-after:page;padding:0}.card{break-inside:avoid}main{max-width:none;padding:0}a{color:var(--ink)}@page{size:A4;margin:15mm}}'''
 contents=''.join(f'<a href="#p{i+1}">{i+1}. {html.escape(pg["title"])}</a>' for i,pg in enumerate(PAGES))
-soundhtml=''.join(f'<div class="sound"><b>{label}</b><p>Četiri uvodna otkucaja • 60 otkucaja/min</p><audio controls preload="none" src="audio/{name}"></audio></div>' for name,seq,label in AUDIO)
+soundhtml=''.join(f'<div class="sound"><b>{label}</b><p>Dva kratka otkucaja • melodija {rep}× • 60 otkucaja/min</p><audio controls preload="none" src="audio/{name}"></audio></div>' for name,seq,label,rep in AUDIO)
 sections=''.join(f'<section class="page" id="p{i+1}"><div class="label">{html.escape(pg["kicker"])}</div><h2>{html.escape(pg["title"])}</h2>'+''.join(html_block(b) for b in pg['blocks'])+'</section>' for i,pg in enumerate(PAGES))
 doc='<!doctype html><html lang="hr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Moja prva gitarska pustolovina</title><style>'+CSS+'</style></head><body><header><div class="label" style="color:#edbd59">PRVI MJESEC • 8 GODINA • HRVATSKI</div><h1>Moja prva gitarska pustolovina</h1><p>Mali koraci, poznata pjesmica i jasni dokazi da smo nešto naučili.</p><nav><a href="#p4">Susreti</a><a href="#p12">Dječje kartice</a><a href="#p26">Tabulatura</a><a href="#zvuk">Poslušaj</a><a href="pdf/gitarska_pustolovina_prvi_mjesec.pdf">PDF za ispis</a><button onclick="window.print()">Ispiši HTML</button></nav></header><main><section class="page"><h2>Pronađi svoj zadatak</h2><div class="contents">'+contents+'</div></section><section class="page audio-section" id="zvuk"><h2>Poslušaj i ponovi</h2><p>Sintetizirani tonski primjeri za melodiju i puls. Nisu snimka gitare. Prvo slušaj, zatim sviraj u manjim dijelovima. Za pravilni položaj pogledaj karticu i odraslu osobu.</p><div class="sounds">'+soundhtml+'</div></section>'+sections+'</main><footer>Izdanje 1.0 • 7. listopada 2026. • Radi bez interneta, osim vanjskih poveznica.</footer></body></html>'
 (OUT/'gitarska_pustolovina.html').write_text(doc,encoding='utf-8')

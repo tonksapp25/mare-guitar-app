@@ -19,11 +19,16 @@
     392.0
   ],
   "audio_durations_seconds": {
-    "01_cetiri_otkucaja.wav": 8.3,
-    "02_prva_zica_0_1_3_1.wav": 8.3,
-    "03_bratec_martin_dio_A.wav": 8.3,
-    "04_bratec_martin_dio_B.wav": 8.3,
-    "05_bratec_martin_motiv.wav": 20.3
+    "01_cetiri_otkucaja.wav": 16.3,
+    "02_prva_zica_0_1_3_1.wav": 16.3,
+    "03_bratec_martin_dio_A.wav": 16.3,
+    "04_bratec_martin_dio_B.wav": 16.3,
+    "05_bratec_martin_motiv.wav": 52.3,
+    "06_zvuk_tisina.wav": 16.3,
+    "07_most_druga3_prva0.wav": 10.3,
+    "08_druga_zica_1_3_1.wav": 13.3,
+    "09_prva_zica_0_1_0_1.wav": 16.3,
+    "10_prva_zica_0_1_3.wav": 13.3
   },
   "pdf_links": 6
 }

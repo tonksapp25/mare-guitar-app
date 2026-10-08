@@ -18,14 +18,14 @@ class CheckHTML(HTMLParser):
         if tag=='article' and a.get('class')=='card':self.cards+=1
 text=(root/'gitarska_pustolovina.html').read_text(encoding='utf-8')
 parser=CheckHTML();parser.feed(text)
-assert parser.cards==26
+assert parser.cards==28
 assert '<html lang="hr">' in text
 for href in parser.links+parser.sounds:
     if href.startswith('#'):assert href[1:] in parser.ids,href
     elif not href.startswith(('https://','http://')):assert (root/href).is_file(),href
 svgs=text.split('<svg ')[1:]
 for svg in svgs:ET.fromstring('<svg '+svg.split('</svg>')[0]+'</svg>')
-assert len(parser.sounds)==5
+assert len(parser.sounds)==10
 results=[]
 for name in parser.sounds:
     with wave.open(str(root/name)) as wav:
@@ -35,11 +35,11 @@ for name in parser.sounds:
         results.append((name,round(len(samples)/sr,2)))
 with wave.open(str(root/'audio/05_bratec_martin_motiv.wav')) as wav:
     sr=wav.getframerate();samples=np.frombuffer(wav.readframes(wav.getnframes()),dtype=np.int16)
-expected=[(4,261.6256),(5,293.6648),(6,329.6276),(7,261.6256),(8,261.6256),(9,293.6648),(10,329.6276),(11,261.6256),(12,329.6276),(13,349.2282),(14,391.9954),(16,329.6276),(17,349.2282),(18,391.9954)]
+expected=[(2,261.6256),(3,293.6648),(4,329.6276),(5,261.6256),(6,261.6256),(7,293.6648),(8,329.6276),(9,261.6256),(10,329.6276),(11,349.2282),(12,391.9954),(14,329.6276),(15,349.2282),(16,391.9954)]
 for start,target in expected:
     section=samples[int((start+.1)*sr):int((start+.8)*sr)]
     spectrum=abs(np.fft.rfft(section*np.hanning(len(section))))
     measured=np.fft.rfftfreq(len(section),1/sr)[np.argmax(spectrum)]
     assert abs(measured-target)<2,(start,target,measured)
-print('OK: 26 kartice; svi lokalni linkovi; valjani SVG crtezi; 5 zvukova; svih 14 tonova audio motiva provjereno.')
+print('OK: 28 kartice; svi lokalni linkovi; valjani SVG crtezi; 10 zvukova; svih 14 tonova audio motiva provjereno.')
 print(results)

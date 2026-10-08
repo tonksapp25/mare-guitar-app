@@ -92,7 +92,7 @@
       "title": "Prst blizu granice",
       "kind": "neck",
       "steps": [
-        "Postavi kažiprst blizu prve metalne prečke.",
+        "Pogledaj šaku: kažiprst ide na 1, tik uz prečku.",
         "Pritisni samo toliko da zvuk bude čist.",
         "Otpusti i odmori šaku."
       ]
@@ -129,7 +129,7 @@
       "kind": "tab",
       "steps": [
         "Pogledaj crtu prve žice.",
-        "Reci: 0 bez pritiska, 1 prvi prag, 3 treći prag.",
+        "Reci: 0 bez prsta, 1 kažiprst, 3 prstenjak.",
         "Odaberi jednu oznaku i odsviraj je."
       ]
     },

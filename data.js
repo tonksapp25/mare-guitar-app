@@ -443,42 +443,42 @@ window.GUITAR_DATA = {
           [
             [
               "1",
-              "Upoznaj: 1.1 i 1.3; pronađi prvu žicu.",
-              "Prvi prag: 2.3: prva žica 0 pa 1.",
+              "Udobno: 1.1: sjedi udobno i dotakni prvu žicu.",
+              "Prst: 2.1: kažiprst blizu prve prečke.",
               "Pripremi: 3.1: ramena miruju, prvi prag druge žice.",
               "Pripremi: 4.1: ugodi gitaru i list pjesmice."
             ],
             [
               "2",
-              "Zaustavi: 1.3: zvuk pa tišina.",
-              "Treći prag: 2.1 i 2.3: zaseban zvuk na 3.",
+              "Koraci: 1.2: pljesak pa četiri zvuka na prvoj žici.",
+              "Korak: 2.2: na svaki pljesak — prazna prva žica.",
               "Mali most: 3.3: druga žica 3, pa prva prazna.",
               "Spoji: 4.2: poveži A pa A."
             ],
             [
               "3",
-              "Pronađi: 1.4: prva i druga žica.",
-              "Poveži: 2.3: 0-1-3-1 polako.",
+              "Tišina: 1.3: zvuk pa tišina.",
+              "Niz: 2.3: 0-1-3-1 polako.",
               "Pjevaj: 3.4: echo A i B; Pjesmice ili list.",
               "Most: 4.3: vježbaj spoj A pa B."
             ],
             [
               "4",
-              "Odgovori: 1.2: ponovi dva pa četiri zvuka.",
-              "Druga žica: 2.5: 1-3-1, bez žurbe.",
+              "Žice: 1.4: prva i druga žica.",
+              "Karta: 2.4: značenje 0, 1 i 3.",
               "Dio B: 3.2: B na gitari — 0-1-3; zadnji ton traje.",
               "Motiv: 4.3: sviraj A-A-B-B."
             ],
             [
               "5",
               "Zapjevaj: 1.5: pjevaj i plješći.",
-              "Pročitaj: 2.4: pokaži što znači 0, 1 i 3.",
+              "Druga: 2.5: druga žica 1-3-1.",
               "Dio A: 3.5: pjevaj Bratec Martin — dio A.",
               "Zajedno: 4.4: mama/tata tapka, Marija A-A-B-B."
             ],
             [
               "6",
-              "Pokaži: 1.6: izvedi bez pomaganja.",
+              "Pokaži: 1.6: četiri zvuka — sama, pa naklon.",
               "Pokaži: 2.6: pročitaj i odsviraj niz.",
               "Pokaži: 3.6: mali koncert — sama A, zatim sama B.",
               "Koncert: 4.6: mali koncert bez ekrana."
@@ -878,7 +878,7 @@ window.GUITAR_DATA = {
                 ]
               },
               "steps": [
-                "Postavi kažiprst blizu prve metalne prečke.",
+                "Pogledaj šaku: kažiprst ide na 1, tik uz prečku.",
                 "Pritisni samo toliko da zvuk bude čist.",
                 "Otpusti i odmori šaku."
               ]
@@ -1599,7 +1599,7 @@ window.GUITAR_DATA = {
         ],
         [
           "p",
-          "U HTML izdanju poslušaj dio A, dio B ili cijeli motiv. Primjeri imaju četiri uvodna otkucaja i brzinu 60 otkucaja u minuti. Najprije slušaj; ne moraš odmah stići svirati zajedno."
+          "U HTML izdanju poslušaj dio A, dio B ili cijeli motiv. Primjer počinje s dva kratka otkucaja, zatim se melodija čuje tri puta, brzinom 60 otkucaja u minuti. Najprije slušaj; ne moraš odmah stići svirati zajedno."
         ],
         [
           "note",
@@ -1949,7 +1949,7 @@ window.GUITAR_DATA = {
         ]
       },
       "steps": [
-        "Postavi kažiprst blizu prve metalne prečke.",
+        "Pogledaj šaku: kažiprst ide na 1, tik uz prečku.",
         "Pritisni samo toliko da zvuk bude čist.",
         "Otpusti i odmori šaku."
       ]
@@ -2028,7 +2028,7 @@ window.GUITAR_DATA = {
       ],
       "steps": [
         "Pogledaj crtu prve žice.",
-        "Reci: 0 bez pritiska, 1 prvi prag, 3 treći prag.",
+        "Reci: 0 bez prsta, 1 kažiprst, 3 prstenjak.",
         "Odaberi jednu oznaku i odsviraj je."
       ]
     },
@@ -2414,7 +2414,7 @@ window.GUITAR_DATA = {
       ],
       [
         "Karta",
-        "2.4: objasni značenje 0, 1 i 3."
+        "2.4: 0 bez prsta, 1 kažiprst, 3 prstenjak."
       ],
       [
         "Druga",
@@ -2523,10 +2523,15 @@ window.GUITAR_DATA = {
     ]
   ],
   "audio_durations": {
-    "01_cetiri_otkucaja.wav": 8.3,
-    "02_prva_zica_0_1_3_1.wav": 8.3,
-    "03_bratec_martin_dio_A.wav": 8.3,
-    "04_bratec_martin_dio_B.wav": 8.3,
-    "05_bratec_martin_motiv.wav": 20.3
+    "01_cetiri_otkucaja.wav": 16.3,
+    "02_prva_zica_0_1_3_1.wav": 16.3,
+    "03_bratec_martin_dio_A.wav": 16.3,
+    "04_bratec_martin_dio_B.wav": 16.3,
+    "05_bratec_martin_motiv.wav": 52.3,
+    "06_zvuk_tisina.wav": 16.3,
+    "07_most_druga3_prva0.wav": 10.3,
+    "08_druga_zica_1_3_1.wav": 13.3,
+    "09_prva_zica_0_1_0_1.wav": 16.3,
+    "10_prva_zica_0_1_3.wav": 13.3
   }
 };

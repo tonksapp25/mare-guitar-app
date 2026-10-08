@@ -40,7 +40,7 @@ MARIJA_STEPS = {
         "Reci mami ili tati što si ponovila.",
     ],
     "2-1": [
-        "Postavi kažiprst blizu prve metalne prečke.",
+        "Pogledaj šaku: kažiprst ide na 1, tik uz prečku.",
         "Pritisni samo toliko da zvuk bude čist.",
         "Otpusti i odmori šaku.",
     ],
@@ -56,7 +56,7 @@ MARIJA_STEPS = {
     ],
     "2-4": [
         "Pogledaj crtu prve žice.",
-        "Reci: 0 bez pritiska, 1 prvi prag, 3 treći prag.",
+        "Reci: 0 bez prsta, 1 kažiprst, 3 prstenjak.",
         "Odaberi jednu oznaku i odsviraj je.",
     ],
     "2-5": [
@@ -196,7 +196,7 @@ DAILY_WEEK2 = [
     ["Prst", "2.1: kažiprst blizu prve prečke na prvoj žici."],
     ["Korak", "2.2: na svaki pljesak — prazna prva žica."],
     ["Niz", "2.3: 0-1-3-1 polako na prvoj žici."],
-    ["Karta", "2.4: objasni značenje 0, 1 i 3."],
+    ["Karta", "2.4: 0 bez prsta, 1 kažiprst, 3 prstenjak."],
     ["Druga", "2.5: na drugoj žici — 1, 3, 1."],
     ["Pokaži", "2.6: sama pročitaj i odsviraj niz."],
     ["Ponovi", "2.7: ponovi omiljenu misiju."],
