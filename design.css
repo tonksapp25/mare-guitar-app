@@ -188,4 +188,39 @@
     body.theme-marija .page-heading{margin-bottom:20px}
     body.theme-marija .location-path{font-size:12px}
   }
+  /* A lesson step is one unit: instruction, illustration/audio, then controls. */
+  body.theme-marija .mission-work{display:grid;grid-template-columns:minmax(0,1fr);grid-template-areas:'step' 'picture' 'sound';gap:12px;align-items:start}
+  body.theme-marija .mission-step{grid-area:step;margin:0;min-width:0}
+  body.theme-marija .mission-picture{grid-area:picture;min-width:0}
+  body.theme-marija .mission-sound{grid-area:sound;min-width:0}
+  body.theme-marija .mission-controls{position:sticky;bottom:calc(var(--app-dock-height,76px) + 8px);z-index:17;background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px;margin:14px -4px 0;box-shadow:0 -6px 18px #392d4609}
+  body.theme-marija .mission-controls .step-actions{display:flex;align-items:center;justify-content:space-between;margin:0;gap:12px}
+  body.theme-marija .step-position{font-size:13px;color:#80678b;font-weight:900}
+  body.theme-marija .step-finished{font-size:12px;color:#49775f}
+  body.theme-marija .exercise-card>.card-tag{display:none}
+  body.theme-marija .exercise-card>h3{margin:0 0 8px!important}
+  body.theme-marija .exercise-card>.tune-check{margin-bottom:12px}
+  body.theme-marija .mission-step .step-one{margin:6px 0 8px}
+  body.theme-marija .mission-step .step-guidance{margin:4px 0}
+  body.theme-marija .mission-picture .teach-hero{margin:0}
+  body.theme-marija .mission-picture .card-figure-caption{margin:6px 0 0;padding:0;font-size:12px}
+  body.theme-marija .mission-sound .card-audio{margin:0;padding:8px 10px}
+  body.theme-marija .mission-sound .card-audio+.card-audio{margin-top:8px}
+  body.theme-marija .step-posture{margin:0;display:flex;align-items:center;gap:14px}
+  body.theme-marija .step-posture .posture-girl{height:200px;width:150px;max-width:55%;margin:0;object-fit:contain;background:#fff7f9}
+  body.theme-marija .step-posture figcaption{font-size:14px;line-height:1.5;color:#76617e;flex:1}
+  body.theme-marija .posture-reference{margin-top:16px}
+  @media(min-width:700px){
+    body.theme-marija .mission-work{grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-areas:'step picture' 'sound picture';column-gap:22px;row-gap:12px}
+    body.theme-marija .step-posture{flex-direction:column;gap:8px;text-align:center}
+    body.theme-marija .step-posture .posture-girl{height:240px;width:180px;max-width:100%}
+    body.theme-marija .mission-controls .step-actions{max-width:440px;margin-left:auto}
+  }
+  @media(max-height:600px) and (orientation:landscape){
+    body.theme-marija .mission-step .step-one{font-size:16px;line-height:1.4;padding:10px 12px}
+    body.theme-marija .mission-controls{padding:6px}
+    body.theme-marija .mission-controls .step-actions .button,
+    body.theme-marija .mission-controls .step-actions .secondary{min-height:44px;padding:8px 12px}
+  }
 }
+@media print{.mission-controls{display:none!important}}

@@ -93,3 +93,12 @@ Oznake žica ostaju vidljive uz pomicanje dugog zapisa; osnovna legenda je otvor
 Ujednačava tipografiju, kartice, gumbe, navigaciju i dijaloge. Tjedni imaju
 četiri blage boje, glavna radnja je ružičasta, a uputa za vježbu svijetložuta.
 Pravila su ograničena na `@media screen` kako bi ispis zadržao postojeći raspored.
+
+## Prijelazi između koraka
+
+Uputa i prikaz čine jednu cjelinu: od 700 px su u dva stupca, na užem ekranu
+slijede jedan ispod drugoga. Kontrole ostaju iznad donje navigacije. Klik na
+Natrag ili Dalje vraća novu uputu ispod stalne putanje; Završi vodi na oznaku
+pokušaja i zvjezdice. Zvuk se pritom ne učitava ponovno. Prva vježba mijenja
+prikaz sjedenja u prikaz žica kada zadatak traži dodir najtanje žice, a cijela
+legenda položaja dostupna je pod „Pogledaj cijeli položaj”.
