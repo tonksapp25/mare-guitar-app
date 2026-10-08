@@ -79,7 +79,7 @@ window.KID_COPY=(()=>{
     {text:'Cijeli motiv: A, A, B, B!',missions:[3],parent:'Ako zapne, prvo A-A, pa B-B, pa tek onda sve skupa.',game:'Igra: A-A-B-B voz.'},
     {text:'Mama ili tata tiho tapka — ti sviraš cijeli motiv A-A-B-B uz taj puls.',missions:[4],parent:'Ti samo tapkaš (ne sviraš gitaru). Marija gleda list i svira motiv. Ako zapne, tapkaj sporije.',game:'Igra: tapkanje + motiv.'},
     {text:'Moj mali koncert — odloži ekran, sviraj A-A-B-B s lista i nakloni se!',missions:[6],parent:'Samo slušaj i plješći na kraju. Bez ispravaka usred nastupa. Zvjezdice ★ birate zajedno na kartici.',game:'Igra: koncert!'},
-    {text:'Ponovi omiljenu misiju ili igru iz ovog tjedna.',missions:[7],parent:'Može ponoviti koncert (4.6) ili bilo koju drugu misiju. Ako je koncert uspio i drugi dan, ★★★ na 4.6.',game:'Igra: njezin izbor!'}
+    {text:'Ponovi omiljenu misiju ili igru iz ovog tjedna.',missions:[7],parent:'Može ponoviti koncert (4.6) ili bilo koju drugu misiju. Za ★★★ na 4.6 neka odsvira cijeli koncert napamet, bez pomoći i gledanja u upute.',game:'Igra: njezin izbor!'}
   ]];
   const missionSteps={
     '2-1':['Stavi kažiprst na prvi prag, blizu metalne prečke.','Pritisni žicu lagano i odsviraj jedan čist zvuk.','Pusti žicu i odmori šaku.'],

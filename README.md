@@ -79,6 +79,9 @@ zasebne korake, sliku i zvuk prijelaza kraj A → početak B.
 
 `dayPractice` bilježi pokušaj po danu odvojeno od zvjezdica za karticu. Dva dana
 koja koriste istu karticu zato ne preuzimaju oznaku pokušaja jedan od drugoga.
+Zvjezdice su u jednom redu: ★ Probala sam, ★★ Mogu sama, ★★★ Znam napamet.
+Za treću zvjezdicu dijete pokaže cijelu vježbu bez pomoći i gledanja u upute;
+oznaku bira dijete uz pomoć odrasle osobe, bez automatske provjere sviranja.
 Pomoć za čitanje otvara se u dijalogu. Povratak iz pjesmice/zvukova pamti rutu,
 korak i skrolanje izvorne vježbe u sessionStorage (`mare-support-return`).
 

@@ -141,7 +141,7 @@
     return '';
   };
   const pageBody=n=>data.pages[n-1].blocks.map(block).join('');
-  const starLabels=['','Probala sam','Sama!','Ponovila sam drugi dan'];
+  const starLabels=['','Probala sam','Mogu sama','Znam napamet'];
   const getStars=key=>Math.min(3,Math.max(0,Number(state.missionStars[key])||0));
   const weekMissionCount=week=>data.cards.filter(c=>c.week===week).length;
   const starCards=week=>data.cards.filter(c=>c.week===week&&c.kind!=='review');
@@ -171,14 +171,15 @@
       toast.innerHTML='';
     },3200);
   };
-  const starHowTo=`<aside class="star-howto" aria-label="Kako dobivaš zvjezdice"><p class="star-howto-title"><span class="app-ico app-ico-star" aria-hidden="true"></span> Kako skupljaš zvjezdice?</p><ol class="star-howto-steps"><li><strong>Probaj</strong> sve korake vježbe.</li><li>Na dnu kartice dodirni <strong>jedan</strong> gumb — ti biraš (mama/tata mogu pomoći).</li><li><strong>★</strong> Probala sam · <strong>★★</strong> Sama! · <strong>★★★</strong> Ponovila sam drugi dan</li></ol><p class="star-howto-note">Zvjezdice nisu ocjene — samo bilježe što si danas vježbala. Ako nisi sigurna, kreni s jednom ★.</p></aside>`;
-  const starButtons=(key,n)=>`<div class="star-picker" role="group" aria-label="Zvjezdice za misiju">
+  const starHowTo=`<aside class="star-howto" aria-label="Kako dobivaš zvjezdice"><p class="star-howto-title"><span class="app-ico app-ico-star" aria-hidden="true"></span> Kako skupljaš zvjezdice?</p><ol class="star-howto-steps"><li><strong>Probaj</strong> sve korake vježbe.</li><li>Na dnu kartice dodirni <strong>jedan</strong> gumb — ti biraš (mama/tata mogu pomoći).</li><li><strong>★</strong> Probala sam · <strong>★★</strong> Mogu sama · <strong>★★★</strong> Znam napamet</li></ol><p class="star-howto-note">Za tri zvjezdice pokaži cijelu vježbu napamet, bez pomoći i gledanja u upute. Ako zapneš, još malo vježbaj pa pokušaj opet.</p></aside>`;
+  const starButtons=(key,n)=>`<div class="star-picker" role="group" aria-label="Zvjezdice za vježbu">
       <p class="star-picker-label">Završila si? Odaberi zvjezdice:</p>
       <div class="star-choice-row">${[
         [1,'★','Probala sam','Danas sam vježbala.'],
-        [2,'★★','Sama!','Uspjelo bez pomoći.'],
-        [3,'★★★','Ponovila sam drugi dan','Znala sam i drugi dan.']
+        [2,'★★','Mogu sama','Bez tuđe pomoći.'],
+        [3,'★★★','Znam napamet','Bez pomoći i uputa.']
       ].map(([i,stars,label,desc])=>`<button type="button" class="star-choice${n===i?' is-on':''}" data-mission-star="${key}" data-stars="${i}" aria-pressed="${n===i}"><span class="star-choice-stars" aria-hidden="true">${stars}</span><span class="star-choice-label">${label}</span><span class="star-choice-desc">${desc}</span></button>`).join('')}</div>
+      <p class="star-mastery-hint">Za ★★★ pokaži cijelu vježbu napamet, bez pomoći i gledanja u upute.</p>
       ${n?`<button type="button" class="star-clear secondary" data-mission-star="${key}" data-stars="0">Makni zvjezdice</button>`:''}
     </div>`;
   const cardTip=key=>{const tip=missionTips[key]||['Hajde!','Tri mala koraka. Polako — ja navijam!'];return tip;};
@@ -484,7 +485,7 @@
     const reminder=(c.week===3&&[4,6].includes(c.num))||(c.week===4&&c.num!==5&&c.kind!=='review');
     const stepHtml=steps.length?`<p class="step-kicker">Korak ${i+1} od ${steps.length}</p><p class="step-one" tabindex="-1">${fingerPlain(steps[i].replace('misiju','vježbu'))}</p>${c.kind==='review'?reviewPickList(c.week):''}${reminder?partReminder():''}${needsMelody?`<p class="step-guidance" role="status">Izaberi još ${4-melodySlots(key).length} ${4-melodySlots(key).length===1?'zvuk':'zvuka'} ispod upute.</p>`:''}${showNav?`<p class="step-guidance">${last?'Probaj zadatak, pa dodirni Završi.':c.kind==='review'&&i===0?'Izaberi vježbu iznad. Kad je ponoviš, vrati se ovamo.':'Probaj ovaj zadatak, pa nastavi.'}</p>`:''}`:'';
     const controlsHtml=showNav?`<div class="step-actions">${prevHtml}<span class="step-position" aria-hidden="true">${i+1} / ${steps.length}</span>${nextHtml||'<button type="button" class="button step-next" data-step-finish aria-label="Završi vježbu">Završi</button>'}</div>`:'';
-    const starsHtml=last&&withStars?`<div class="mission-footer">${starButtons(key,n)}${n?`<p class="mission-cheer">${escape(mascotName)}: ${n===3?'Tri zvjezdice! Ti si sjajna!':n===2?'Sama — super! Sutra možeš treću.':'Bravo! Probala si. Još ★★ kad budeš sama!'}</p>`:''}</div>`:'';
+    const starsHtml=last&&withStars?`<div class="mission-footer">${starButtons(key,n)}${n?`<p class="mission-cheer">${escape(mascotName)}: ${n===3?'Znaš cijelu vježbu napamet — bravo!':n===2?'Možeš sama — super! Za treću pokaži vježbu napamet.':'Bravo! Probala si. Još ★★ kad budeš sama!'}</p>`:''}</div>`:'';
     const reviewHtml='';
     const open=!!stuckOpen[key];
     const tip=key==='4-3'&&day===3?['Mali prijelaz!','Sviramo samo dva zvuka: kraj A i početak B.']:cardTip(key);
@@ -581,7 +582,7 @@
   };
   const weekMeter=week=>{
     const got=weekStarTotal(week);const max=weekStarMax(week);const pct=Math.round(got/max*100);
-    return `<section class="sheet week-meter" aria-label="Zvjezdice ovog tjedna"><div class="sheet-label">TVOJE ZVJEZDICE</div><div class="week-meter-top"><strong>${got}</strong><span> / ${max} ★ ovaj tjedan</span></div><div class="week-meter-track"><div class="week-meter-fill" style="width:${pct}%"></div></div><p class="storage-note">Zvjezdice nisu ocjene — samo bilješka što si vježbala.</p></section>`;
+    return `<section class="sheet week-meter" aria-label="Zvjezdice ovog tjedna"><div class="sheet-label">TVOJE ZVJEZDICE</div><div class="week-meter-top"><strong>${got}</strong><span> / ${max} ★ ovaj tjedan</span></div><div class="week-meter-track"><div class="week-meter-fill" style="width:${pct}%"></div></div><p class="storage-note">Zvjezdice pokazuju kako ti ide vježba — nisu ocjene.</p></section>`;
   };
   const badgesPanel=()=>{
     const next=nextBadge();
@@ -774,6 +775,7 @@
 
       `<section class="sheet star-hero"><div class="star-hero-count" aria-label="Ukupno zvjezdica"><span class="star-hero-num">${total}</span><span class="star-hero-label">zvjezdica</span></div><div class="star-hero-bar"><div class="week-meter-fill" style="width:${Math.round(total/maxAll*100)}%"></div></div><p>${unlocked} od 4 nagrade otključano</p><div id="save-status" class="saved" role="status"></div></section>`+
       mascotBubble(mascotProg[0],mascotProg[1])+
+      starHowTo+
       badgesPanel()+
       starGallery()+
       `<p class="guitar-settings"><button type="button" class="secondary" data-guitar-settings>Dijelovi i ime gitare</button></p>`+
@@ -1025,7 +1027,7 @@
       save();
       const after=unlockedBadges().find(b=>!beforeBadges.has(b.id));
       if(after)showBadgeCheer(after);
-      else if(next>prev)celebrate(next===3?'Tri zvjezdice!':next===2?'Dvije zvjezdice!':'Zvjezdica!',next===3?'Sutra opet — ti si sjajna!':next===2?'Sama si — super!':'Probala si — Zvonko je sretan!','star');
+      else if(next>prev)celebrate(next===3?'Znaš napamet!':next===2?'Dvije zvjezdice!':'Zvjezdica!',next===3?'Cijela vježba bez pomoći i uputa — bravo!':next===2?'Sama si — super!':'Probala si — Zvonko je sretan!','star');
       else if(next===0)celebrate('U redu!','Možeš opet zaraditi ★ kad budeš spremna.','soft');
       refreshMission(key);document.querySelector(`[data-mission-star="${key}"][data-stars="${next}"]`)?.focus({preventScroll:true});return;
     }
