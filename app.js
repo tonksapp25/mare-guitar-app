@@ -500,7 +500,11 @@
     }
     current.className=next.className;
     const orientation=document.querySelector('.week-orientation');
-    if(orientation)orientation.outerHTML=weekOrientation(w,missionDay(w,n),!missionDay(w,n));
+    if(orientation){
+      const compass=document.createElement('template');
+      compass.innerHTML=weekOrientation(w,missionDay(w,n),!missionDay(w,n));
+      orientation.replaceWith(compass.content.querySelector('.week-orientation'));
+    }
     updateShortcuts();
   };
   const weekMeter=week=>{
