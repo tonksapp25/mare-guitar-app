@@ -62,12 +62,12 @@ Korak se pamti zasebno za svaki dan, i kad dva dana koriste istu karticu.
 Dodatne kartice koje nisu u dnevnom rasporedu označene su kao dodatne vježbe.
 Povijest preglednika čuva položaj skrolanja; povratak iz štimanja vraća na
 prethodni ekran. Koraci vježbi ostaju u postojećem localStorage zapisu.
-Kružni prečaci stoje uz sadržaj na širokom ekranu i iznad njega na mobitelu;
-gitara uvijek otvara štimanje. Promjena koraka čuva postojeći audio player.
-
-Donja navigacija na mobitelu i tabletu: Početak, Pjesmice i Zvjezdice.
-Na ekranu širem od 1280 px zamjenjuje je postojeći lijevi izbornik.
-Štimanje je uvijek u kružnim prečacima; ostali krugovi prate trenutačnu vježbu.
+Header ima gumb Izbornik lijevo, samo ime gitare u sredini i gumb Prečaci desno.
+Izbornik otvara sve glavne stranice na svim veličinama ekrana. Nema donje
+navigacije ni footera. Prečaci otvaraju okomiti panel iznad sadržaja bez
+pomicanja vježbe: Početak, Štimanje i pomoćne radnje za trenutačni ekran.
+Panel se zatvara istim gumbom, križićem, dodirom izvan njega, tipkom Escape
+ili izborom radnje. Promjena koraka čuva postojeći audio player.
 
 ## Jasniji dječji prikaz
 
@@ -97,7 +97,7 @@ Pravila su ograničena na `@media screen` kako bi ispis zadržao postojeći rasp
 ## Prijelazi između koraka
 
 Uputa i prikaz čine jednu cjelinu: od 700 px su u dva stupca, na užem ekranu
-slijede jedan ispod drugoga. Kontrole ostaju iznad donje navigacije. Prostor za
+slijede jedan ispod drugoga. Kontrole ostaju pri dnu vidnog polja. Prostor za
 uputu i sliku rezerviran je prema najdužem koraku pri trenutačnoj širini ekrana.
 Natrag i Dalje mijenjaju sadržaj bez pomicanja stranice dok je uputa vidljiva.
 Ako je izvan vidnog polja, vraća se blagim pomicanjem ispod stalne putanje;

@@ -160,11 +160,6 @@
   body.theme-marija :is(input,textarea){background:#fff;border:1px solid #dbccdf;border-radius:12px;color:var(--ink);box-shadow:none}
   body.theme-marija .gate{background:#f5edf7}
   body.theme-marija .gate-card{background:#fff;border:1px solid #e6d8eb;box-shadow:0 20px 70px #51365b12;border-radius:26px}
-  body.theme-marija .mobile-dock{background:#fff;border-top:1px solid #e9dfed;box-shadow:0 -4px 18px #392d4605;backdrop-filter:none;padding-top:7px;padding-bottom:calc(7px + env(safe-area-inset-bottom,0px))}
-  body.theme-marija .mobile-dock .dock-item{background:transparent;border-radius:14px;box-shadow:none;color:#927a96;min-height:56px;font-size:10px;gap:4px}
-  body.theme-marija .mobile-dock .dock-item[aria-current=page]{background:#f8eaf1;color:#9d3061;box-shadow:none}
-  body.theme-marija .mobile-dock .app-ico{width:26px;height:26px;background:transparent;color:inherit;box-shadow:none;font-size:20px;margin:0}
-  body.theme-marija footer{color:#aa97af;font-size:11px}
   body.theme-marija :is(.goal,.note,blockquote){background:#f7f1f8;border-color:#d8b3d3;color:#725a7a;box-shadow:none}
   @media(min-width:1000px){
     body.theme-marija .utility-bar{background:transparent;border:0}
@@ -197,7 +192,7 @@
   body.theme-marija .mission-step .step-one{min-height:var(--lesson-text-height,0px)}
   .lesson-measure .mission-step,.lesson-measure .mission-picture{min-height:0!important}
   body.theme-marija .mission-sound{grid-area:sound;min-width:0}
-  body.theme-marija .mission-controls{position:sticky;bottom:calc(var(--app-dock-height,76px) + 8px);z-index:17;background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px;margin:14px -4px 0;box-shadow:0 -6px 18px #392d4609}
+  body.theme-marija .mission-controls{position:sticky;bottom:calc(8px + env(safe-area-inset-bottom,0px));z-index:17;background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px;margin:14px -4px 0;box-shadow:0 -6px 18px #392d4609}
   body.theme-marija .mission-controls .step-actions{display:flex;align-items:center;justify-content:space-between;margin:0;gap:12px}
   body.theme-marija .mission-controls .step-actions .step-next{width:96px;flex:0 0 96px}
   body.theme-marija .melody-slot{min-height:70px}
@@ -230,5 +225,73 @@
     body.theme-marija .mission-controls .step-actions .button,
     body.theme-marija .mission-controls .step-actions .secondary{min-height:44px;padding:8px 12px}
   }
+  /* One compact header; optional navigation opens over the page. */
+  html{scrollbar-gutter:stable}
+  body.theme-marija .workspace{margin-left:0!important;padding-bottom:env(safe-area-inset-bottom,0px)!important}
+  body.theme-marija .workspace #content{max-width:1100px;padding:20px 24px 28px!important}
+  body.theme-marija .topbar{
+    position:sticky!important;top:0;z-index:30;display:grid;
+    grid-template-columns:minmax(96px,1fr) minmax(0,2fr) minmax(96px,1fr);
+    gap:8px;padding:8px 14px;padding-top:calc(8px + env(safe-area-inset-top,0px));
+    min-height:60px!important;
+  }
+  body.theme-marija .nav-toggle{display:inline-flex;justify-self:start;min-height:44px;padding:8px 10px;font-size:13px;gap:7px}
+  body.theme-marija .nav-toggle-text{display:inline}
+  body.theme-marija #topbar-greeting{
+    justify-self:center;max-width:100%;min-width:44px;min-height:44px;padding:7px 12px;
+    border:1px solid #e8dce7;border-radius:12px;background:#fff;box-shadow:none;
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:center;font-size:14px;
+  }
+  body.theme-marija .header-tools{position:relative;justify-self:end}
+  body.theme-marija .shortcuts-toggle,
+  body.theme-marija .shortcuts-close{
+    display:grid;place-items:center;width:44px;height:44px;min-height:44px;padding:10px;
+    border:1px solid #e8dce7;border-radius:12px;background:#f7f1f7;color:#9d3061;box-shadow:none;
+  }
+  body.theme-marija .shortcuts-toggle svg{width:22px;height:22px;fill:currentColor}
+  body.theme-marija .shortcuts-toggle[aria-expanded=true]{background:#fbe6ef;border-color:#c792b2}
+  body.theme-marija .header-tools .utility-bar{
+    position:absolute;top:calc(100% + 8px);right:0;left:auto;bottom:auto;
+    display:block;width:min(252px,calc(100vw - 28px));margin:0;padding:10px;
+    max-height:calc(100dvh - var(--app-topbar-height,60px) - 16px);overflow-y:auto;
+    border:1px solid #e8dce7;border-radius:18px;background:#fff;box-shadow:0 12px 36px #392d4624;
+  }
+  body.theme-marija .header-tools .utility-bar[hidden]{display:none!important}
+  body.theme-marija .shortcuts-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:4px;padding-left:10px}
+  body.theme-marija .shortcuts-heading h2{margin:0;font:800 14px "Nunito",sans-serif;color:#76617e}
+  body.theme-marija .shortcuts-close{background:#fff;font-size:16px}
+  body.theme-marija .header-tools :is(.screen-navigation,.page-shortcuts){
+    position:static;display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;
+    width:100%;min-width:0;max-width:none;gap:4px;padding:0;overflow:visible;
+  }
+  body.theme-marija .header-tools .screen-navigation{border-bottom:1px solid var(--line);margin-bottom:4px;padding-bottom:4px}
+  body.theme-marija .header-tools :is(.home-shortcut,.round-shortcut){
+    display:flex;flex-direction:row;align-items:center;justify-content:flex-start;
+    width:100%;min-width:0;min-height:48px;flex:none;gap:10px;padding:6px 10px;
+    border:0;border-radius:12px;color:#67446b;background:#fff;font-size:14px;
+  }
+  body.theme-marija .header-tools :is(.home-shortcut,.round-shortcut):hover{background:#faf2f7}
+  body.theme-marija .header-tools :is(.home-shortcut>span[aria-hidden],.round-shortcut>svg,.round-shortcut>span[aria-hidden]){
+    width:34px;height:34px;flex:0 0 34px;padding:6px;font-size:22px;box-shadow:none;
+  }
+  body.theme-marija .header-tools .shortcut-label{font-size:14px;white-space:normal;text-align:left}
+  body.theme-marija .location-path{top:var(--app-topbar-height,60px)}
+  body.theme-marija .nav-close{display:inline-flex;align-items:center;justify-content:center;min-height:44px;min-width:44px}
+  body.theme-marija .sidebar-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:8px}
+  body.theme-marija .sidebar{
+    position:fixed!important;inset:0 auto 0 0;width:min(300px,88vw)!important;max-width:300px;
+    padding:20px 18px calc(24px + env(safe-area-inset-bottom,0px))!important;
+    z-index:40;overflow-y:auto;transform:translateX(-105%);visibility:hidden;pointer-events:none;
+    transition:transform .2s ease;
+  }
+  body.theme-marija.nav-open .sidebar{transform:translateX(0);visibility:visible;pointer-events:auto}
+  body.theme-marija.nav-open{overflow:hidden}
+  body.theme-marija.nav-open .nav-backdrop{display:block}
+  body.theme-marija .nav-backdrop[hidden]{display:none!important}
+  body.theme-marija .zvonko-toast{bottom:calc(20px + env(safe-area-inset-bottom,0px))!important}
+  @media(max-width:700px){
+    body.theme-marija .workspace #content{padding:12px 12px 20px!important}
+  }
+  @media(prefers-reduced-motion:reduce){body.theme-marija .sidebar{transition:none}}
 }
 @media print{.mission-controls{display:none!important}}

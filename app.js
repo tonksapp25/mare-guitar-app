@@ -127,7 +127,7 @@
     return false;
   };
   const guitarNameTrim=()=>(state.guitarName||'').trim();
-  const updateChrome=()=>{const el=document.getElementById('topbar-greeting');if(!el)return;const name=guitarNameTrim();el.textContent=name?`Moja gitara · ${name}`:'Moja gitara';el.setAttribute('aria-label',name?`${name}. Promijeni ime gitare`:'Dodaj ime gitare');document.documentElement.style.setProperty('--app-dock-height',Math.ceil(document.querySelector('#mobile-dock')?.getBoundingClientRect().height||0)+'px');document.documentElement.style.setProperty('--app-topbar-height',Math.ceil(document.querySelector('.topbar').getBoundingClientRect().height)+'px');document.documentElement.style.setProperty('--app-utility-height',Math.ceil(document.querySelector('.utility-bar').getBoundingClientRect().height)+'px');};
+  const updateChrome=()=>{const el=document.getElementById('topbar-greeting');if(!el)return;const name=guitarNameTrim();el.textContent=name||'Gitara';el.setAttribute('aria-label',name?`${name}. Promijeni ime gitare`:'Dodaj ime gitare');document.documentElement.style.setProperty('--app-dock-height','0px');document.documentElement.style.setProperty('--app-topbar-height',Math.ceil(document.querySelector('.topbar').getBoundingClientRect().height)+'px');document.documentElement.style.setProperty('--app-utility-height','0px');};
   const save=()=>{try{localStorage.setItem(storageKey,JSON.stringify(state));storageAvailable=true}catch{storageAvailable=false}const status=document.getElementById('save-status');if(status)status.textContent=storageAvailable?'':'Zvjezdice se nisu mogle spremiti.';};
   const section=(title,body,id='',label='')=>`<section class="sheet"${id?` id="${id}"`:''}>${label?`<div class="sheet-label">${escape(label)}</div>`:''}<h2>${escape(title)}</h2>${body}</section>`;
   const heading=(label,title,desc)=>`<div class="page-heading"><div><div class="eyebrow">${escape(label)}</div><h1>${escape(title)}</h1><p class="lede">${escape(desc)}</p></div></div>`;
@@ -640,9 +640,7 @@
           const box=note.getBoundingClientRect(),frame=scroller.getBoundingClientRect();
           if(box.left<frame.left+36||box.right>frame.right-36)scroller.scrollTo({left:scroller.scrollLeft+box.left-frame.left-scroller.clientWidth/2+box.width/2,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});
           const topbar=document.querySelector('.topbar').getBoundingClientRect().bottom;
-          const dockBox=document.getElementById('mobile-dock').getBoundingClientRect();
-          const dock=dockBox.height?dockBox.top:window.innerHeight;
-          if(frame.top<topbar||frame.bottom>dock)scroller.scrollIntoView({block:'center',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});
+          if(frame.top<topbar||frame.bottom>window.innerHeight)scroller.scrollIntoView({block:'center',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});
         }
       }
       if(context.currentTime>=finish){stopSong();return;}requestAnimationFrame(animate);
@@ -821,18 +819,8 @@
     else content.innerHTML=help();
     const contextBanner=supportBanner();if(contextBanner)content.insertAdjacentHTML('afterbegin',contextBanner);
     document.title=(route==='pjesmica'?window.GUITAR_SONGS.find(s=>s.id===anchor)?.title||'Pjesmice':nav.find(n=>n[0]===route)[1])+' · Gitarska pustolovina';
-    const dock=document.getElementById('mobile-dock');
-    if(dock){
-      const dockNav=[
-        ['#pocetak','spark','Početak',route==='pocetak'&&anchor!=='stimanje'],
-        ['#pjesmica','note','Pjesmice',route==='pjesmica'],
-        ['#napredak','star','Zvjezdice',route==='napredak']
-      ];
-      dock.innerHTML=dockNav.map(([href,icon,label,on])=>`<a href="${href}" class="dock-item${on?' is-on':''}"${on?' aria-current="page"':''}><span class="dock-icon app-ico app-ico-${icon}" aria-hidden="true"></span><span class="dock-label">${label}</span></a>`).join('');
-    }
     setNavOpen(false);
-    const chip=document.getElementById('danas-chip');
-    if(chip)chip.hidden=true;
+    setShortcutsOpen(false);
     if(reopenParentFold){
       const fold=document.querySelector('.parent-fold');
       if(fold)fold.open=true;
@@ -846,11 +834,22 @@
     updateChrome();
   }
   const setNavOpen=open=>{
+    if(open)setShortcutsOpen(false);
     document.body.classList.toggle('nav-open',!!open);
     const toggle=document.getElementById('nav-toggle');
     const backdrop=document.getElementById('nav-backdrop');
-    if(toggle)toggle.setAttribute('aria-expanded',open?'true':'false');
+    if(toggle){toggle.setAttribute('aria-expanded',open?'true':'false');toggle.setAttribute('aria-label',open?'Zatvori izbornik':'Otvori izbornik');}
     if(backdrop)backdrop.hidden=!open;
+    document.getElementById('app-sidebar').inert=!open;
+    if(open)document.getElementById('nav-close').focus({preventScroll:true});
+  };
+  const setShortcutsOpen=(open,restoreFocus=false)=>{
+    const panel=document.getElementById('header-shortcuts-panel');
+    const toggle=document.getElementById('shortcuts-toggle');
+    panel.hidden=!open;
+    toggle.setAttribute('aria-expanded',open?'true':'false');
+    toggle.setAttribute('aria-label',open?'Zatvori prečace':'Otvori prečace');
+    if(restoreFocus)toggle.focus({preventScroll:true});
   };
   const today=()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`};
   const weekdayHr=['nedjelja','ponedjeljak','utorak','srijeda','četvrtak','petak','subota'][new Date().getDay()];
@@ -934,8 +933,11 @@
     if(!dlg.open)dlg.showModal();
   };
   document.addEventListener('click',e=>{
+    if(e.target.closest('#shortcuts-toggle')){setShortcutsOpen(document.getElementById('header-shortcuts-panel').hidden);return;}
+    if(e.target.closest('#shortcuts-close')){setShortcutsOpen(false,true);return;}
+    if(e.target.closest('#header-shortcuts-panel a,#header-shortcuts-panel button'))setShortcutsOpen(false);
     const readButton=e.target.closest('[data-read-help]');
-    if(readButton){window.GuitarSongUI.showHelp(howToReadMap().replace('<h2>','<h2 id="explain-title">'),readButton);return;}
+    if(readButton){window.GuitarSongUI.showHelp(howToReadMap().replace('<h2>','<h2 id="explain-title">'),readButton.closest('#header-shortcuts-panel')?document.getElementById('shortcuts-toggle'):readButton);return;}
     const mapButton=e.target.closest('[data-open-map]');
     if(mapButton){const map=document.querySelector('.lesson-map');if(map){map.open=true;map.querySelector('summary').scrollIntoView({block:'nearest'});map.querySelector('summary').focus({preventScroll:true});}return;}
     const homeLink=e.target.closest('a[href="#pocetak"]');
@@ -970,7 +972,7 @@
     if(e.target.closest('#guitar-name-save')){saveGuitarName();return;}
     if(e.target.closest('#guitar-name-close')){document.getElementById('guitar-name-dialog')?.close();return;}
     if(e.target.closest('#nav-toggle')){setNavOpen(!document.body.classList.contains('nav-open'));return;}
-    if(e.target.closest('#nav-close')||e.target.closest('#nav-backdrop')){setNavOpen(false);return;}
+    if(e.target.closest('#nav-close')||e.target.closest('#nav-backdrop')){setNavOpen(false);document.getElementById('nav-toggle').focus({preventScroll:true});return;}
     if(e.target.closest('#navigation a')||e.target.closest('.brand'))setNavOpen(false);
     const invitePrint=e.target.closest('.print-invite');
     if(invitePrint){
@@ -1117,8 +1119,21 @@
     if(e.key==='Enter'&&e.target.dataset&&e.target.dataset.guitarName!==undefined){e.preventDefault();document.getElementById('guitar-name-ready')?.click();return;}
     if(e.key==='Escape'){
       if(!document.getElementById('zvonko-welcome')?.hidden){hideZvonkoWelcome();}
-      else setNavOpen(false);
+      else if(!document.getElementById('header-shortcuts-panel').hidden)setShortcutsOpen(false,true);
+      else if(document.body.classList.contains('nav-open')){setNavOpen(false);document.getElementById('nav-toggle').focus({preventScroll:true});}
     }
+    if(e.key==='Tab'&&document.body.classList.contains('nav-open')){
+      const controls=Array.from(document.querySelectorAll('#app-sidebar a,#app-sidebar button'));
+      const first=controls[0],last=controls.at(-1);
+      if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+      else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+    }
+  });
+  document.addEventListener('pointerdown',e=>{
+    if(!e.target.closest('.header-tools'))setShortcutsOpen(false);
+  },{passive:true});
+  document.addEventListener('focusin',e=>{
+    if(!e.target.closest('.header-tools'))setShortcutsOpen(false);
   });
   window.addEventListener('afterprint',()=>{
     document.body.classList.remove('print-concert-only');
@@ -1199,7 +1214,7 @@
       requestAnimationFrame(()=>{restoringScreen=false;rememberScreenPosition();});
     });
   });
-  window.addEventListener('orientationchange',()=>setNavOpen(false),{passive:true});
+  window.addEventListener('orientationchange',()=>{setNavOpen(false);setShortcutsOpen(false);},{passive:true});
   window.addEventListener('resize',()=>{updateChrome();stabiliseLesson();},{passive:true});
   window.visualViewport?.addEventListener('resize',()=>{
     if(document.body.classList.contains('nav-open')&&window.visualViewport&&window.visualViewport.width>1280)setNavOpen(false);

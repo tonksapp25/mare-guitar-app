@@ -17,13 +17,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css?ux=1">
   <link rel="stylesheet" href="ux.css">
-  <link rel="stylesheet" href="design.css?v=10">
+  <link rel="stylesheet" href="design.css?v=12">
   <script src="data.js" defer></script>
   <script src="figures.js" defer></script>
   <script src="kid-copy.js" defer></script>
   <script src="songs.js" defer></script>
   <script src="song-ui.js" defer></script>
-  <script src="app.js?v=7" defer></script>
+  <script src="app.js?v=9" defer></script>
 </head>
 <body class="theme-marija">
   <div id="gate" class="gate">
@@ -56,15 +56,20 @@
         <span class="nav-toggle-bars" aria-hidden="true"></span>
         <span class="nav-toggle-text">Izbornik</span>
       </button>
-      <button type="button" class="topbar-greeting" id="topbar-greeting" aria-haspopup="dialog" aria-controls="guitar-name-dialog">Moja gitara</button>
-      <span class="local-badge">Tvoja bilježnica</span>
+      <button type="button" class="topbar-greeting" id="topbar-greeting" aria-haspopup="dialog" aria-controls="guitar-name-dialog">Gitara</button>
+      <div class="header-tools">
+        <button type="button" class="shortcuts-toggle" id="shortcuts-toggle" aria-label="Otvori prečace" aria-expanded="false" aria-controls="header-shortcuts-panel" title="Prečaci">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg>
+        </button>
+        <section class="utility-bar" id="header-shortcuts-panel" aria-labelledby="shortcuts-title" hidden>
+          <div class="shortcuts-heading"><h2 id="shortcuts-title">Prečaci</h2><button type="button" class="shortcuts-close secondary" id="shortcuts-close" aria-label="Zatvori prečace">✕</button></div>
+          <nav id="screen-navigation" class="screen-navigation" aria-label="Stalna navigacija"></nav>
+          <nav id="page-shortcuts" class="page-shortcuts" aria-label="Prečaci ove stranice"></nav>
+        </section>
+      </div>
     </header>
-    <div class="utility-bar"><nav id="screen-navigation" class="screen-navigation" aria-label="Stalna navigacija"></nav><nav id="page-shortcuts" class="page-shortcuts" aria-label="Prečaci ove stranice"></nav></div>
     <main id="content" tabindex="-1"></main>
-    <footer>Gitara 3/4 · Sviramo polako i veselo · Prvi mjesec</footer>
   </div>
-  <a class="danas-chip" id="danas-chip" href="#tjedan-1/danas">Danas →</a>
-  <nav class="mobile-dock" id="mobile-dock" aria-label="Brza navigacija"></nav>
   <noscript>Za listanje materijala uključi JavaScript. Za statično izdanje otvori <a href="output/gitarska_pustolovina.html">postojeći HTML</a>.</noscript>
   <dialog id="explain-dialog" aria-labelledby="explain-title"><button class="modal-close secondary" type="button" aria-label="Zatvori objašnjenje">✕</button><div id="explain-body"></div><button type="button" class="modal-done">Natrag na vježbu</button></dialog>
   <dialog id="hand-dialog" aria-labelledby="hand-title">
