@@ -12,12 +12,15 @@
   <script>
     try{if(localStorage.getItem('gitarska-pustolovina-ulaz')==='1')document.documentElement.classList.add('gate-open')}catch(e){}
   </script>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-title" content="Mare">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css?ux=2">
   <link rel="stylesheet" href="ux.css">
-  <link rel="stylesheet" href="design.css?v=26">
+  <link rel="stylesheet" href="design.css?v=27">
   <script src="data.js" defer></script>
   <script src="figures.js" defer></script>
   <script src="kid-copy.js?v=2" defer></script>
@@ -25,6 +28,7 @@
   <script src="song-ui.js" defer></script>
   <script src="rhythm-follow.js?v=1" defer></script>
   <script src="app.js?v=20" defer></script>
+  <script src="pwa.js?v=1" defer></script>
 </head>
 <body class="theme-marija">
   <div id="gate" class="gate">
@@ -49,6 +53,11 @@
     </div>
     <p class="eyebrow">MARIJIN PRVI MJESEC</p>
     <nav id="navigation"></nav>
+    <div class="sidebar-app-actions" aria-label="Prikaz aplikacije">
+      <button type="button" id="install-app"><span aria-hidden="true">＋</span><span class="sidebar-action-label">Dodaj aplikaciju</span></button>
+      <button type="button" id="fullscreen-app" aria-pressed="false"><span aria-hidden="true">⛶</span><span class="sidebar-action-label">Puni ekran</span></button>
+    </div>
+    <p id="offline-state" class="sidebar-offline-state" role="status"></p>
     <div class="sidebar-note"><strong>Ti to možeš!</strong><br>Prvo lijep zvuk,<br>pa malo igre.</div>
     <p class="sidebar-dedication"><span aria-hidden="true">♥</span><span>Za Mariju, s ljubavlju od Tonke.</span></p>
   </aside>
@@ -81,6 +90,11 @@
       <div class="completion-action-space"><div id="completion-actions" class="completion-actions" hidden><button type="button" class="secondary" id="completion-stay">Ostani ovdje</button><a class="button" id="completion-next" href="#pocetak">Sljedeća vježba →</a></div></div>
       <p id="completion-next-hint" class="completion-next-hint"></p>
     </div>
+  </dialog>
+  <dialog id="app-mode-dialog" aria-labelledby="app-mode-title">
+    <div class="completion-heading"><h2 id="app-mode-title">Dodaj aplikaciju</h2><button type="button" class="secondary" data-app-mode-close aria-label="Zatvori upute">✕</button></div>
+    <p id="app-mode-body"></p>
+    <button type="button" class="button" data-app-mode-close>U redu</button>
   </dialog>
   <dialog id="parent-info-dialog" aria-labelledby="parent-info-title" aria-describedby="parent-info-lesson">
     <div class="completion-heading"><h2 id="parent-info-title">Za mamu ili tatu</h2><button type="button" class="secondary" id="parent-info-close" aria-label="Zatvori informacije za roditelje">✕</button></div>

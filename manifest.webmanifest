@@ -1,0 +1,17 @@
+{
+  "id": "./",
+  "name": "Gitarska pustolovina za Mariju",
+  "short_name": "Mare",
+  "description": "Mali koraci, zvukovi i pjesmice za učenje gitare.",
+  "lang": "hr",
+  "start_url": "./#pocetak",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#faf7fb",
+  "theme_color": "#40304d",
+  "icons": [
+    {"src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "assets/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}

@@ -402,3 +402,27 @@
     border: 0; background: transparent; box-shadow: none;
   }
 }
+
+@media screen {
+  body.theme-marija .sidebar-app-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 22px; }
+  body.theme-marija .sidebar-app-actions button {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 4px; min-height: 64px; min-width: 0; padding: 9px 5px;
+    border: 1px solid #ffffff38; border-radius: 12px; background: #ffffff0d;
+    color: #f7eaf2; font-size: 11px; line-height: 1.3; box-shadow: none;
+  }
+  body.theme-marija .sidebar-app-actions button > [aria-hidden] { font-size: 23px; line-height: 1; }
+  body.theme-marija .sidebar-app-actions button:hover { background: #ffffff20; }
+  body.theme-marija .sidebar-app-actions button:disabled { opacity: .6; cursor: default; }
+  body.theme-marija .sidebar-offline-state { margin: 9px 4px 0; color: #d9ccdf; font-size: 11px; line-height: 1.45; font-weight: 400; }
+  body.theme-marija .sidebar-offline-state:empty { display: none; }
+  body.theme-marija #app-mode-dialog {
+    width: min(480px,calc(100vw - 24px)); max-width: none; max-height: calc(100dvh - 24px);
+    box-sizing: border-box; padding: 22px; border: 1px solid #e5d6e8; border-radius: 24px;
+    background: #fff; box-shadow: 0 24px 80px #30203840;
+  }
+  body.theme-marija #app-mode-dialog .completion-heading h2 { font-size: 22px; }
+  body.theme-marija #app-mode-body { font-size: 15px; line-height: 1.6; margin: 18px 0; }
+  body.theme-marija #app-mode-dialog > .button { width: 100%; }
+}
+@media print { #app-mode-dialog { display: none !important; } }

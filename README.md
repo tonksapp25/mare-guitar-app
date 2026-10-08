@@ -151,3 +151,17 @@ Na hostingu najprije aktiviraj valjani SSL certifikat za `mare.aplikacija.com.hr
 Pravilo ne izdaje certifikat; hosting mora podržavati `.htaccess` i `mod_rewrite`.
 Ako se HTTPS završava na zasebnom proxyju, provjeri hostingovu konfiguraciju
 HTTPS-a prije primjene pravila kako bi se izbjeglo ponavljano preusmjeravanje.
+
+## PWA i puni ekran
+
+U sidebaru su jedan kraj drugog „Dodaj aplikaciju” i „Puni ekran”. Manifest i
+ikone omogućuju instalaciju s HTTPS domene; kad preglednik ne ponudi svoj
+instalacijski prozor, gumb prikazuje upute za dodavanje na početni zaslon.
+Fullscreen se pokreće korisničkim klikom, a isti gumb služi za izlazak.
+
+Service worker preuzima osnovnu aplikaciju, sve slike i zvukove. Poruka ispod
+gumba potvrđuje da je preuzimanje dovršeno. PDF i dugi HTML spremaju se nakon
+prvog otvaranja. Vanjske poveznice i vanjski fontovi nisu dio offline paketa.
+Napredak ostaje u lokalnoj pohrani, bez sinkronizacije između uređaja.
+`python build_hosting.py` osvježava `cache-list.js` s novom verzijom sadržaja
+te uključuje manifest, ikone, `pwa.js`, `sw.js` i popis u hosting ZIP.
