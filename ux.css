@@ -1,0 +1,147 @@
+/* Touch-first refinements. Lesson content and star rules stay unchanged. */
+.topbar{height:auto!important;min-height:60px!important;flex-wrap:nowrap!important}
+.utility-bar{position:sticky;top:var(--app-topbar-height,60px);z-index:19;display:flex;align-items:center;gap:14px;max-width:1000px;margin:0 auto;padding:10px 20px;background:rgba(255,250,252,.96);border-bottom:1px solid #f5b8d4}
+.screen-navigation{display:flex;flex-direction:row;gap:8px;flex:0 0 auto}
+body.theme-marija .screen-arrow{display:flex;align-items:center;justify-content:center;gap:8px;min-width:52px;min-height:52px;padding:10px 14px;background:#fff;color:#880e4f;border:2px solid #f48fb1;box-shadow:none;font-size:15px}
+.screen-arrow [aria-hidden]{font-size:25px;line-height:1}
+.screen-arrow:disabled{opacity:.35;cursor:default;transform:none!important}
+.page-shortcuts{display:flex;flex-direction:row;align-items:center;justify-content:flex-end;gap:10px;flex:1;min-width:0;overflow-x:auto;padding:2px}
+body.theme-marija .round-shortcut{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;flex:0 0 58px;width:58px;min-height:66px;padding:0;border:0;background:transparent;color:#880e4f;text-decoration:none;box-shadow:none;font-family:inherit}
+.round-shortcut>svg,.round-shortcut>span[aria-hidden]{display:grid;place-items:center;width:48px;height:48px;padding:10px;border:2px solid #f48fb1;border-radius:50%;background:#fff;color:#c2185b;font-size:24px;line-height:1}
+.round-shortcut.is-current>svg,.round-shortcut.is-current>span[aria-hidden]{background:#fff3c4;border-color:#c2185b}
+.shortcut-label{font-size:11px;line-height:1.2;font-weight:700;white-space:nowrap}
+button:focus-visible,a:focus-visible,summary:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid #c2185b;outline-offset:3px}
+body.theme-marija main{padding-top:20px!important}
+.mission-work{display:grid;gap:16px;align-items:start}
+.mission-instruction,.mission-picture{min-width:0}
+.mission-picture:empty,.mission-sound:empty{display:none}
+.exercise-card .mission-picture svg{max-height:300px;height:auto}
+.exercise-card .mission-picture .teach-svg{max-height:none}
+.mission-picture .learning-illustration{grid-template-columns:1fr}
+.mission-step{margin-bottom:16px}
+body.theme-marija .step-actions .step-prev,body.theme-marija .step-actions .step-next{min-height:52px;min-width:76px;padding:10px 14px;font-size:16px}
+.step-head{gap:12px;flex-wrap:wrap}
+.step-one{font-size:1.15rem;line-height:1.55;margin-top:8px}
+.step-one:focus{outline:none}
+.step-one:focus-visible{outline:3px solid #c2185b;outline-offset:3px}
+.card-zvonko{flex-wrap:nowrap!important;gap:10px;padding:10px 12px!important;animation:none!important}
+.card-zvonko img{width:42px;height:42px;border-radius:12px}
+.card-zvonko p{font-size:14px;line-height:1.4}
+.card-zvonko strong{font-size:15px}
+.tune-check{margin:0 0 14px;font-size:14px;color:#8a496b;font-weight:650}
+.mission-completion{margin-top:20px}
+.mission-completion:empty{display:none}
+.finish-hint{padding:12px 14px;background:#fff3c4;border-radius:14px;font-size:15px;line-height:1.5}
+.mission-completion .mission-back{margin:20px 0 0}
+.mission-help{margin-top:16px}
+.mission-help:empty{display:none}
+body.theme-marija .finger-word{min-height:44px;min-width:44px;padding:5px 10px}
+.mission-sound .card-audio{padding:12px;margin:0 0 12px}
+.card-audio-label{margin-bottom:6px}
+.mission-picture .picture-legend{margin-top:12px}
+.mission-picture .posture-girl{max-height:330px;width:auto;max-width:100%}
+.mascot-panel{grid-template-columns:64px 1fr!important;text-align:left!important;gap:12px!important;padding:14px!important;margin-bottom:18px}
+.mascot-frame{margin:0!important;width:64px;height:64px;padding:0;border:0;box-shadow:none;animation:none!important}
+.mascot-frame img{width:60px!important;height:60px!important}
+.mascot-frame::after{display:none}
+.speech-bubble{padding:12px!important;font-size:15px}
+.speech-bubble::before,.speech-bubble::after{display:none!important}
+.week-picker{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr));overflow:visible!important;gap:6px!important;margin-right:0!important}
+body.theme-marija .week-pick{min-width:0;min-height:48px;padding:8px 4px!important;font-size:13px}
+.week-footer{margin-top:18px}
+body.theme-marija .song-choice{display:block;min-height:100px;text-decoration:none;color:#5c3d55}
+.song-choice:hover,.song-choice:focus-visible{border-color:#c2185b}
+.song-heading{margin-bottom:10px}
+.song-heading h1{margin:8px 0}
+.song-back{min-height:44px;display:inline-flex;align-items:center;font-size:15px;color:#880e4f}
+.song-sheet{padding:18px!important}
+.song-sheet .song{padding:0;border:0;background:transparent}
+.song-title{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+body.theme-marija .song-play{min-width:150px;min-height:56px;font-size:17px}
+.song-options,.song-sources{margin-top:16px}
+.song-options summary,.song-sources summary,.parent-fold summary{min-height:48px;display:flex;align-items:center;font-size:16px}
+.song-controls{display:flex;flex-wrap:wrap;gap:12px;margin-top:12px}
+.song-controls label{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+.song-controls select{min-height:48px;font-size:16px}
+.song-legend{display:flex;flex-wrap:wrap;gap:8px}
+body.theme-marija .data-help{min-width:44px;min-height:44px;padding:8px 10px;border:1px solid #f5b8d4;border-radius:12px;line-height:1.35;font-size:14px;background:#fff}
+.tap-hint{font-size:14px;line-height:1.45;margin-bottom:8px;color:#8a496b}
+.song-sheet .compact-tab-scroll{overflow-x:auto;overscroll-behavior-x:contain;scroll-padding-inline:36px;margin:14px 0;padding-bottom:8px;scrollbar-width:auto}
+.song-sheet .compact-tab{min-width:1030px;height:auto;max-height:none}
+.song-sheet .tab-fret{font-size:28px!important;fill:#5c3d55}
+.song-sheet .tab-duration{font-size:20px;fill:#8a496b}
+.song-sheet .tab-lyric{font-size:20px!important}
+.song-sheet .tab-string{font-size:18px!important}
+.song-sheet .tab-line[data-string="1"]{stroke:#ec407a}
+.song-sheet .tab-line[data-string="2"]{stroke:#e69100}
+.svg-help[data-string="1"] .tab-string{fill:#c2185b}
+.svg-help[data-string="2"] .tab-string{fill:#a14b00}
+.svg-help:hover rect{fill:#fff3c4}
+.song-sheet .song-tip{font-size:14px;line-height:1.5;margin:8px 0}
+.guitar-settings{margin:16px 0 24px}
+.star-hero{margin-top:0}
+.star-choice-label{font-size:15px}
+.star-choice-desc{font-size:14px}
+.resume-card{margin-bottom:16px}
+.resume-card .button{width:100%;text-align:center}
+.name-later{min-height:48px;margin-top:8px}
+.tune-return .button{width:100%;text-align:center;min-height:56px}
+.zvonko-toast{pointer-events:none!important;padding:10px 14px!important;border-radius:16px!important;max-width:320px!important;bottom:94px!important}
+.zvonko-toast img{width:40px!important;height:40px!important}
+.zvonko-toast strong{font-size:16px!important}
+.zvonko-toast span{font-size:14px!important}
+@media(min-width:1000px){
+  .utility-bar{background:transparent;border-bottom:0;padding:0;position:relative;top:auto}
+  .screen-navigation{position:fixed;left:20px;top:140px;flex-direction:column;gap:14px;z-index:25}
+  body.theme-marija .screen-arrow{width:56px;height:56px;padding:8px;border-radius:50%}
+  .screen-arrow span:not([aria-hidden]){display:none}
+  .page-shortcuts{position:fixed;right:20px;top:130px;bottom:100px;overflow-y:auto;overflow-x:hidden;display:flex;flex-direction:column;justify-content:flex-start;gap:16px;width:66px;flex:none;z-index:25}
+  .round-shortcut{flex-shrink:0}
+  body.theme-marija main{max-width:1100px;padding:8px 96px 28px!important}
+  .workspace #content[data-view=songs]{padding:8px 96px 28px!important}
+  .mission-work{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px}
+  .mission-picture .learning-illustration svg{max-height:270px}
+}
+@media(min-width:1281px){.screen-navigation{left:274px}}
+@media(max-width:700px){
+  .utility-bar{padding:6px 12px;gap:10px}
+  body.theme-marija .screen-arrow{width:48px;min-width:48px;height:48px;min-height:48px;padding:8px;border-radius:50%}
+  .screen-arrow span:not([aria-hidden]){display:none}
+  .page-shortcuts{justify-content:flex-start;gap:6px}
+  body.theme-marija .round-shortcut{flex-basis:52px;width:52px;min-height:62px}
+  .round-shortcut>svg,.round-shortcut>span[aria-hidden]{width:44px;height:44px;padding:8px}
+  .local-badge{display:none}
+  #topbar-greeting{min-width:0;overflow:hidden;text-overflow:ellipsis}
+  .mascot-panel{grid-template-columns:48px 1fr!important}
+  .mascot-frame img{width:46px!important;height:46px!important}
+  .mascot-frame{width:48px;height:48px}
+  .mascot-panel .speech-bubble{font-size:14px}
+  .day-tile{padding:12px;gap:8px}
+  .day-tile-num{min-width:54px}
+  .day-tile-star{font-size:18px}
+  .exercise-card{padding:16px!important}
+  .step-actions{margin-left:auto}
+  .step-kicker{font-size:12px}
+  body.theme-marija .step-actions .step-prev,body.theme-marija .step-actions .step-next{min-width:68px;padding:10px 12px}
+  .mission-picture .picture-legend li{margin-bottom:8px}
+  .mission-picture .picture-legend p{font-size:13px}
+  .song-title{flex-wrap:wrap}
+  .song-title .data-help{font-size:13px}
+}
+@media(max-height:600px) and (orientation:landscape){
+  .topbar{position:relative!important}
+  .utility-bar{position:relative;top:auto}
+  .mobile-dock .dock-item{min-height:44px}
+  #explain-dialog,#hand-dialog,#guitar-name-dialog{max-height:calc(100dvh - 16px)}
+}
+@media(prefers-reduced-motion:reduce){.card-zvonko,.mascot-panel,.speech-bubble{animation:none!important;transition:none!important}}
+@media print{
+  .utility-bar,.page-shortcuts,.screen-navigation,.mission-help,.tune-check,.tune-return,.name-later,.guitar-settings,.resume-card{display:none!important}
+  body.theme-marija main{max-width:none;padding:0!important}
+  .mission-work{display:block}
+  .mission-sound{display:none}
+  .song-sheet .compact-tab{min-width:0;width:100%}
+  .song-sheet .compact-tab-scroll{overflow:visible}
+  .song-options,.song-sources,.song-title,.tap-hint{display:none!important}
+  .song-sheet .tab-fret{font-size:24px!important}
+}

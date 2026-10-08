@@ -8,7 +8,7 @@ Nisu potrebni instalacija, server ni internetska veza za osnovne materijale.
 - Četiri tjedna: susret, šest kartica, sedam kućnih zadataka i zvučni primjeri.
 - Pjesmica po tabulaturi, list napretka i vodič s vanjskim poveznicama.
 - Gumb za ispis trenutačnog lista.
-- Napredak i bilješke spremaju se u lokalnu pohranu tog preglednika.
+- Napredak, zadnji korak vježbe i bilješke spremaju se u lokalnu pohranu tog preglednika.
   Za trajnu kopiju ispiši list napretka. Spremanje ovisi o dopuštenjima preglednika.
 
 ## Datoteke i nadogradnja
@@ -21,7 +21,7 @@ Dječji ekran i PDF paket imaju odvojene izvore.
 - `app.js`: navigacija, zvjezdice i teach crteži (`missionHero`).
 - `data.js`: generirani tekst vodiča i kartica, bez crteža.
 - `figures.js`: generirani SVG crteži paketa.
-- `index.html`, `styles.css`: okvir i izgled.
+- `index.html`, `styles.css`, `ux.css`: okvir, izgled i prilagodbe za mobitel/tablet.
 - `songs.js`, `song-ui.js`: melodije i listovi.
 - `assets/audio`, `assets/illustrations`: zvuk i ilustracije.
 - `output`: PDF paket. `output/sadrzaj.json` je izvor tog paketa, ne dječjeg ekrana.
@@ -51,3 +51,11 @@ to su sintetizirani primjeri bez prepoznavanja zvuka mikrofonom.
 Gumb za ispis ispisuje odabranu pjesmicu bez zaglavlja preglednika.
 `verify_songs.cjs` provjerava melodiju, ritam, tekst, transpoziciju,
 slušanje, zasebne stranice, uklonjene pjesme i jedanaest vrsta objašnjenja.
+
+## Navigacija na mobitelu i tabletu
+
+Strelice Natrag/Naprijed prate posjećene ekrane u ovoj kartici preglednika
+i vraćaju položaj skrolanja. Povijest ekrana čuva se u sessionStorage,
+a koraci vježbi i posljednja otvorena misija u postojećem localStorage zapisu.
+Kružni prečaci stoje uz sadržaj na širokom ekranu i iznad njega na mobitelu;
+gitara uvijek otvara štimanje. Promjena koraka čuva postojeći audio player.
