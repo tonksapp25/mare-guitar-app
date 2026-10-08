@@ -171,7 +171,7 @@
       toast.innerHTML='';
     },3200);
   };
-  const starHowTo=`<aside class="star-howto" aria-label="Kako dobivaš zvjezdice"><p class="star-howto-title"><span class="app-ico app-ico-star" aria-hidden="true"></span> Kako skupljaš zvjezdice?</p><ol class="star-howto-steps"><li><strong>Probaj</strong> sve korake vježbe.</li><li>Na dnu kartice dodirni <strong>jedan</strong> gumb — ti biraš (mama/tata mogu pomoći).</li><li><strong>★</strong> Probala sam · <strong>★★</strong> Mogu sama · <strong>★★★</strong> Znam napamet</li></ol><p class="star-howto-note">Za tri zvjezdice pokaži cijelu vježbu napamet, bez pomoći i gledanja u upute. Ako zapneš, još malo vježbaj pa pokušaj opet.</p></aside>`;
+  const starHowTo=`<aside class="star-howto" aria-label="Kako dobivaš zvjezdice"><p class="star-howto-title"><span class="app-ico app-ico-star" aria-hidden="true"></span> Kako skupljaš zvjezdice?</p><ol class="star-howto-steps"><li><strong>Probaj</strong> sve korake vježbe.</li><li>Na zadnjem koraku dodirni <strong>Završi</strong>, pa odaberi zvjezdice — mama ili tata mogu pomoći.</li><li><strong>★</strong> Probala sam · <strong>★★</strong> Mogu sama · <strong>★★★</strong> Znam napamet</li></ol><p class="star-howto-note">Za tri zvjezdice pokaži cijelu vježbu napamet, bez pomoći i gledanja u upute. Ako zapneš, još malo vježbaj pa pokušaj opet.</p></aside>`;
   const starButtons=(key,n)=>`<div class="star-picker" role="group" aria-label="Zvjezdice za vježbu">
       <p class="star-picker-label">Završila si? Odaberi zvjezdice:</p>
       <div class="star-choice-row">${[
@@ -180,7 +180,7 @@
         [3,'★★★','Znam napamet','Bez pomoći i uputa.']
       ].map(([i,stars,label,desc])=>`<button type="button" class="star-choice${n===i?' is-on':''}" data-mission-star="${key}" data-stars="${i}" aria-pressed="${n===i}"><span class="star-choice-stars" aria-hidden="true">${stars}</span><span class="star-choice-label">${label}</span><span class="star-choice-desc">${desc}</span></button>`).join('')}</div>
       <p class="star-mastery-hint">Za ★★★ pokaži cijelu vježbu napamet, bez pomoći i gledanja u upute.</p>
-      ${n?`<button type="button" class="star-clear secondary" data-mission-star="${key}" data-stars="0">Makni zvjezdice</button>`:''}
+      <div class="star-clear-slot">${n?`<button type="button" class="star-clear secondary" data-mission-star="${key}" data-stars="0">Makni zvjezdice</button>`:''}</div>
     </div>`;
   const cardTip=key=>{const tip=missionTips[key]||['Hajde!','Tri mala koraka. Polako — ja navijam!'];return tip;};
   /* Audio usklađen s misijom (ritam + tab gdje postoji snimka). */
@@ -484,9 +484,7 @@
     const nextHtml=showNav&&!last?`<button type="button" class="button step-next" data-step-next="${key}" data-step-max="${lastIndex}"${needsMelody?' disabled':''} aria-label="Sljedeći korak">Dalje</button>`:'';
     const reminder=(c.week===3&&[4,6].includes(c.num))||(c.week===4&&c.num!==5&&c.kind!=='review');
     const stepHtml=steps.length?`<p class="step-kicker">Korak ${i+1} od ${steps.length}</p><p class="step-one" tabindex="-1">${fingerPlain(steps[i].replace('misiju','vježbu'))}</p>${c.kind==='review'?reviewPickList(c.week):''}${reminder?partReminder():''}${needsMelody?`<p class="step-guidance" role="status">Izaberi još ${4-melodySlots(key).length} ${4-melodySlots(key).length===1?'zvuk':'zvuka'} ispod upute.</p>`:''}${showNav?`<p class="step-guidance">${last?'Probaj zadatak, pa dodirni Završi.':c.kind==='review'&&i===0?'Izaberi vježbu iznad. Kad je ponoviš, vrati se ovamo.':'Probaj ovaj zadatak, pa nastavi.'}</p>`:''}`:'';
-    const controlsHtml=showNav?`<div class="step-actions">${prevHtml}<span class="step-position" aria-hidden="true">${i+1} / ${steps.length}</span>${nextHtml||'<button type="button" class="button step-next" data-step-finish aria-label="Završi vježbu">Završi</button>'}</div>`:'';
-    const starsHtml=last&&withStars?`<div class="mission-footer">${starButtons(key,n)}${n?`<p class="mission-cheer">${escape(mascotName)}: ${n===3?'Znaš cijelu vježbu napamet — bravo!':n===2?'Možeš sama — super! Za treću pokaži vježbu napamet.':'Bravo! Probala si. Još ★★ kad budeš sama!'}</p>`:''}</div>`:'';
-    const reviewHtml='';
+    const controlsHtml=showNav?`<div class="step-actions">${prevHtml}<span class="step-position" aria-hidden="true">${i+1} / ${steps.length}</span>${nextHtml||'<button type="button" class="button step-next" data-step-finish aria-label="Završi vježbu">Završi</button>'}</div>`:'<div class="step-actions"><button type="button" class="button step-next" data-step-finish aria-label="Završi vježbu">Završi</button></div>';
     const open=!!stuckOpen[key];
     const tip=key==='4-3'&&day===3?['Mali prijelaz!','Sviramo samo dva zvuka: kraj A i početak B.']:cardTip(key);
     const zvonkoHtml=`<aside class="card-zvonko" aria-label="${escape(mascotName)}"><img src="assets/dragon-guitar-pixar.jpg" alt="" width="56" height="56"><p><strong>${escape(tip[0])}</strong>${fingerPlain(tip[1])}</p></aside>`;
@@ -501,7 +499,6 @@
       ${kid?.game?`<p class="mission-game">${fingerPlain(kid.game)}</p>`:''}
       ${listenLinks(videosForMission(c.week,c.num))}
       ${kid?.parent?`<details class="parent-fold mission-parent"><summary>Za mamu ili tatu</summary><p>${fingerPlain(kid.parent)}</p></details>`:''}
-      <div class="mission-completion">${last&&withStars?'<p class="finish-hint">Kako je išlo? Odaberi zvjezdice za svoj pokušaj.</p>':''}${reviewHtml}${last&&day?`<button type="button" class="day-practice secondary" data-practised-day="${c.week}-${day}" aria-pressed="${!!state.dayPractice[`${c.week}-${day}`]}">${state.dayPractice[`${c.week}-${day}`]?'✓ Probala sam ovaj dan':'Probala sam za danas'}</button>`:''}${starsHtml}${last?missionNav(c.week,c.num):''}</div>
       <div class="mission-help">${stuckHtml}</div>
       ${printQuiet()}
     </article>`;
@@ -545,7 +542,7 @@
     const focus=current.contains(document.activeElement)?document.activeElement:null;
     const focusSelector=focus?.matches('.step-next')?'.step-next':focus?.matches('.step-prev')?'.step-prev':null;
     current.querySelectorAll('details[open]').forEach(el=>{const counterpart=next.querySelector('.'+el.classList[0]);if(counterpart)counterpart.open=true;});
-    for(const selector of ['.mission-step','.mission-controls','.mission-completion','.mission-help']){
+    for(const selector of ['.mission-step','.mission-controls','.mission-help']){
       current.querySelector(selector)?.replaceWith(next.querySelector(selector));
     }
     if(key==='1-1')current.querySelector('.mission-picture').replaceWith(next.querySelector('.mission-picture'));
@@ -698,11 +695,34 @@
     const maps=day||extra?`<details class="lesson-map"${matchMedia('(min-width:1000px)').matches?' open':''}><summary>Dani i tjedni · otvori izbor</summary>${weekTabs(n)}${timeline}</details>`:weekTabs(n);
     return path+`<section class="week-orientation" aria-label="Tjedni i dani">${maps}</section>`;
   };
-  const missionNav=(week,num)=>{
+  const nextMission=(week,num)=>{
     const day=missionDay(week,num);
-    const prev=day>1?`<a class="button secondary" href="${dayRoute(week,day-1)}">← Dan ${day-1}</a>`:'';
-    const next=day&&day<7?`<a class="button" href="${dayRoute(week,day+1)}">Dan ${day+1}: ${escape(dayTitle(week,day+1))} →</a>`:day===7&&week<4?`<a class="button" href="#tjedan-${week+1}">Prijeđi na ${week+1}. tjedan →</a>`:day===7?'<a class="button" href="#napredak">Moje zvjezdice →</a>':'';
-    return `<p class="mission-back">${prev}<a class="button secondary" href="#tjedan-${week}">Svi dani ${week}. tjedna</a>${next}</p>`;
+    if(day&&day<7)return {href:dayRoute(week,day+1),label:'Sljedeća vježba',hint:`Dan ${day+1}: ${dayTitle(week,day+1)}`};
+    if(!day){const next=data.cards.find(c=>c.week===week&&c.num>num);if(next)return {href:missionRoute(week,next.num),label:'Sljedeća vježba',hint:cardTitle(week,next.num)};}
+    if(week<4)return {href:dayRoute(week+1,1),label:'Sljedeća vježba',hint:`${week+1}. tjedan · Dan 1`};
+    return {href:'#napredak',label:'Moje zvjezdice',hint:'Završila si sve tjedne!'};
+  };
+  let completionContext=null;
+  const updateCompletion=(badge=null)=>{
+    const ctx=completionContext;if(!ctx)return;
+    const n=getStars(ctx.key),ready=ctx.review||n>0;
+    document.getElementById('completion-body').innerHTML=ctx.review?'<p class="completion-review">Bravo za ponavljanje omiljene vježbe!</p>':starButtons(ctx.key,n);
+    document.getElementById('completion-feedback').textContent=badge?`Otključala si bedž „${badge.title}”!`:ctx.review?'Odaberi kamo želiš dalje.':n?`Spremljeno: ${'★'.repeat(n)} ${starLabels[n]}`:'Odaberi zvjezdice pa izaberi kamo dalje.';
+    document.getElementById('completion-actions').hidden=!ready;
+    document.getElementById('completion-next-hint').textContent=ready?ctx.next.hint:'';
+  };
+  const openCompletion=()=>{
+    const match=/kartica-(\d)-(\d)/.exec(document.querySelector('.exercise-card')?.id||'');if(!match)return;
+    const week=Number(match[1]),num=Number(match[2]),c=data.cards.find(c=>c.week===week&&c.num===num);
+    const key=`${week}-${num}`,review=c.kind==='review';
+    completionContext={key,hash:location.hash,review,next:nextMission(week,num)};
+    setShortcutsOpen(false);stopSong();document.querySelectorAll('audio').forEach(a=>a.pause());
+    document.getElementById('completion-title').textContent=review?'Vježba je gotova!':'Kako je išlo?';
+    document.getElementById('completion-lesson').textContent=document.querySelector('.exercise-card h3').textContent;
+    const next=document.getElementById('completion-next');next.href=completionContext.next.href;next.textContent=completionContext.next.label+' →';
+    updateCompletion();
+    document.getElementById('completion-dialog').showModal();
+    (document.querySelector('#completion-dialog .star-choice[aria-pressed=true]')||document.querySelector('#completion-dialog .star-choice'))?.focus({preventScroll:true});
   };
   const todayView=(week,opts={})=>{
     const day=Math.min(7,Math.max(1,Number(state.days[week])||1));
@@ -797,6 +817,7 @@
     section('Pouzdani izvori',pageBody(11))+
     section('Ispis','<p><a href="output/pdf/gitarska_pustolovina_prvi_mjesec.pdf">PDF cijelog mjeseca</a> · <a href="output/gitarska_pustolovina.html">Dugi HTML list svih materijala</a></p>');}
   function render(keepPosition=false){
+    if(document.getElementById('completion-dialog').open)document.getElementById('completion-dialog').close();
     stopSong();
     const openDialog=document.getElementById('explain-dialog');if(openDialog.open)openDialog.close();
     const handDialog=document.getElementById('hand-dialog');if(handDialog?.open)handDialog.close();
@@ -988,7 +1009,14 @@
       }
     }
     if(e.target.closest('.print'))window.print();
-    if(e.target.closest('[data-step-finish]')){revealMissionStep('.mission-completion');return;}
+    if(e.target.closest('[data-step-finish]')){openCompletion();return;}
+    if(e.target.closest('#completion-close,#completion-stay,#completion-next')){
+      if(completionContext?.review&&e.target.closest('#completion-stay,#completion-next')){
+        const [w,n]=completionContext.key.split('-').map(Number),day=missionDay(w,n);
+        if(day){state.dayPractice[`${w}-${day}`]=true;save();refreshMission(completionContext.key);}
+      }
+      document.getElementById('completion-dialog').close();return;
+    }
     const stepPrev=e.target.closest('[data-step-prev]');
     if(stepPrev&&!stepPrev.disabled){
       const key=stepPrev.dataset.stepPrev;
@@ -1016,8 +1044,6 @@
       document.querySelector('.stuck-toggle')?.focus({preventScroll:true});
       return;
     }
-    const dayButton=e.target.closest('[data-practised-day]');
-    if(dayButton){const key=dayButton.dataset.practisedDay;state.dayPractice[key]=!state.dayPractice[key];save();const w=Number(key.split('-')[0]);const d=Number(key.split('-')[1]);refreshMission(`${w}-${dailyKid[w-1][d-1].missions[0]}`);if(state.dayPractice[key])celebrate('Bravo za pokušaj!','Za danas je dovoljno. Možeš ponoviti kad poželiš.','soft');return;}
     const starBtn=e.target.closest('[data-mission-star]');
     if(starBtn){
       const key=starBtn.dataset.missionStar;const next=Number(starBtn.dataset.stars);const prev=getStars(key);
@@ -1026,6 +1052,10 @@
       const w=Number(key.split('-')[0]),num=Number(key.split('-')[1]),day=missionDay(w,num);if(next>0&&day)state.dayPractice[`${w}-${day}`]=true;
       save();
       const after=unlockedBadges().find(b=>!beforeBadges.has(b.id));
+      if(starBtn.closest('#completion-dialog')){
+        refreshMission(key);updateCompletion(after);
+        (document.querySelector(`#completion-dialog [data-stars="${next}"]`)||document.querySelector('#completion-dialog .star-choice'))?.focus({preventScroll:true});return;
+      }
       if(after)showBadgeCheer(after);
       else if(next>prev)celebrate(next===3?'Znaš napamet!':next===2?'Dvije zvjezdice!':'Zvjezdica!',next===3?'Cijela vježba bez pomoći i uputa — bravo!':next===2?'Sama si — super!':'Probala si — Zvonko je sretan!','star');
       else if(next===0)celebrate('U redu!','Možeš opet zaraditi ★ kad budeš spremna.','soft');
@@ -1136,6 +1166,15 @@
   },{passive:true});
   document.addEventListener('focusin',e=>{
     if(!e.target.closest('.header-tools'))setShortcutsOpen(false);
+  });
+  document.getElementById('completion-dialog').addEventListener('close',()=>{
+    if(completionContext?.hash===location.hash)document.querySelector('[data-step-finish]')?.focus({preventScroll:true});
+    completionContext=null;
+  });
+  document.getElementById('completion-dialog').addEventListener('click',e=>{
+    if(e.target!==e.currentTarget)return;
+    const r=e.currentTarget.getBoundingClientRect();
+    if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)e.currentTarget.close();
   });
   window.addEventListener('afterprint',()=>{
     document.body.classList.remove('print-concert-only');

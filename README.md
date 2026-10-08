@@ -80,6 +80,10 @@ zasebne korake, sliku i zvuk prijelaza kraj A → početak B.
 `dayPractice` bilježi pokušaj po danu odvojeno od zvjezdica za karticu. Dva dana
 koja koriste istu karticu zato ne preuzimaju oznaku pokušaja jedan od drugoga.
 Zvjezdice su u jednom redu: ★ Probala sam, ★★ Mogu sama, ★★★ Znam napamet.
+Gumb Završi na zadnjem koraku otvara modal za zvjezdice. Odabir se odmah sprema,
+zatim se nude Sljedeća vježba i Ostani ovdje. Ponovno otvaranje pamti odabir i
+dopušta promjenu. U samoj kartici nema završnog bloka sa zvjezdicama i navigacijom.
+Ponavljanje bez zvjezdica istim modalom bilježi pokušaj i nudi nastavak.
 Za treću zvjezdicu dijete pokaže cijelu vježbu bez pomoći i gledanja u upute;
 oznaku bira dijete uz pomoć odrasle osobe, bez automatske provjere sviranja.
 Pomoć za čitanje otvara se u dijalogu. Povratak iz pjesmice/zvukova pamti rutu,
@@ -104,7 +108,7 @@ slijede jedan ispod drugoga. Kontrole ostaju pri dnu vidnog polja. Prostor za
 uputu i sliku rezerviran je prema najdužem koraku pri trenutačnoj širini ekrana.
 Natrag i Dalje mijenjaju sadržaj bez pomicanja stranice dok je uputa vidljiva.
 Ako je izvan vidnog polja, vraća se blagim pomicanjem ispod stalne putanje;
-Završi vodi na oznaku pokušaja i zvjezdice. Zvuk se pritom ne učitava ponovno.
+Završi otvara modal bez pomicanja vježbe. Zvuk se pri promjeni koraka ne učitava ponovno.
 Izbori za ponavljanje i kontrole melodije zadržavaju svoje mjesto kroz korake.
 Prva vježba mijenja
 prikaz sjedenja u prikaz žica kada zadatak traži dodir najtanje žice, a cijela

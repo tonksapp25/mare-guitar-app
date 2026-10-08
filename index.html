@@ -17,13 +17,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css?ux=1">
   <link rel="stylesheet" href="ux.css">
-  <link rel="stylesheet" href="design.css?v=14">
+  <link rel="stylesheet" href="design.css?v=15">
   <script src="data.js" defer></script>
   <script src="figures.js" defer></script>
   <script src="kid-copy.js?v=2" defer></script>
   <script src="songs.js" defer></script>
   <script src="song-ui.js" defer></script>
-  <script src="app.js?v=10" defer></script>
+  <script src="app.js?v=13" defer></script>
 </head>
 <body class="theme-marija">
   <div id="gate" class="gate">
@@ -70,6 +70,16 @@
     <main id="content" tabindex="-1"></main>
   </div>
   <noscript>Za listanje materijala uključi JavaScript. Za statično izdanje otvori <a href="output/gitarska_pustolovina.html">postojeći HTML</a>.</noscript>
+  <dialog id="completion-dialog" class="completion-dialog" aria-labelledby="completion-title" aria-describedby="completion-lesson">
+    <div class="completion-heading"><h2 id="completion-title">Kako je išlo?</h2><button type="button" class="secondary" id="completion-close" aria-label="Natrag na vježbu">✕</button></div>
+    <p id="completion-lesson" class="completion-lesson"></p>
+    <div id="completion-body" class="completion-body"></div>
+    <div class="completion-footer">
+      <p id="completion-feedback" role="status"></p>
+      <div class="completion-action-space"><div id="completion-actions" class="completion-actions" hidden><button type="button" class="secondary" id="completion-stay">Ostani ovdje</button><a class="button" id="completion-next" href="#pocetak">Sljedeća vježba →</a></div></div>
+      <p id="completion-next-hint" class="completion-next-hint"></p>
+    </div>
+  </dialog>
   <dialog id="explain-dialog" aria-labelledby="explain-title"><button class="modal-close secondary" type="button" aria-label="Zatvori objašnjenje">✕</button><div id="explain-body"></div><button type="button" class="modal-done">Natrag na vježbu</button></dialog>
   <dialog id="hand-dialog" aria-labelledby="hand-title">
     <button class="hand-close secondary" type="button" id="hand-close" aria-label="Zatvori">✕</button>

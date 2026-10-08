@@ -304,5 +304,26 @@
     body.theme-marija .workspace #content{padding:12px 12px 20px!important}
   }
   @media(prefers-reduced-motion:reduce){body.theme-marija .sidebar{transition:none}}
+  body.theme-marija #completion-dialog{
+    width:min(540px,calc(100vw - 24px));max-height:calc(100dvh - 24px);padding:20px;
+    border:1px solid #e5d6e8;border-radius:24px;background:#fff;box-shadow:0 24px 80px #30203840;overflow:hidden;
+  }
+  body.theme-marija #completion-dialog[open]{display:flex;flex-direction:column;gap:12px}
+  .completion-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-shrink:0}
+  body.theme-marija .completion-heading h2{margin:0;font-size:24px}
+  body.theme-marija #completion-close{width:44px;height:44px;min-height:44px;padding:8px;flex:0 0 44px;border-radius:12px}
+  body.theme-marija .completion-lesson{margin:-6px 0 0;color:var(--muted);font-size:14px;flex-shrink:0}
+  .completion-body{min-height:0;overflow-y:auto;padding:4px;flex:0 1 auto}
+  body.theme-marija #completion-dialog .star-picker-label{font-size:14px;margin-bottom:10px}
+  body.theme-marija #completion-dialog .star-choice{animation:none}
+  .star-clear-slot{min-height:50px}
+  body.theme-marija #completion-dialog .star-clear{min-height:44px;margin-top:6px;padding:8px 12px;font-size:12px}
+  .completion-footer{flex-shrink:0;border-top:1px solid #e9e2ee;padding-top:12px}
+  body.theme-marija #completion-feedback{margin:0 0 8px;min-height:2.8em;font-size:13px;line-height:1.4;color:#67446b}
+  .completion-action-space{min-height:56px}
+  .completion-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .completion-actions[hidden]{display:none!important}
+  body.theme-marija .completion-actions :is(button,a){display:flex;align-items:center;justify-content:center;min-height:56px;padding:10px;font-size:14px;text-align:center;line-height:1.3}
+  body.theme-marija .completion-next-hint{margin:8px 0 0;min-height:2.8em;font-size:12px;line-height:1.4;color:var(--muted)}
 }
-@media print{.mission-controls{display:none!important}}
+@media print{.mission-controls,#completion-dialog{display:none!important}}
